@@ -1,3 +1,7 @@
+// src/lib/supabaseAdmin.ts
+// This file sets up a Supabase client with admin privileges using the service role key.
+// It exports the supabaseAdmin client for use in other parts of the application.
+
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;

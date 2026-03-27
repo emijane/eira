@@ -32,7 +32,7 @@ SUPABASE_SERVICE_ROLE_KEY
 
 ### Run the script:
 
-npx tsx src/app/classification/tool-input.ts
+npx tsx src/app/classification/toolInput.ts
 
 ### Purpose:
 

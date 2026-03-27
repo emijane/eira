@@ -1,5 +1,10 @@
+// src/app/classification/insertTool.ts
+// This file defines a function to insert a new tool into the "tools" table in the Supabase database.
+// It imports the Supabase client with admin privileges and defines the structure of the input data required for the insertion.
+
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
+// Define the structure of the input data required to insert a new tool into the database.
 export type ToolInsertInput = {
     name: string;
     slug: string;
@@ -12,16 +17,21 @@ export type ToolInsertInput = {
     tags: string[];
 };
 
+// Function to insert a new tool into the "tools" table in the Supabase database. 
+// It takes a ToolInsertInput object as an argument and returns the inserted tool data.
 export async function insertTool(tool: ToolInsertInput) {
+    // Use the Supabase client to insert the new tool into the "tools" table.
     const { data, error } = await supabaseAdmin
         .from("tools")
         .insert([tool])
         .select()
         .single();
 
+    // If there was an error during the insert operation, throw an error with a descriptive message.
     if (error) {
         throw new Error(`Supabase insert failed: ${error.message}`);
     }
 
+    // If the insert was successful, return the inserted tool data.
     return data;
 }

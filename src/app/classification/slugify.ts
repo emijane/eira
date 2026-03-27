@@ -1,3 +1,6 @@
+// src/app/classification/slugify.ts
+// Utility function to convert a string into a URL-friendly slug format.
+
 export function slugify(value: string): string {
     return value
         .toLowerCase()
