@@ -12,46 +12,53 @@ export default async function LibraryPage() {
                 <p>No tools found.</p>
             ) : (
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {tools.map((tool) => (
-                        <div
-                            key={tool.id}
-                            className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"
-                        >
-                            {tool.image_url && (
-                                <Image
-                                    src={tool.image_url}
-                                    alt={tool.name}
-                                    width={400}
-                                    height={160}
-                                    className="mb-4 h-40 w-full rounded-xl object-cover"
-                                />
-                            )}
+                    {tools.map((tool) => {
+                        const imageSrc = tool.image_file_name
+                            ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/media/${tool.image_file_name}`
+                            : null;
 
-                            <h2 className="text-xl font-semibold">{tool.name}</h2>
+                        return (
+                            <div
+                                key={tool.id}
+                                className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"
+                            >
+                                {imageSrc && (
+                                    <Image
+                                        src={imageSrc}
+                                        alt={tool.name}
+                                        className="mb-4 rounded-xl object-cover"
+                                        width={400}
+                                        height={160}
+                                        unoptimized
+                                    />
+                                )}
 
-                            <p className="mt-2 text-sm text-gray-600">
-                                {tool.description}
-                            </p>
+                                <h2 className="text-xl font-semibold">{tool.name}</h2>
 
-                            <div className="mt-4 space-y-1 text-sm text-gray-500">
-                                <p>{tool.category}</p>
-                                <p>{tool.subcategory}</p>
-                            </div>
+                                <p className="mt-2 text-sm text-gray-600">
+                                    {tool.description}
+                                </p>
 
-                            {tool.tags?.length > 0 && (
-                                <div className="mt-4 flex flex-wrap gap-2">
-                                    {tool.tags.map((tag: string) => (
-                                        <span
-                                            key={tag}
-                                            className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
+                                <div className="mt-4 space-y-1 text-sm text-gray-500">
+                                    <p>{tool.category}</p>
+                                    <p>{tool.subcategory}</p>
                                 </div>
-                            )}
-                        </div>
-                    ))}
+
+                                {tool.tags?.length > 0 && (
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                        {tool.tags.map((tag: string) => (
+                                            <span
+                                                key={tag}
+                                                className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700"
+                                            >
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             )}
         </main>
