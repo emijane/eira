@@ -3,10 +3,18 @@ import type { LibraryTool } from "./types";
 
 export default function LibraryGrid({ tools }: { tools: LibraryTool[] }) {
     return (
-        <section className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {tools.map((tool) => (
-                <LibraryCard key={tool.id} tool={tool} />
-            ))}
+        <section className="mt-10">
+            <div className="mb-5">
+                <p className="text-sm font-medium text-stone-600">
+                    {tools.length} tools found
+                </p>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                {tools.map((tool) => (
+                    <LibraryCard key={tool.id} tool={tool} />
+                ))}
+            </div>
         </section>
     );
 }

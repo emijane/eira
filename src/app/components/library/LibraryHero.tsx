@@ -8,25 +8,37 @@ const quickFilterPills = [
 
 export default function LibraryHero() {
     return (
-        <section className="relative overflow-hidden rounded-[2rem] border border-stone-200/70 bg-[linear-gradient(180deg,#fffdfa_0%,#fff8f1_100%)] px-7 py-10 shadow-[0_24px_80px_-40px_rgba(120,53,15,0.18)] sm:px-10 lg:px-12 lg:py-12">
-            <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.16),_transparent_52%),radial-gradient(circle_at_top_right,_rgba(249,115,22,0.10),_transparent_38%)]" />
+        <section className="overflow-hidden rounded-[2rem] border border-stone-200/70 bg-white px-7 py-8 shadow-[0_24px_80px_-40px_rgba(120,53,15,0.18)] sm:px-10 lg:px-12 lg:py-10">
+            <div>
+                <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:items-end">
+                    <div>
+                        <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-4 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-amber-900">
+                            Curated Tool Library
+                        </span>
 
-            <div className="relative max-w-5xl">
-                <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-4 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-amber-900">
-                    Curated Tool Library
-                </span>
+                        <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
+                            Discover beautiful tools for building on the web.
+                        </h1>
 
-                <h1 className="mt-15 max-w-2xl text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
-                    Discover beautiful tools for building on the web.
-                </h1>
+                        <p className="mt-4 max-w-2xl text-base leading-7 text-stone-600 sm:text-lg">
+                            A warm, browsable collection of standout UI kits, frameworks,
+                            and developer tools, organized so you can scan quickly and find
+                            the right fit.
+                        </p>
+                    </div>
 
-                <p className="mt-4 max-w-xl text-base leading-7 text-stone-600 sm:text-lg">
-                    A warm, browsable collection of standout UI kits, frameworks,
-                    and developer tools, organized so you can scan quickly and find
-                    the right fit.
-                </p>
+                    <div className="hidden rounded-[1.5rem] border border-stone-200/80 bg-white/70 p-5 lg:block">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-500">
+                            Browse smarter
+                        </p>
+                        <p className="mt-3 text-sm leading-6 text-stone-600">
+                            Start broad with a category, then narrow by subcategory,
+                            tags, or sorting to explore the collection more naturally.
+                        </p>
+                    </div>
+                </div>
 
-                <div className="mt-8 max-w-4xl rounded-[1.75rem] border border-stone-200/80 bg-white/80 p-5 shadow-[0_18px_45px_-36px_rgba(120,53,15,0.2)]">
+                <div className="mt-8 w-full rounded-[1.75rem] border border-stone-200/80 bg-white/80 p-5 shadow-[0_18px_45px_-36px_rgba(120,53,15,0.2)]">
                     <div className="flex flex-wrap items-center gap-2">
                         {quickFilterPills.map((pill, index) => (
                             <button
@@ -43,7 +55,7 @@ export default function LibraryHero() {
                         ))}
                     </div>
 
-                    <div className="mt-5 grid gap-3 border-t border-stone-200/80 pt-5 sm:grid-cols-2 xl:grid-cols-4">
+                    <div className="mt-5 grid gap-3 border-t border-stone-200/80 pt-5 md:grid-cols-2 xl:grid-cols-4">
                         <label className="flex flex-col gap-2 text-sm">
                             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-500">
                                 Category
