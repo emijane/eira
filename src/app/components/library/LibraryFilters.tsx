@@ -73,7 +73,7 @@ function FilterDropdown({
                     onClick={onToggle}
                     className={`flex w-full items-center justify-between rounded-2xl border px-5 py-3 text-left text-white transition ${
                         isOpen
-                            ? "border-[#BED3CC] ring-2 ring-[#BED3CC]/20"
+                            ? "border-accent-sea ring-2 ring-accent-sea/20"
                             : "border-white/12 hover:border-white/24"
                     }`}
                     style={{ backgroundColor: "rgba(255,255,255,0.08)" }}
@@ -86,7 +86,7 @@ function FilterDropdown({
             </label>
 
             {isOpen ? (
-                <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-[#2B2539] bg-[#1f1a29] shadow-[0_20px_50px_-24px_rgba(0,0,0,0.35)]">
+                <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-brand-ink bg-brand-deep shadow-[0_20px_50px_-24px_rgba(0,0,0,0.35)]">
                     <ul className="max-h-72 overflow-auto py-2">
                         {options.map((option) => {
                             const active = option.value === value;
@@ -104,7 +104,7 @@ function FilterDropdown({
                                     >
                                         <span>{option.label}</span>
                                         {active ? (
-                                            <span className="text-[#BED3CC]">&#10003;</span>
+                                            <span className="text-accent-sea">&#10003;</span>
                                         ) : null}
                                     </button>
                                 </li>
@@ -129,7 +129,7 @@ export default function LibraryFilters() {
     const closeMenu = () => setOpenMenu(null);
 
     return (
-        <div className="mt-10 overflow-visible rounded-[1.6rem] border border-[#2B2539]/10 bg-[#2B2539] p-5 shadow-[0_24px_55px_-30px_rgba(43,37,57,0.42)] sm:p-6">
+        <div className="mt-10 overflow-visible rounded-[1.6rem] border border-brand-ink/10 bg-brand-ink p-5 shadow-[0_24px_55px_-30px_rgba(43,37,57,0.42)] sm:p-6">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-300">

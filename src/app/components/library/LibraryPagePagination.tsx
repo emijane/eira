@@ -26,16 +26,16 @@ export default function LibraryPagePagination({
                 marginPagesDisplayed={1}
                 forcePage={currentPage - 1}
                 onPageChange={(event) => onPageChange(event.selected + 1)}
-                containerClassName="flex flex-wrap items-center justify-center gap-2 rounded-full border border-[#2B2539]/8 bg-white/80 p-1.5 shadow-[0_18px_40px_-32px_rgba(43,37,57,0.32)]"
+                containerClassName="flex flex-wrap items-center justify-center gap-2 rounded-full border border-brand-ink/10 bg-white/80 p-1.5 shadow-[0_18px_40px_-32px_rgba(43,37,57,0.32)]"
                 pageClassName="flex"
-                pageLinkClassName="inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-[#2B2539]/10 bg-white px-3 text-sm font-medium text-[#5c5368] transition hover:border-[#2B2539]/16 hover:bg-[#f7f4f0] hover:text-[#2B2539]"
+                pageLinkClassName="inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-brand-ink/10 bg-white px-3 text-sm font-medium text-brand-muted transition hover:border-brand-ink/15 hover:bg-brand-oat hover:text-brand-ink"
                 previousClassName="flex"
-                previousLinkClassName="inline-flex h-10 items-center justify-center rounded-full border border-[#2B2539]/10 bg-white px-4 text-sm font-medium text-[#5c5368] transition hover:border-[#2B2539]/16 hover:bg-[#f7f4f0] hover:text-[#2B2539]"
+                previousLinkClassName="inline-flex h-10 items-center justify-center rounded-full border border-brand-ink/10 bg-white px-4 text-sm font-medium text-brand-muted transition hover:border-brand-ink/15 hover:bg-brand-oat hover:text-brand-ink"
                 nextClassName="flex"
-                nextLinkClassName="inline-flex h-10 items-center justify-center rounded-full border border-[#2B2539]/10 bg-white px-4 text-sm font-medium text-[#5c5368] transition hover:border-[#2B2539]/16 hover:bg-[#f7f4f0] hover:text-[#2B2539]"
+                nextLinkClassName="inline-flex h-10 items-center justify-center rounded-full border border-brand-ink/10 bg-white px-4 text-sm font-medium text-brand-muted transition hover:border-brand-ink/15 hover:bg-brand-oat hover:text-brand-ink"
                 breakClassName="flex"
-                breakLinkClassName="inline-flex h-10 min-w-10 items-center justify-center rounded-full px-2 text-sm text-[#8b8196]"
-                activeClassName="[&>a]:border-[#2B2539] [&>a]:bg-[#2B2539] [&>a]:text-white [&>a]:shadow-[0_14px_28px_-18px_rgba(43,37,57,0.62)] [&>a:hover]:bg-[#2B2539] [&>a:hover]:text-white"
+                breakLinkClassName="inline-flex h-10 min-w-10 items-center justify-center rounded-full px-2 text-sm text-brand-haze"
+                activeClassName="[&>a]:border-brand-ink [&>a]:bg-brand-ink [&>a]:text-white [&>a]:shadow-[0_14px_28px_-18px_rgba(43,37,57,0.62)] [&>a:hover]:bg-brand-ink [&>a:hover]:text-white"
                 disabledClassName="pointer-events-none opacity-45"
                 renderOnZeroPageCount={null}
                 pageCount={pageCount}

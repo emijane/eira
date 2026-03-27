@@ -11,7 +11,7 @@ const utilityItems = ["Pricing", "Sign In"];
 
 export default function Header() {
     return (
-        <header className="sticky top-0 z-40 border-b border-white/8 bg-[#2B2539]">
+        <header className="sticky top-0 z-40 border-b border-white/8 bg-brand-ink">
             <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4 sm:px-8 lg:px-10">
                 <div className="flex items-center gap-4">
                     <a
