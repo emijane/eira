@@ -9,7 +9,24 @@ export default function LibraryCard({ tool }: { tool: LibraryTool }) {
     return (
         <article className="group overflow-hidden rounded-[1.75rem] border border-stone-200/80 bg-white/90 shadow-[0_18px_60px_-40px_rgba(120,53,15,0.45)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_70px_-36px_rgba(120,53,15,0.35)]">
             <div className="relative overflow-hidden border-b border-stone-100 bg-[linear-gradient(180deg,#fffaf5_0%,#fff4e8_100%)]">
-                {imageSrc ? (
+                {imageSrc ? tool.website_url ? (
+                    <a
+                        href={tool.website_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Visit ${tool.name}`}
+                        className="block"
+                    >
+                        <Image
+                            src={imageSrc}
+                            alt={tool.name}
+                            className="h-56 w-full object-cover object-top transition duration-300 hover:scale-[1.02]"
+                            width={400}
+                            height={240}
+                            unoptimized
+                        />
+                    </a>
+                ) : (
                     <Image
                         src={imageSrc}
                         alt={tool.name}
