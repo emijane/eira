@@ -5,6 +5,7 @@ import readline from "node:readline";
 import { classifyTool } from "./classifyTool";
 import { slugify } from "./slugify";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { findExistingToolByName } from "./findExistingTool";
 
 // Utility function to prompt the user with a question and return their input as a string.
 function askQuestion(question: string): Promise<string> {
@@ -55,6 +56,14 @@ async function main() {
             subcategory: classified.subcategory,
             tags: classified.tags,
         };
+
+        const existing = await findExistingToolByName(rowToInsert.name);
+
+        if (existing) {
+            console.log("Tool already exists. Skipping insert.");
+            console.log(JSON.stringify(existing, null, 4));
+            return;
+        }
 
         // Log the generated row to the console in a formatted manner for the user 
         // to review before confirming the insertion into the database.
