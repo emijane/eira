@@ -18,10 +18,7 @@ export default function Header() {
                         href="#"
                         className="inline-flex items-center gap-3 text-stone-900"
                     >
-                        <span className="flex h-11 min-w-11 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#f59e0b_0%,#fb7185_100%)] px-3 text-sm font-semibold lowercase tracking-tight text-white shadow-[0_14px_30px_-18px_rgba(190,24,93,0.85)]">
-                            e.
-                        </span>
-                        <span className="flex items-baseline gap-1.5">
+                        <span className="flex items-baseline gap-[0.10rem]">
                             <span className="text-xl font-semibold tracking-tight text-stone-950">
                                 eira
                             </span>
