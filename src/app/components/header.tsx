@@ -65,7 +65,7 @@ export default function Header() {
                         type="button"
                         className="inline-flex items-center rounded-full bg-stone-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-stone-700"
                     >
-                        Placeholder CTA
+                        Submit a Tool
                     </button>
                 </div>
             </div>
