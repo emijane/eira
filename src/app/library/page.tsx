@@ -26,7 +26,7 @@ export default async function LibraryPage({
     const endIndex = Math.min(start + TOOLS_PER_PAGE, tools.length);
 
     return (
-        <main className="min-h-screen bg-[linear-gradient(180deg,#fff9f4_0%,#fffdf9_42%,#ffffff_100%)]">
+        <main className="min-h-screen bg-[radial-gradient(circle_at_top_right,rgba(186,224,218,0.18),transparent_24%),radial-gradient(circle_at_top_left,rgba(239,200,200,0.22),transparent_28%),linear-gradient(180deg,#fff9f4_0%,#fffdf9_42%,#ffffff_100%)]">
             <div className="mx-auto max-w-7xl px-6 py-12 sm:px-8 lg:px-10 lg:py-16">
                 <LibraryHero />
                 {tools.length === 0 ? (
