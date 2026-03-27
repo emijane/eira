@@ -17,6 +17,7 @@ export default function LibraryPagePagination({
 
     return (
         <div className="mt-10 flex justify-center">
+            {/* react-paginate handles the page math while we keep the project styling here */}
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="Next"

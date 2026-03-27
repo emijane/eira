@@ -3,12 +3,14 @@ import LibraryFilters from "./LibraryFilters";
 export default function LibraryHero() {
     return (
         <section className="relative overflow-visible rounded-[2rem] border border-stone-200/80 bg-[linear-gradient(180deg,#fffefc_0%,#ffffff_100%)] px-6 py-8 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.18)] sm:px-8 lg:px-10 lg:py-10">
+            {/* decorative color atmospheres that sit behind the hero copy */}
             <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]">
                 <div className="absolute -left-8 top-20 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(255,196,196,0.45)_0%,rgba(255,196,196,0)_72%)]" />
                 <div className="absolute right-[-2.5rem] top-[-1.5rem] h-52 w-52 rounded-full bg-[radial-gradient(circle,rgba(186,224,218,0.32)_0%,rgba(186,224,218,0)_72%)]" />
             </div>
 
             <div className="relative">
+                {/* the hero pairs the main message with a supporting "featured lens" card on large screens */}
                 <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start">
                     <div>
                         <div className="flex flex-wrap items-center gap-3">

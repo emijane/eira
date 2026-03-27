@@ -3,8 +3,7 @@
 // This file contains utility functions related to tools, such as fetching tools from the database.
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
-// Function to fetch all tools from the "tools" table in the Supabase database.
-// It selects specific fields and orders the results by name in ascending order.
+// fetch the full tool list for routes that do their own filtering or slicing.
 export async function getTools() {
     const { data, error } = await supabaseAdmin
         .from("tools")

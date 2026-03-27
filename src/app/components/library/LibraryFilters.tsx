@@ -98,6 +98,7 @@ function FilterDropdown({
 }
 
 export default function LibraryFilters() {
+    // only one menu stays open at a time so the filter deck stays compact.
     const [openMenu, setOpenMenu] = useState<string | null>(null);
     const [category, setCategory] = useState("all");
     const [tags, setTags] = useState("all");
@@ -130,6 +131,7 @@ export default function LibraryFilters() {
                 </div>
 
                 <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-[1.2fr_1fr_1fr]">
+                    {/* each filter sits in its own tinted panel so the controls feel grouped without a heavy dashboard look */}
                     <div className="rounded-[1.25rem] bg-[linear-gradient(135deg,rgba(239,200,200,0.18),rgba(255,255,255,0.92))] p-3 ring-1 ring-[rgba(43,37,57,0.06)]">
                         <FilterDropdown
                             label="Category"

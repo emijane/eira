@@ -24,6 +24,7 @@ export default function PaginatedLibrarySection({
     const searchParams = useSearchParams();
 
     function handlePageChange(selectedPage: number) {
+        // keep the current query params intact and only swap the page number.
         const params = new URLSearchParams(searchParams.toString());
 
         if (selectedPage <= 1) {
@@ -38,6 +39,7 @@ export default function PaginatedLibrarySection({
 
     return (
         <>
+            {/* the server slices the tools first; this client wrapper only coordinates pagination ui */}
             <LibraryGrid
                 tools={tools}
                 totalTools={totalTools}

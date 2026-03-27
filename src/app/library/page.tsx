@@ -4,6 +4,7 @@ import PaginatedLibrarySection from "@/app/components/library/PaginatedLibrarySe
 import type { LibraryTool } from "@/app/components/library/types";
 import { getTools } from "@/lib/getTools";
 
+// keep the page size here so the server-rendered slice and pagination ui stay aligned.
 const TOOLS_PER_PAGE = 9;
 
 export default async function LibraryPage({
@@ -12,6 +13,7 @@ export default async function LibraryPage({
     searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
     const tools = (await getTools()) as LibraryTool[];
+    // next.js passes search params as a promise in this server component shape.
     const resolvedSearchParams = await searchParams;
     const rawPage = resolvedSearchParams?.page;
     const pageParam = Array.isArray(rawPage) ? rawPage[0] : rawPage;

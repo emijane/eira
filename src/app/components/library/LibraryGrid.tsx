@@ -15,6 +15,7 @@ export default function LibraryGrid({
     return (
         <section className="mt-10">
             <div className="mb-5">
+                {/* this count reflects the current page slice, not the full dataset */}
                 <p className="text-sm font-medium text-stone-600">
                     Showing {startIndex}-{endIndex} of {totalTools} tools
                 </p>
