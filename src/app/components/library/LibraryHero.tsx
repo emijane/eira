@@ -2,21 +2,57 @@ import LibraryFilters from "./LibraryFilters";
 
 export default function LibraryHero() {
     return (
-        <section className="overflow-visible rounded-[2rem] border border-stone-200/70 bg-white px-6 py-8 shadow-[0_24px_80px_-40px_rgba(120,53,15,0.18)] sm:px-8 lg:px-10 lg:py-9">
-            <div>
-                <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-amber-800">
-                    Curated Tool Library
-                </span>
+        <section className="relative overflow-visible rounded-[2rem] border border-stone-200/80 bg-[linear-gradient(180deg,#fffefc_0%,#ffffff_100%)] px-6 py-8 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.18)] sm:px-8 lg:px-10 lg:py-10">
+            <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]">
+                <div className="absolute -left-8 top-20 h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(255,196,196,0.45)_0%,rgba(255,196,196,0)_72%)]" />
+                <div className="absolute right-[-2.5rem] top-[-1.5rem] h-52 w-52 rounded-full bg-[radial-gradient(circle,rgba(186,224,218,0.32)_0%,rgba(186,224,218,0)_72%)]" />
+            </div>
 
-                <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
-                    Discover beautiful tools for building on the web.
-                </h1>
+            <div className="relative">
+                <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start">
+                    <div>
+                        <div className="flex flex-wrap items-center gap-3">
+                            <span className="inline-flex items-center rounded-full border border-[#d9c9b6] bg-[#fff8ef] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#8c5a20]">
+                                Curated Tool Library
+                            </span>
+                            <span className="hidden h-px flex-1 bg-[linear-gradient(90deg,rgba(123,103,103,0.24),rgba(186,224,218,0.18),rgba(239,200,200,0.12),transparent)] sm:block" />
+                        </div>
 
-                <p className="mt-4 max-w-3xl text-base leading-7 text-stone-600 sm:text-lg">
-                    A warm, browsable collection of standout UI kits, frameworks,
-                    and developer tools, organized so you can scan quickly and find
-                    the right fit.
-                </p>
+                        <h1 className="mt-6 max-w-4xl text-4xl font-semibold tracking-[-0.04em] text-stone-950 sm:text-5xl lg:text-[3.7rem] lg:leading-[1.02]">
+                            Discover beautiful tools for building on the web.
+                        </h1>
+
+                        <p className="mt-5 max-w-3xl text-base leading-7 text-stone-600 sm:text-lg">
+                            A warm, browsable collection of standout UI kits, frameworks,
+                            and developer tools, organized so you can scan quickly and find
+                            the right fit.
+                        </p>
+                    </div>
+
+                    <div className="hidden lg:block">
+                        <div className="rounded-[1.75rem] bg-white/74 p-4 shadow-[0_18px_40px_-28px_rgba(43,37,57,0.12)] ring-1 ring-[rgba(43,37,57,0.08)]">
+                            <div className="rounded-[1.25rem] bg-[linear-gradient(135deg,rgba(239,200,200,0.42)_0%,rgba(186,224,218,0.36)_34%,rgba(238,239,200,0.34)_68%,rgba(196,181,253,0.14)_100%)] p-4 ring-1 ring-white/60">
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#7B6767]">
+                                    Featured Lens
+                                </p>
+                                <p className="mt-3 text-lg font-semibold tracking-tight text-[#2B2539]">
+                                    Browse by vibe, stack, or category.
+                                </p>
+                                <div className="mt-5 flex flex-wrap gap-2">
+                                    <span className="rounded-full border border-[rgba(43,37,57,0.12)] bg-white/80 px-3 py-1 text-xs font-medium text-[#2B2539]">
+                                        UI Kits
+                                    </span>
+                                    <span className="rounded-full border border-[rgba(43,37,57,0.12)] bg-white/80 px-3 py-1 text-xs font-medium text-[#2B2539]">
+                                        Frameworks
+                                    </span>
+                                    <span className="rounded-full border border-[rgba(43,37,57,0.12)] bg-white/80 px-3 py-1 text-xs font-medium text-[#2B2539]">
+                                        Dev Tools
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <LibraryFilters />
             </div>
