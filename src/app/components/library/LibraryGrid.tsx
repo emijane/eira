@@ -6,7 +6,7 @@ export default function LibraryGrid({ tools }: { tools: LibraryTool[] }) {
         <section className="mt-10">
             <div className="mb-5">
                 <p className="text-sm font-medium text-stone-600">
-                    {tools.length} tools found
+                    Showing {tools.length} tools
                 </p>
             </div>
 

@@ -2,14 +2,6 @@
 
 import { useState } from "react";
 
-const quickFilterPills = [
-    "All Tools",
-    "UI & Styling",
-    "React",
-    "Design Systems",
-    "Developer Experience",
-];
-
 type FilterOption = {
     value: string;
     label: string;
@@ -54,7 +46,7 @@ function FilterDropdown({
     return (
         <div className="relative">
             <label className="flex flex-col gap-2 text-sm">
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-500">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-600">
                     {label}
                 </span>
                 <button
@@ -108,7 +100,6 @@ function FilterDropdown({
 export default function LibraryFilters() {
     const [openMenu, setOpenMenu] = useState<string | null>(null);
     const [category, setCategory] = useState("all");
-    const [subcategory, setSubcategory] = useState("all");
     const [tags, setTags] = useState("all");
     const [sortBy, setSortBy] = useState("popular");
 
@@ -116,23 +107,22 @@ export default function LibraryFilters() {
 
     return (
         <div className="mt-6 w-full rounded-[1.75rem] border border-stone-200/80 bg-stone-50/70 p-5 shadow-[0_18px_45px_-36px_rgba(120,53,15,0.16)]">
-            <div className="flex flex-wrap items-center gap-2">
-                {quickFilterPills.map((pill, index) => (
-                    <button
-                        key={pill}
-                        type="button"
-                        className={`btn h-10 min-h-10 rounded-full px-4 text-sm font-medium normal-case shadow-none transition ${
-                            index === 0
-                                ? "border-stone-900 bg-stone-900 text-white hover:border-stone-800 hover:bg-stone-800"
-                                : "border-stone-200 bg-stone-50 text-stone-700 hover:border-stone-300 hover:bg-white"
-                        }`}
-                    >
-                        {pill}
-                    </button>
-                ))}
+            <div className="flex items-start justify-between gap-4 border-b border-stone-200/80 pb-4">
+                <div>
+                    <p className="text-sm font-semibold text-stone-900">Refine your browse</p>
+                    <p className="mt-1 text-sm text-stone-600">
+                        Narrow the library by category or tags, then sort results.
+                    </p>
+                </div>
+                <button
+                    type="button"
+                    className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:border-stone-300 hover:text-stone-900"
+                >
+                    Reset
+                </button>
             </div>
 
-            <div className="mt-5 grid gap-3 border-t border-stone-200/80 pt-5 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 <FilterDropdown
                     label="Category"
                     value={category}
@@ -149,27 +139,6 @@ export default function LibraryFilters() {
                         { value: "ui", label: "UI & Styling" },
                         { value: "frontend", label: "Frontend Frameworks" },
                         { value: "devtools", label: "Developer Tools" },
-                    ]}
-                />
-
-                <FilterDropdown
-                    label="Subcategory"
-                    value={subcategory}
-                    isOpen={openMenu === "subcategory"}
-                    onToggle={() =>
-                        setOpenMenu((current) =>
-                            current === "subcategory" ? null : "subcategory"
-                        )
-                    }
-                    onSelect={(value) => {
-                        setSubcategory(value);
-                        closeMenu();
-                    }}
-                    options={[
-                        { value: "all", label: "All subcategories" },
-                        { value: "components", label: "Component Libraries" },
-                        { value: "css", label: "CSS Frameworks" },
-                        { value: "boilerplates", label: "Boilerplates" },
                     ]}
                 />
 
