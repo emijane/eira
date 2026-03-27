@@ -32,7 +32,7 @@ export default function LibraryHero() {
                     </div>
 
                     <div className="hidden lg:block">
-                        <div className="rounded-[1.75rem] border border-[#2B2539]/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.92)_0%,rgba(248,246,244,0.92)_100%)] p-4 shadow-[0_24px_44px_-30px_rgba(43,37,57,0.28)]">
+                        <div className="rounded-[1.75rem] border border-[#2B2539]/14 bg-[#2B2539] p-4 shadow-[0_24px_44px_-30px_rgba(43,37,57,0.28)]">
                             <div className="rounded-[1.25rem] border border-[#2B2539]/12 bg-[linear-gradient(135deg,rgba(239,200,200,0.46)_0%,rgba(186,224,218,0.38)_34%,rgba(238,239,200,0.36)_68%,rgba(196,181,253,0.18)_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#64586d]">
                                     Featured Lens
