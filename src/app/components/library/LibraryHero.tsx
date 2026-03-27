@@ -8,37 +8,23 @@ const quickFilterPills = [
 
 export default function LibraryHero() {
     return (
-        <section className="overflow-hidden rounded-[2rem] border border-stone-200/70 bg-white px-7 py-8 shadow-[0_24px_80px_-40px_rgba(120,53,15,0.18)] sm:px-10 lg:px-12 lg:py-10">
+        <section className="overflow-hidden rounded-[2rem] border border-stone-200/70 bg-white px-6 py-8 shadow-[0_24px_80px_-40px_rgba(120,53,15,0.18)] sm:px-8 lg:px-10 lg:py-9">
             <div>
-                <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:items-end">
-                    <div>
-                        <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-4 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-amber-900">
-                            Curated Tool Library
-                        </span>
+                <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-4 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-amber-800">
+                    Curated Tool Library
+                </span>
 
-                        <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
-                            Discover beautiful tools for building on the web.
-                        </h1>
+                <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
+                    Discover beautiful tools for building on the web.
+                </h1>
 
-                        <p className="mt-4 max-w-2xl text-base leading-7 text-stone-600 sm:text-lg">
-                            A warm, browsable collection of standout UI kits, frameworks,
-                            and developer tools, organized so you can scan quickly and find
-                            the right fit.
-                        </p>
-                    </div>
+                <p className="mt-4 max-w-3xl text-base leading-7 text-stone-600 sm:text-lg">
+                    A warm, browsable collection of standout UI kits, frameworks,
+                    and developer tools, organized so you can scan quickly and find
+                    the right fit.
+                </p>
 
-                    <div className="hidden rounded-[1.5rem] border border-stone-200/80 bg-white/70 p-5 lg:block">
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-500">
-                            Browse smarter
-                        </p>
-                        <p className="mt-3 text-sm leading-6 text-stone-600">
-                            Start broad with a category, then narrow by subcategory,
-                            tags, or sorting to explore the collection more naturally.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="mt-8 w-full rounded-[1.75rem] border border-stone-200/80 bg-white/80 p-5 shadow-[0_18px_45px_-36px_rgba(120,53,15,0.2)]">
+                <div className="mt-6 w-full rounded-[1.75rem] border border-stone-200/80 bg-stone-50/70 p-5 shadow-[0_18px_45px_-36px_rgba(120,53,15,0.16)]">
                     <div className="flex flex-wrap items-center gap-2">
                         {quickFilterPills.map((pill, index) => (
                             <button
