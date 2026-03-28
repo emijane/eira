@@ -1,6 +1,8 @@
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const LIBRARY_PAGE_SIZE = 12;
+const MAX_SEARCH_QUERY_LENGTH = 80;
+const MAX_SEARCH_TERMS = 8;
 
 export type GetToolsPageOptions = {
     limit?: number;
@@ -26,8 +28,10 @@ type SearchableTool = {
 
 function normalizeSearchInput(value: string) {
     return value
+        .slice(0, MAX_SEARCH_QUERY_LENGTH)
         .toLowerCase()
         .trim()
+        .replace(/[{}()<>[\]\\]/g, " ")
         .replace(/[^a-z0-9+#.\-\s]/gi, " ")
         .replace(/\s+/g, " ");
 }
@@ -41,7 +45,8 @@ function buildSearchTerms(searchQuery: string) {
     const rawTerms = normalizedQuery
         .split(" ")
         .map((term) => term.trim())
-        .filter((term) => term.length >= 2);
+        .filter((term) => term.length >= 2)
+        .slice(0, MAX_SEARCH_TERMS);
 
     const searchTerms = new Set<string>(rawTerms);
 
@@ -51,11 +56,17 @@ function buildSearchTerms(searchQuery: string) {
         searchTerms.add(compactSearchValue(normalizedQuery));
     }
 
-    return [...searchTerms].filter((term) => term.length >= 2);
+    return [...searchTerms]
+        .filter((term) => term.length >= 2)
+        .slice(0, MAX_SEARCH_TERMS);
 }
 
 function escapeLikeValue(value: string) {
-    return value.replace(/[%_,]/g, "");
+    return value.replace(/[%_,:{}()<>[\]\\]/g, "");
+}
+
+function sanitizeOverlapTerm(value: string) {
+    return value.replace(/[{},"]/g, "");
 }
 
 function scoreToolMatch(tool: SearchableTool, searchQuery: string) {
@@ -143,7 +154,7 @@ export async function getToolsPage({
 
     if (normalizedSearch) {
         const safeSearch = escapeLikeValue(normalizedSearch);
-        const searchTerms = buildSearchTerms(searchQuery);
+        const searchTerms = buildSearchTerms(searchQuery).map(sanitizeOverlapTerm);
         const searchFilters = [
             `name.ilike.%${safeSearch}%`,
             `description.ilike.%${safeSearch}%`,
