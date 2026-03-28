@@ -1,13 +1,15 @@
 import LibraryEmptyState from "@/app/components/library/LibraryEmptyState";
 import LibraryHero from "@/app/components/library/LibraryHero";
-import LibraryGrid from "@/app/components/library/LibraryGrid";
+import InfiniteLibraryGrid from "@/app/components/library/InfiniteLibraryGrid";
 import LibrarySidebar from "@/app/components/library/LibrarySidebar";
-import type { LibraryTool } from "@/app/components/library/types";
-import { getTools } from "@/lib/getTools";
+import { getToolsPage, LIBRARY_PAGE_SIZE } from "@/lib/getTools";
 
 export default async function LibraryPage({
 }: object) {
-    const tools = (await getTools()) as LibraryTool[];
+    const { tools, totalTools, hasMore } = await getToolsPage({
+        limit: LIBRARY_PAGE_SIZE,
+        offset: 0,
+    });
 
     return (
         <main
@@ -15,11 +17,16 @@ export default async function LibraryPage({
         >
             <div className="mx-auto">
                 <LibraryHero />
-                {tools.length === 0 ? (
+                {totalTools === 0 ? (
                     <LibraryEmptyState />
                 ) : (
-                    <div className="mt-10 mx-auto max-w-7xl grid gap-8 xl:grid-cols-[minmax(0,1.9fr)_320px] xl:items-start">
-                        <LibraryGrid tools={tools} totalTools={tools.length} />
+                    <div className="mt-10 p-7 lg:p-0 mx-auto max-w-7xl grid gap-8 xl:grid-cols-[minmax(0,1.9fr)_320px] xl:items-start">
+                        <InfiniteLibraryGrid
+                            initialTools={tools}
+                            totalTools={totalTools}
+                            initialHasMore={hasMore}
+                            pageSize={LIBRARY_PAGE_SIZE}
+                        />
                         <div className="xl:sticky xl:top-28">
                             <LibrarySidebar />
                         </div>

@@ -4,9 +4,11 @@ import type { LibraryTool } from "./types";
 export default function LibraryGrid({
     tools,
     totalTools,
+    visibleTools = tools.length,
 }: {
     tools: LibraryTool[];
     totalTools: number;
+    visibleTools?: number;
 }) {
     return (
         <section>
@@ -16,12 +18,12 @@ export default function LibraryGrid({
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-haze">
                             results
                         </p>
-                        <h3 className="mt-3 text-2xl font-semibold tracking-tight text-brand-ink">
-                            {totalTools} tools found
+                        <h3 className="mt-3 text-xl font-semibold tracking-tight text-brand-ink sm:text-[1.35rem]">
+                            {visibleTools} tools
                         </h3>
-                        <p className="mt-2 text-sm leading-6 text-brand-copy">
-                            Explore curated picks across frameworks, ui kits, and developer
-                            tools.
+                        <p className="mt-2 text-[0.92rem] leading-6 text-brand-copy">
+                            Scroll to keep exploring curated picks across frameworks, ui kits,
+                            and developer tools.
                         </p>
                     </div>
 
@@ -40,7 +42,7 @@ export default function LibraryGrid({
                 </div>
             </div>
 
-            <div className="grid gap-6 xl:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-2 ">
                 {tools.map((tool) => (
                     <LibraryCard key={tool.id} tool={tool} />
                 ))}

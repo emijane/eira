@@ -1,18 +1,45 @@
-// src/lib/tools.ts
-
-// This file contains utility functions related to tools, such as fetching tools from the database.
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
-// fetch the full tool list for routes that do their own filtering or slicing.
-export async function getTools() {
-    const { data, error } = await supabaseAdmin
+export const LIBRARY_PAGE_SIZE = 12;
+
+export type GetToolsPageOptions = {
+    limit?: number;
+    offset?: number;
+};
+
+export async function getToolsPage({
+    limit = LIBRARY_PAGE_SIZE,
+    offset = 0,
+}: GetToolsPageOptions = {}) {
+    const safeLimit = Math.max(1, Math.min(limit, 24));
+    const safeOffset = Math.max(0, offset);
+
+    const { data, error, count } = await supabaseAdmin
         .from("tools")
-        .select("*")
-        .order("name", { ascending: true });
+        .select("*", { count: "exact" })
+        .order("name", { ascending: true })
+        .range(safeOffset, safeOffset + safeLimit - 1);
 
     if (error) {
         throw new Error(`Failed to fetch tools: ${error.message}`);
     }
 
-    return data;
+    const tools = data ?? [];
+    const totalTools = count ?? tools.length;
+
+    return {
+        tools,
+        totalTools,
+        hasMore: safeOffset + tools.length < totalTools,
+        nextOffset: safeOffset + tools.length,
+    };
+}
+
+export async function getTools() {
+    const { tools } = await getToolsPage({
+        limit: 24,
+        offset: 0,
+    });
+
+    return tools;
 }
