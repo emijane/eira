@@ -18,6 +18,7 @@ export type ToolFilters = {
     categories: string[];
     subcategories: string[];
     subcategoriesByCategory: Record<string, string[]>;
+    categoryCounts: Record<string, number>;
 };
 
 type SearchableTool = {
@@ -260,6 +261,7 @@ export async function getToolFilters(): Promise<ToolFilters> {
     const categories = new Set<string>();
     const subcategories = new Set<string>();
     const subcategoriesByCategory = new Map<string, Set<string>>();
+    const categoryCounts = new Map<string, number>();
 
     for (const row of data ?? []) {
         const category =
@@ -273,6 +275,7 @@ export async function getToolFilters(): Promise<ToolFilters> {
 
         if (category) {
             categories.add(category);
+            categoryCounts.set(category, (categoryCounts.get(category) ?? 0) + 1);
         }
 
         if (subcategory) {
@@ -297,5 +300,6 @@ export async function getToolFilters(): Promise<ToolFilters> {
                 [...values].sort((a, b) => a.localeCompare(b)),
             ]),
         ),
+        categoryCounts: Object.fromEntries(categoryCounts.entries()),
     };
 }
