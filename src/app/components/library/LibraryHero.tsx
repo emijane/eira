@@ -25,36 +25,36 @@ export default function LibraryHero() {
                     </div>
 
                     <div className="hidden lg:block">
-                        <div className="rounded-[1.75rem] border border-white/16 bg-white/12 p-4 shadow-[0_22px_44px_-34px_rgba(43,37,57,0.3)] backdrop-blur-md">
-                            <div className="rounded-[1.4rem] border border-white/28 bg-[linear-gradient(135deg,rgba(255,255,255,0.32)_0%,rgba(255,255,255,0.18)_100%)] p-5">
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/72">
+                        <div className="rounded-[1.75rem] border border-white/24 bg-white/18 p-4 shadow-[0_22px_44px_-34px_rgba(43,37,57,0.3)] backdrop-blur-xl">
+                            <div className="rounded-[1.4rem] border border-white/42 bg-[linear-gradient(160deg,rgba(255,255,255,0.82)_0%,rgba(240,248,255,0.68)_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-600">
                                     featured lens
                                 </p>
-                                <p className="mt-3 text-lg font-semibold tracking-tight text-white">
+                                <p className="mt-3 text-lg font-semibold tracking-tight text-slate-900">
                                     Browse by stack, styling approach, or workflow.
                                 </p>
                                 <div className="mt-5 grid gap-3">
-                                    <div className="flex items-center justify-between rounded-2xl bg-white/18 px-4 py-3">
-                                        <span className="text-sm font-medium text-white/78">
+                                    <div className="flex items-center justify-between rounded-2xl border border-white/38 bg-[rgba(255,255,255,0.48)] px-4 py-3 shadow-[0_10px_24px_-20px_rgba(43,37,57,0.25)] backdrop-blur-sm">
+                                        <span className="text-sm font-semibold text-slate-700">
                                             ui kits
                                         </span>
-                                        <span className="text-sm font-semibold text-white">
+                                        <span className="text-sm font-semibold text-slate-900">
                                             24
                                         </span>
                                     </div>
-                                    <div className="flex items-center justify-between rounded-2xl bg-white/18 px-4 py-3">
-                                        <span className="text-sm font-medium text-white/78">
+                                    <div className="flex items-center justify-between rounded-2xl border border-white/38 bg-[rgba(255,255,255,0.48)] px-4 py-3 shadow-[0_10px_24px_-20px_rgba(43,37,57,0.25)] backdrop-blur-sm">
+                                        <span className="text-sm font-semibold text-slate-700">
                                             frameworks
                                         </span>
-                                        <span className="text-sm font-semibold text-white">
+                                        <span className="text-sm font-semibold text-slate-900">
                                             18
                                         </span>
                                     </div>
-                                    <div className="flex items-center justify-between rounded-2xl bg-white/18 px-4 py-3">
-                                        <span className="text-sm font-medium text-white/78">
+                                    <div className="flex items-center justify-between rounded-2xl border border-white/38 bg-[rgba(255,255,255,0.48)] px-4 py-3 shadow-[0_10px_24px_-20px_rgba(43,37,57,0.25)] backdrop-blur-sm">
+                                        <span className="text-sm font-semibold text-slate-700">
                                             dev tools
                                         </span>
-                                        <span className="text-sm font-semibold text-white">
+                                        <span className="text-sm font-semibold text-slate-900">
                                             31
                                         </span>
                                     </div>
