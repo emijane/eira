@@ -67,7 +67,7 @@ function NavigationMenuLink({
 }
 
 const navigationMenuTriggerStyle =
-    "inline-flex h-9 items-center justify-center rounded-md border border-transparent px-3 py-2 text-sm font-medium transition-colors text-brand-haze hover:bg-white/6 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/15";
+    "inline-flex h-9 items-center justify-center rounded-md border border-transparent px-3 py-2 text-sm font-medium transition-colors text-stone-500 hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-200";
 
 export {
     NavigationMenu,

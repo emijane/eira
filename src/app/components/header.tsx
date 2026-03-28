@@ -26,29 +26,29 @@ export default function Header() {
     const pathname = usePathname();
 
     return (
-        <header className="sticky top-0 z-40 border-b border-white/8 bg-brand-ink">
+        <header className="sticky top-0 z-40 border-b border-white/8 bg-white">
             <div className="mx-auto flex max-w-390 items-center gap-6 py-3 sm:px-6">
                 <div className="flex min-w-0 items-center gap-4">
                     <Link
                         href="/"
-                        className="inline-flex items-baseline gap-0.5 text-white transition hover:opacity-90"
+                        className="inline-flex items-baseline gap-0.5 transition hover:opacity-90"
                     >
-                        <span className="text-lg font-semibold tracking-tight text-white">
+                        <span className="text-lg font-semibold tracking-tight text-stone-900">
                             eira
                         </span>
-                        <span className="text-lg font-medium tracking-tight text-brand-haze">
+                        <span className="text-lg font-medium tracking-tight text-stone-400">
                             .tool
                         </span>
                     </Link>
 
-                    <label className="hidden min-w-[17rem] items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2 text-sm text-brand-haze shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] lg:flex">
-                        <Search className="h-4 w-4 text-brand-haze" />
+                    <label className="hidden min-w-[17rem] items-center gap-3 rounded-xl border border-stone-200 bg-stone-50 px-3 py-2 text-sm text-stone-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] lg:flex">
+                        <Search className="h-4 w-4 text-stone-400" />
                         <input
                             type="text"
                             placeholder="Search documentation..."
-                            className="w-full bg-transparent text-sm text-white outline-none placeholder:text-brand-haze"
+                            className="w-full bg-transparent text-sm text-stone-800 outline-none placeholder:text-stone-400"
                         />
-                        <span className="inline-flex items-center rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5 text-[10px] font-medium text-brand-haze">
+                        <span className="inline-flex items-center rounded-md border border-stone-200 bg-white px-1.5 py-0.5 text-[10px] font-medium text-stone-400">
                             <Slash className="mr-1 h-3 w-3" />
                             k
                         </span>
@@ -73,7 +73,7 @@ export default function Header() {
                                                 className={cn(
                                                     navigationMenuTriggerStyle,
                                                     isActive &&
-                                                        "bg-white/10 text-white"
+                                                        "bg-stone-900 text-white hover:bg-stone-900 hover:text-white"
                                                 )}
                                             >
                                                 {item.label}
@@ -87,7 +87,7 @@ export default function Header() {
 
                     <Link
                         href="#"
-                        className="inline-flex h-9 items-center rounded-xl bg-white px-4 text-sm font-medium text-black transition hover:bg-white/90"
+                        className="inline-flex h-9 items-center rounded-xl bg-stone-900 px-4 text-sm font-medium text-white transition hover:bg-stone-800"
                     >
                         Submit a Tool
                     </Link>
