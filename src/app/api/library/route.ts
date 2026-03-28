@@ -15,9 +15,19 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const limit = parsePositiveInt(searchParams.get("limit"), LIBRARY_PAGE_SIZE);
     const offset = parsePositiveInt(searchParams.get("offset"), 0);
+    const searchQuery = searchParams.get("q")?.trim() ?? "";
+    const category = searchParams.get("category")?.trim() ?? "";
+    const tag = searchParams.get("tag")?.trim() ?? "";
 
     try {
-        const result = await getToolsPage({ limit, offset, includeCount: false });
+        const result = await getToolsPage({
+            limit,
+            offset,
+            includeCount: false,
+            searchQuery,
+            category,
+            tag,
+        });
         return NextResponse.json(result);
     } catch (error) {
         const message =

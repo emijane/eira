@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal } from "lucide-react";
 
 type FilterOption = {
@@ -97,28 +98,74 @@ function FilterDropdown({
 }
 
 export default function LibraryFilters() {
-    // only one menu stays open at a time so the filter deck stays compact.
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const activeSearchQuery = searchParams.get("q") ?? "";
+    const activeCategory = searchParams.get("category") ?? "all";
+    const activeTag = searchParams.get("tag") ?? "all";
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [category, setCategory] = useState("all");
-    const [subcategory, setSubcategory] = useState("all");
-    const [tags, setTags] = useState("all");
 
     const closeMenu = () => setOpenMenu(null);
+
+    function updateFilters(nextValues?: {
+        searchQuery?: string;
+        category?: string;
+        tag?: string;
+    }) {
+        const params = new URLSearchParams(searchParams.toString());
+        const nextSearch = nextValues?.searchQuery ?? activeSearchQuery;
+        const nextCategory = nextValues?.category ?? activeCategory;
+        const nextTag = nextValues?.tag ?? activeTag;
+
+        if (nextSearch.trim()) {
+            params.set("q", nextSearch.trim());
+        } else {
+            params.delete("q");
+        }
+
+        if (nextCategory && nextCategory !== "all") {
+            params.set("category", nextCategory);
+        } else {
+            params.delete("category");
+        }
+
+        if (nextTag && nextTag !== "all") {
+            params.set("tag", nextTag);
+        } else {
+            params.delete("tag");
+        }
+
+        const query = params.toString();
+        router.push(query ? `${pathname}?${query}` : pathname, { scroll: true });
+    }
+
+    function clearFilters() {
+        setFiltersOpen(false);
+        closeMenu();
+        router.push(pathname, { scroll: true });
+    }
 
     return (
         <div className="mt-10 overflow-visible">
             <div className="rounded-2xl border-2 border-brand-ink/10 bg-white shadow-[0_18px_44px_-34px_rgba(43,37,57,0.16)]">
                 <form
-                    onSubmit={(event) => event.preventDefault()}
+                    onSubmit={(event) => {
+                        event.preventDefault();
+                        const formData = new FormData(event.currentTarget);
+                        updateFilters({
+                            searchQuery: String(formData.get("q") ?? ""),
+                        });
+                    }}
                     className="flex h-14 items-center rounded-xl bg-white px-3"
                 >
                     <Search className="h-4 w-4 text-brand-haze" />
                     <input
+                        name="q"
                         type="text"
-                        value={searchQuery}
-                        onChange={(event) => setSearchQuery(event.target.value)}
+                        key={activeSearchQuery}
+                        defaultValue={activeSearchQuery}
                         placeholder="Search tools, frameworks, and categories"
                         className="ml-3 w-full bg-transparent text-sm text-brand-ink outline-none placeholder:text-brand-haze"
                     />
@@ -140,27 +187,27 @@ export default function LibraryFilters() {
             {filtersOpen ? (
                 <div className="mt-3 rounded-3xl border border-brand-ink/8 bg-white/96 p-4 shadow-[0_18px_44px_-34px_rgba(43,37,57,0.16)] sm:p-5">
                     <div className="mb-4 flex flex-wrap gap-2">
-                        {category !== "all" ? (
+                        {activeSearchQuery ? (
                             <span className="rounded-full bg-brand-oat px-3 py-1 text-xs font-medium text-brand-ink">
-                                {category}
+                                {activeSearchQuery}
                             </span>
                         ) : null}
-                        {subcategory !== "all" ? (
+                        {activeCategory !== "all" ? (
                             <span className="rounded-full bg-brand-oat px-3 py-1 text-xs font-medium text-brand-ink">
-                                {subcategory}
+                                {activeCategory}
                             </span>
                         ) : null}
-                        {tags !== "all" ? (
+                        {activeTag !== "all" ? (
                             <span className="rounded-full bg-brand-oat px-3 py-1 text-xs font-medium text-brand-ink">
-                                {tags}
+                                {activeTag}
                             </span>
                         ) : null}
                     </div>
-                    <div className="grid gap-4 md:grid-cols-3">
+                    <div className="grid gap-4 md:grid-cols-2">
                         <div>
                             <FilterDropdown
                                 label="Category"
-                                value={category}
+                                value={activeCategory}
                                 isOpen={openMenu === "category"}
                                 onToggle={() =>
                                     setOpenMenu((current) =>
@@ -168,7 +215,7 @@ export default function LibraryFilters() {
                                     )
                                 }
                                 onSelect={(value) => {
-                                    setCategory(value);
+                                    updateFilters({ category: value });
                                     closeMenu();
                                 }}
                                 options={[
@@ -182,31 +229,8 @@ export default function LibraryFilters() {
 
                         <div>
                             <FilterDropdown
-                                label="Subcategory"
-                                value={subcategory}
-                                isOpen={openMenu === "subcategory"}
-                                onToggle={() =>
-                                    setOpenMenu((current) =>
-                                        current === "subcategory" ? null : "subcategory"
-                                    )
-                                }
-                                onSelect={(value) => {
-                                    setSubcategory(value);
-                                    closeMenu();
-                                }}
-                                options={[
-                                    { value: "all", label: "All subcategories" },
-                                    { value: "components", label: "Component Libraries" },
-                                    { value: "css", label: "CSS Frameworks" },
-                                    { value: "boilerplates", label: "Boilerplates" },
-                                ]}
-                            />
-                        </div>
-
-                        <div>
-                            <FilterDropdown
                                 label="Tags"
-                                value={tags}
+                                value={activeTag}
                                 isOpen={openMenu === "tags"}
                                 onToggle={() =>
                                     setOpenMenu((current) =>
@@ -214,7 +238,7 @@ export default function LibraryFilters() {
                                     )
                                 }
                                 onSelect={(value) => {
-                                    setTags(value);
+                                    updateFilters({ tag: value });
                                     closeMenu();
                                 }}
                                 options={[
@@ -225,6 +249,21 @@ export default function LibraryFilters() {
                                 ]}
                             />
                         </div>
+                    </div>
+                    <div className="mt-5 flex flex-wrap gap-3">
+                        <button
+                            type="submit"
+                            className="inline-flex h-10 items-center justify-center rounded-2xl bg-brand-ink px-4 text-sm font-medium text-white transition hover:bg-brand-inkSoft"
+                        >
+                            Apply Search
+                        </button>
+                        <button
+                            type="button"
+                            onClick={clearFilters}
+                            className="inline-flex h-10 items-center justify-center rounded-2xl border border-brand-ink/10 bg-white px-4 text-sm font-medium text-brand-copy transition hover:border-brand-ink/18 hover:text-brand-ink"
+                        >
+                            Clear Filters
+                        </button>
                     </div>
                 </div>
             ) : null}

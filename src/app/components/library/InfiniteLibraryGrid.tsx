@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LibraryGrid from "./LibraryGrid";
 import type { LibraryTool } from "./types";
@@ -9,6 +9,9 @@ type InfiniteLibraryGridProps = {
     initialTools: LibraryTool[];
     initialHasMore: boolean;
     pageSize: number;
+    searchQuery?: string;
+    category?: string;
+    tag?: string;
 };
 
 type ToolsResponse = {
@@ -22,11 +25,21 @@ export default function InfiniteLibraryGrid({
     initialTools,
     initialHasMore,
     pageSize,
+    searchQuery = "",
+    category = "",
+    tag = "",
 }: InfiniteLibraryGridProps) {
     const [tools, setTools] = useState(initialTools);
     const [hasMore, setHasMore] = useState(initialHasMore);
     const [offset, setOffset] = useState(initialTools.length);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    useEffect(() => {
+        setTools(initialTools);
+        setHasMore(initialHasMore);
+        setOffset(initialTools.length);
+        setErrorMessage(null);
+    }, [initialTools, initialHasMore]);
 
     async function loadMoreTools() {
         if (!hasMore) {
@@ -35,11 +48,26 @@ export default function InfiniteLibraryGrid({
 
         try {
             setErrorMessage(null);
+            const params = new URLSearchParams({
+                offset: String(offset),
+                limit: String(pageSize),
+            });
 
-            const response = await fetch(
-                `/api/library?offset=${offset}&limit=${pageSize}`,
-                { cache: "no-store" },
-            );
+            if (searchQuery) {
+                params.set("q", searchQuery);
+            }
+
+            if (category) {
+                params.set("category", category);
+            }
+
+            if (tag) {
+                params.set("tag", tag);
+            }
+
+            const response = await fetch(`/api/library?${params.toString()}`, {
+                cache: "no-store",
+            });
 
             if (!response.ok) {
                 throw new Error("Could not load more tools right now.");
