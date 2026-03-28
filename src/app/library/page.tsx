@@ -23,7 +23,6 @@ export default async function LibraryPage({
                     <div className="mt-10 p-7 lg:p-0 mx-auto max-w-7xl grid gap-8 xl:grid-cols-[minmax(0,1.9fr)_320px] xl:items-start">
                         <InfiniteLibraryGrid
                             initialTools={tools}
-                            totalTools={totalTools}
                             initialHasMore={hasMore}
                             pageSize={LIBRARY_PAGE_SIZE}
                         />

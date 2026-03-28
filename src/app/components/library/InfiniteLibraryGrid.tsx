@@ -7,7 +7,6 @@ import type { LibraryTool } from "./types";
 
 type InfiniteLibraryGridProps = {
     initialTools: LibraryTool[];
-    totalTools: number;
     initialHasMore: boolean;
     pageSize: number;
 };
@@ -21,7 +20,6 @@ type ToolsResponse = {
 
 export default function InfiniteLibraryGrid({
     initialTools,
-    totalTools,
     initialHasMore,
     pageSize,
 }: InfiniteLibraryGridProps) {
@@ -86,7 +84,6 @@ export default function InfiniteLibraryGrid({
         >
             <LibraryGrid
                 tools={tools}
-                totalTools={totalTools}
                 visibleTools={tools.length}
             />
             {errorMessage ? (

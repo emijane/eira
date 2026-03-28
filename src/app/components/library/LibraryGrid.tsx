@@ -3,11 +3,9 @@ import type { LibraryTool } from "./types";
 
 export default function LibraryGrid({
     tools,
-    totalTools,
     visibleTools = tools.length,
 }: {
     tools: LibraryTool[];
-    totalTools: number;
     visibleTools?: number;
 }) {
     return (

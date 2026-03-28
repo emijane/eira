@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     const offset = parsePositiveInt(searchParams.get("offset"), 0);
 
     try {
-        const result = await getToolsPage({ limit, offset });
+        const result = await getToolsPage({ limit, offset, includeCount: false });
         return NextResponse.json(result);
     } catch (error) {
         const message =
