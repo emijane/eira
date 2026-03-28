@@ -10,7 +10,7 @@ export default async function LibraryPage({
     const tools = (await getTools()) as LibraryTool[];
 
     return (
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top_right,rgba(186,224,218,0.16),transparent_24%),radial-gradient(circle_at_top_left,rgba(239,200,200,0.18),transparent_28%),linear-gradient(180deg,#fdf8f4_0%,#fffdfb_42%,#ffffff_100%)]">
+        <main className="min-h-screen bg-brand-oat">
             <div className="mx-auto">
                 <LibraryHero />
                 {tools.length === 0 ? (
