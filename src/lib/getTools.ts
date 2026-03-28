@@ -18,25 +18,109 @@ export type ToolFilters = {
     subcategoriesByCategory: Record<string, string[]>;
 };
 
-function buildTagSearchTerms(searchQuery: string) {
-    const rawTerms = searchQuery
+type SearchableTool = {
+    name: string | null;
+    description: string | null;
+    tags: string[] | null;
+};
+
+function normalizeSearchInput(value: string) {
+    return value
         .toLowerCase()
-        .split(/[^a-z0-9+#.-]+/i)
+        .trim()
+        .replace(/[^a-z0-9+#.\-\s]/gi, " ")
+        .replace(/\s+/g, " ");
+}
+
+function compactSearchValue(value: string) {
+    return value.replace(/[\s.-]+/g, "");
+}
+
+function buildSearchTerms(searchQuery: string) {
+    const normalizedQuery = normalizeSearchInput(searchQuery);
+    const rawTerms = normalizedQuery
+        .split(" ")
         .map((term) => term.trim())
         .filter((term) => term.length >= 2);
 
     const searchTerms = new Set<string>(rawTerms);
 
-    if (searchQuery.trim()) {
-        searchTerms.add(searchQuery.trim().toLowerCase());
-        searchTerms.add(searchQuery.trim().toLowerCase().replace(/\s+/g, "-"));
+    if (normalizedQuery) {
+        searchTerms.add(normalizedQuery);
+        searchTerms.add(normalizedQuery.replace(/\s+/g, "-"));
+        searchTerms.add(compactSearchValue(normalizedQuery));
     }
 
-    return [...searchTerms].filter(Boolean);
+    return [...searchTerms].filter((term) => term.length >= 2);
 }
 
 function escapeLikeValue(value: string) {
     return value.replace(/[%_,]/g, "");
+}
+
+function scoreToolMatch(tool: SearchableTool, searchQuery: string) {
+    const normalizedSearch = normalizeSearchInput(searchQuery);
+    const compactSearch = compactSearchValue(normalizedSearch);
+    const searchTerms = buildSearchTerms(searchQuery);
+    const normalizedName = normalizeSearchInput(tool.name ?? "");
+    const normalizedDescription = normalizeSearchInput(tool.description ?? "");
+    const normalizedTags = (tool.tags ?? []).map((tag) => normalizeSearchInput(tag));
+    const compactName = compactSearchValue(normalizedName);
+    const compactDescription = compactSearchValue(normalizedDescription);
+    const compactTags = normalizedTags.map((tag) => compactSearchValue(tag));
+
+    let score = 0;
+
+    if (normalizedName === normalizedSearch || compactName === compactSearch) {
+        score += 120;
+    } else if (
+        normalizedName.startsWith(normalizedSearch) ||
+        compactName.startsWith(compactSearch)
+    ) {
+        score += 90;
+    } else if (
+        normalizedName.includes(normalizedSearch) ||
+        compactName.includes(compactSearch)
+    ) {
+        score += 70;
+    }
+
+    for (const tag of normalizedTags) {
+        if (tag === normalizedSearch) {
+            score += 45;
+        } else if (tag.includes(normalizedSearch)) {
+            score += 28;
+        }
+    }
+
+    if (
+        normalizedDescription.includes(normalizedSearch) ||
+        compactDescription.includes(compactSearch)
+    ) {
+        score += 18;
+    }
+
+    for (const term of searchTerms) {
+        const compactTerm = compactSearchValue(term);
+
+        if (normalizedName.includes(term) || compactName.includes(compactTerm)) {
+            score += 12;
+        }
+
+        if (normalizedDescription.includes(term) || compactDescription.includes(compactTerm)) {
+            score += 5;
+        }
+
+        if (normalizedTags.some((tag) => tag.includes(term))) {
+            score += 8;
+        }
+
+        if (compactTags.some((tag) => tag.includes(compactTerm))) {
+            score += 8;
+        }
+    }
+
+    return score;
 }
 
 export async function getToolsPage({
@@ -50,22 +134,23 @@ export async function getToolsPage({
 }: GetToolsPageOptions = {}) {
     const safeLimit = Math.max(1, Math.min(limit, 24));
     const safeOffset = Math.max(0, offset);
+    const normalizedSearch = normalizeSearchInput(searchQuery);
 
     let toolsQuery = supabaseAdmin
         .from("tools")
         .select("*", includeCount ? { count: "exact" } : undefined)
         .order("name", { ascending: true });
 
-    if (searchQuery) {
-        const normalizedSearch = escapeLikeValue(searchQuery.trim());
-        const tagSearchTerms = buildTagSearchTerms(searchQuery);
+    if (normalizedSearch) {
+        const safeSearch = escapeLikeValue(normalizedSearch);
+        const searchTerms = buildSearchTerms(searchQuery);
         const searchFilters = [
-            `name.ilike.%${normalizedSearch}%`,
-            `description.ilike.%${normalizedSearch}%`,
+            `name.ilike.%${safeSearch}%`,
+            `description.ilike.%${safeSearch}%`,
         ];
 
-        if (tagSearchTerms.length > 0) {
-            searchFilters.push(`tags.ov.{${tagSearchTerms.join(",")}}`);
+        if (searchTerms.length > 0) {
+            searchFilters.push(`tags.ov.{${searchTerms.join(",")}}`);
         }
 
         toolsQuery = toolsQuery.or(searchFilters.join(","));
@@ -81,6 +166,39 @@ export async function getToolsPage({
 
     if (tag) {
         toolsQuery = toolsQuery.contains("tags", [tag]);
+    }
+
+    if (normalizedSearch) {
+        const { data, error } = await toolsQuery;
+
+        if (error) {
+            throw new Error(`Failed to fetch tools: ${error.message}`);
+        }
+
+        const rankedTools = (data ?? [])
+            .map((tool) => ({
+                tool,
+                score: scoreToolMatch(tool, searchQuery),
+            }))
+            .filter(({ score }) => score > 0)
+            .sort((left, right) => {
+                if (right.score !== left.score) {
+                    return right.score - left.score;
+                }
+
+                return (left.tool.name ?? "").localeCompare(right.tool.name ?? "");
+            })
+            .map(({ tool }) => tool);
+
+        const totalTools = rankedTools.length;
+        const tools = rankedTools.slice(safeOffset, safeOffset + safeLimit);
+
+        return {
+            tools,
+            totalTools,
+            hasMore: safeOffset + tools.length < totalTools,
+            nextOffset: safeOffset + tools.length,
+        };
     }
 
     if (includeCount) {
