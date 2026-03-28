@@ -2,7 +2,7 @@ import LibraryFilters from "./LibraryFilters";
 
 export default function LibraryHero() {
     return (
-        <section className="relative w-full overflow-hidden border-2 border-brand-ink/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.94)_0%,rgba(246,250,255,0.96)_38%,rgba(255,255,255,0.98)_100%)] px-6 py-10 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.18)] sm:px-8 lg:px-12 lg:py-14">
+        <section className="relative max-w-420 mx-auto rounded-b-3xl overflow-hidden border-2 border-brand-ink/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.94)_0%,rgba(246,250,255,0.96)_38%,rgba(255,255,255,0.98)_100%)] px-6 py-10 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.18)] sm:px-8 lg:px-12 lg:py-14">
             <div className="relative mx-auto max-w-7xl">
                 <div className="grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_320px] lg:items-start">
                     <div>

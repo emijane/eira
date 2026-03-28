@@ -10,7 +10,9 @@ export default async function LibraryPage({
     const tools = (await getTools()) as LibraryTool[];
 
     return (
-        <main className="min-h-screen bg-brand-oat">
+        <main
+            className="min-h-screen bg-brand-inkSoft"
+        >
             <div className="mx-auto">
                 <LibraryHero />
                 {tools.length === 0 ? (
