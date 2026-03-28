@@ -143,6 +143,30 @@ const TAXONOMY_TEXT = Object.entries(TAXONOMY)
     })
     .join("\n\n");
 
+const TAG_NORMALIZATION_MAP: Record<string, string> = {
+    reactjs: "react",
+    "react.js": "react",
+    vuejs: "vue",
+    "vue.js": "vue",
+    "next.js": "nextjs",
+    next: "nextjs",
+    "tailwind css": "tailwind",
+    tailwindcss: "tailwind",
+    "open source": "open-source",
+    opensource: "open-source",
+    "design system": "design-systems",
+    "design systems": "design-systems",
+    icons: "icon-library",
+    "icon library": "icon-library",
+    "component library": "component-library",
+    "component libraries": "component-library",
+    animation: "animations",
+    forms: "form-handling",
+    form: "form-handling",
+    auth: "authentication",
+    authentication: "authentication",
+};
+
 // Define the instructions that will be provided to the OpenAI model when classifying tools.
 const AGENT_INSTRUCTIONS = `
 EIRA AGENT CONTEXT
@@ -171,7 +195,11 @@ ${TAXONOMY_TEXT}
 Rules:
 - Use the real product name.
 - Description must be 1-2 sentences, neutral, no marketing fluff.
-- Tags must be lowercase and relevant.
+- Tags must be lowercase, relevant, and consistent across tools.
+- Prefer short reusable tags over creative variations.
+- Avoid near-duplicate tags and synonyms unless one version is clearly the project standard.
+- Do not use category or subcategory names as tags unless they are genuinely useful for search.
+- Prefer normalized tags such as "react", "vue", "nextjs", "tailwind", "open-source", "component-library", "icon-library", "animations", "form-handling", and "authentication" when they fit.
 - Prefer 3-6 tags.
 - Return no prose outside the JSON result.
 
@@ -213,8 +241,15 @@ function validateOutput(output: ToolOutput): ToolOutput {
         category: output.category.trim(),
         subcategory: output.subcategory.trim(),
         tags: output.tags
-            .map((tag) => String(tag).trim().toLowerCase())
+            .map((tag) =>
+                String(tag)
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, " ")
+            )
+            .map((tag) => TAG_NORMALIZATION_MAP[tag] ?? tag)
             .filter(Boolean)
+            .filter((tag, index, tags) => tags.indexOf(tag) === index)
             .slice(0, 6)
     };
 
