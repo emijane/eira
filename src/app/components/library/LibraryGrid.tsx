@@ -10,26 +10,34 @@ export default function LibraryGrid({
 }) {
     return (
         <section>
-            <div className="mb-6 flex flex-col gap-4 border-b border-brand-ink/8 pb-5 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-haze">
-                        results
-                    </p>
-                    <p className="mt-2 text-base font-semibold text-brand-ink">
-                        {totalTools} tools found
-                    </p>
-                </div>
+            <div className="mb-6 rounded-3xl border border-brand-ink/10 bg-white/90 p-6 shadow-[0_20px_50px_-38px_rgba(43,37,57,0.28)]">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-haze">
+                            results
+                        </p>
+                        <h3 className="mt-3 text-2xl font-semibold tracking-tight text-brand-ink">
+                            {totalTools} tools found
+                        </h3>
+                        <p className="mt-2 text-sm leading-6 text-brand-copy">
+                            Explore curated picks across frameworks, ui kits, and developer
+                            tools.
+                        </p>
+                    </div>
 
-                <label className="flex min-w-[13rem] flex-col gap-2">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-haze">
-                        sort by
-                    </span>
-                    <select className="h-11 rounded-2xl border border-brand-ink/10 bg-white px-4 text-sm text-brand-ink outline-none">
-                        <option>Most popular</option>
-                        <option>Newest</option>
-                        <option>Alphabetical</option>
-                    </select>
-                </label>
+                    <div className="w-full sm:max-w-[15rem]">
+                        <label className="block">
+                            <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-brand-haze">
+                                sort by
+                            </span>
+                            <select className="h-11 w-full rounded-2xl border border-brand-ink/10 bg-brand-cream px-4 text-sm text-brand-ink outline-none">
+                                <option>Most popular</option>
+                                <option>Newest</option>
+                                <option>Alphabetical</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div className="grid gap-6 xl:grid-cols-2">
