@@ -11,6 +11,7 @@ type InfiniteLibraryGridProps = {
     pageSize: number;
     searchQuery?: string;
     category?: string;
+    subcategory?: string;
     tag?: string;
 };
 
@@ -27,6 +28,7 @@ export default function InfiniteLibraryGrid({
     pageSize,
     searchQuery = "",
     category = "",
+    subcategory = "",
     tag = "",
 }: InfiniteLibraryGridProps) {
     const [tools, setTools] = useState(initialTools);
@@ -59,6 +61,10 @@ export default function InfiniteLibraryGrid({
 
             if (category) {
                 params.set("category", category);
+            }
+
+            if (subcategory) {
+                params.set("subcategory", subcategory);
             }
 
             if (tag) {

@@ -3,11 +3,19 @@
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal } from "lucide-react";
+import type { ToolFilters } from "@/lib/getTools";
 
 type FilterOption = {
     value: string;
     label: string;
 };
+
+function formatFilterLabel(value: string) {
+    return value
+        .split(/[-_]/g)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+}
 
 function ChevronIcon({ open }: { open: boolean }) {
     return (
@@ -97,26 +105,57 @@ function FilterDropdown({
     );
 }
 
-export default function LibraryFilters() {
+export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const activeSearchQuery = searchParams.get("q") ?? "";
     const activeCategory = searchParams.get("category") ?? "all";
+    const activeSubcategory = searchParams.get("subcategory") ?? "all";
     const activeTag = searchParams.get("tag") ?? "all";
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
 
     const closeMenu = () => setOpenMenu(null);
 
+    const categoryOptions: FilterOption[] = [
+        { value: "all", label: "All categories" },
+        ...filters.categories.map((category) => ({
+            value: category,
+            label: category,
+        })),
+    ];
+
+    const visibleSubcategories = activeCategory === "all"
+        ? filters.subcategories
+        : filters.subcategoriesByCategory[activeCategory] ?? [];
+
+    const subcategoryOptions: FilterOption[] = [
+        { value: "all", label: "All subcategories" },
+        ...visibleSubcategories.map((subcategory) => ({
+            value: subcategory,
+            label: subcategory,
+        })),
+    ];
+
+    const tagOptions: FilterOption[] = [
+        { value: "all", label: "All tags" },
+        ...filters.tags.map((tag) => ({
+            value: tag,
+            label: formatFilterLabel(tag),
+        })),
+    ];
+
     function updateFilters(nextValues?: {
         searchQuery?: string;
         category?: string;
+        subcategory?: string;
         tag?: string;
     }) {
         const params = new URLSearchParams(searchParams.toString());
         const nextSearch = nextValues?.searchQuery ?? activeSearchQuery;
         const nextCategory = nextValues?.category ?? activeCategory;
+        const nextSubcategory = nextValues?.subcategory ?? activeSubcategory;
         const nextTag = nextValues?.tag ?? activeTag;
 
         if (nextSearch.trim()) {
@@ -129,6 +168,12 @@ export default function LibraryFilters() {
             params.set("category", nextCategory);
         } else {
             params.delete("category");
+        }
+
+        if (nextSubcategory && nextSubcategory !== "all") {
+            params.set("subcategory", nextSubcategory);
+        } else {
+            params.delete("subcategory");
         }
 
         if (nextTag && nextTag !== "all") {
@@ -197,13 +242,18 @@ export default function LibraryFilters() {
                                 {activeCategory}
                             </span>
                         ) : null}
+                        {activeSubcategory !== "all" ? (
+                            <span className="rounded-full bg-brand-oat px-3 py-1 text-xs font-medium text-brand-ink">
+                                {activeSubcategory}
+                            </span>
+                        ) : null}
                         {activeTag !== "all" ? (
                             <span className="rounded-full bg-brand-oat px-3 py-1 text-xs font-medium text-brand-ink">
                                 {activeTag}
                             </span>
                         ) : null}
                     </div>
-                    <div className="grid gap-4 md:grid-cols-2">
+                    <div className="grid gap-4 md:grid-cols-3">
                         <div>
                             <FilterDropdown
                                 label="Category"
@@ -215,15 +265,31 @@ export default function LibraryFilters() {
                                     )
                                 }
                                 onSelect={(value) => {
-                                    updateFilters({ category: value });
+                                    updateFilters({
+                                        category: value,
+                                        subcategory: "all",
+                                    });
                                     closeMenu();
                                 }}
-                                options={[
-                                    { value: "all", label: "All categories" },
-                                    { value: "ui", label: "UI & Styling" },
-                                    { value: "frontend", label: "Frontend Frameworks" },
-                                    { value: "devtools", label: "Developer Tools" },
-                                ]}
+                                options={categoryOptions}
+                            />
+                        </div>
+
+                        <div>
+                            <FilterDropdown
+                                label="Subcategory"
+                                value={activeSubcategory}
+                                isOpen={openMenu === "subcategory"}
+                                onToggle={() =>
+                                    setOpenMenu((current) =>
+                                        current === "subcategory" ? null : "subcategory"
+                                    )
+                                }
+                                onSelect={(value) => {
+                                    updateFilters({ subcategory: value });
+                                    closeMenu();
+                                }}
+                                options={subcategoryOptions}
                             />
                         </div>
 
@@ -241,12 +307,7 @@ export default function LibraryFilters() {
                                     updateFilters({ tag: value });
                                     closeMenu();
                                 }}
-                                options={[
-                                    { value: "all", label: "All tags" },
-                                    { value: "tailwind", label: "Tailwind CSS" },
-                                    { value: "react", label: "React" },
-                                    { value: "open-source", label: "Open source" },
-                                ]}
+                                options={tagOptions}
                             />
                         </div>
                     </div>

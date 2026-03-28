@@ -2,7 +2,7 @@ import LibraryEmptyState from "@/app/components/library/LibraryEmptyState";
 import LibraryHero from "@/app/components/library/LibraryHero";
 import InfiniteLibraryGrid from "@/app/components/library/InfiniteLibraryGrid";
 import LibrarySidebar from "@/app/components/library/LibrarySidebar";
-import { getToolsPage, LIBRARY_PAGE_SIZE } from "@/lib/getTools";
+import { getToolFilters, getToolsPage, LIBRARY_PAGE_SIZE } from "@/lib/getTools";
 
 export default async function LibraryPage({
     searchParams,
@@ -10,27 +10,33 @@ export default async function LibraryPage({
     searchParams?: Promise<{
         q?: string;
         category?: string;
+        subcategory?: string;
         tag?: string;
     }>;
 }) {
     const params = await searchParams;
     const query = params?.q?.trim() ?? "";
     const category = params?.category?.trim() ?? "";
+    const subcategory = params?.subcategory?.trim() ?? "";
     const tag = params?.tag?.trim() ?? "";
-    const { tools, totalTools, hasMore } = await getToolsPage({
+    const [filters, { tools, totalTools, hasMore }] = await Promise.all([
+        getToolFilters(),
+        getToolsPage({
         limit: LIBRARY_PAGE_SIZE,
         offset: 0,
         searchQuery: query,
         category,
+        subcategory,
         tag,
-    });
+        }),
+    ]);
 
     return (
         <main
             className="min-h-screen bg-white"
         >
             <div className="mx-auto">
-                <LibraryHero />
+                <LibraryHero filters={filters} />
                 {totalTools === 0 ? (
                     <LibraryEmptyState />
                 ) : (
@@ -41,6 +47,7 @@ export default async function LibraryPage({
                             pageSize={LIBRARY_PAGE_SIZE}
                             searchQuery={query}
                             category={category}
+                            subcategory={subcategory}
                             tag={tag}
                         />
                         <div className="xl:sticky xl:top-28">

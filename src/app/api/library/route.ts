@@ -17,6 +17,7 @@ export async function GET(request: Request) {
     const offset = parsePositiveInt(searchParams.get("offset"), 0);
     const searchQuery = searchParams.get("q")?.trim() ?? "";
     const category = searchParams.get("category")?.trim() ?? "";
+    const subcategory = searchParams.get("subcategory")?.trim() ?? "";
     const tag = searchParams.get("tag")?.trim() ?? "";
 
     try {
@@ -26,6 +27,7 @@ export async function GET(request: Request) {
             includeCount: false,
             searchQuery,
             category,
+            subcategory,
             tag,
         });
         return NextResponse.json(result);
