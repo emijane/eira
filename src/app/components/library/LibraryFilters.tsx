@@ -10,13 +10,6 @@ type FilterOption = {
     label: string;
 };
 
-function formatFilterLabel(value: string) {
-    return value
-        .split(/[-_]/g)
-        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-        .join(" ");
-}
-
 function ChevronIcon({ open }: { open: boolean }) {
     return (
         <svg
@@ -112,7 +105,6 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
     const activeSearchQuery = searchParams.get("q") ?? "";
     const activeCategory = searchParams.get("category") ?? "all";
     const activeSubcategory = searchParams.get("subcategory") ?? "all";
-    const activeTag = searchParams.get("tag") ?? "all";
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
 
@@ -138,25 +130,15 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
         })),
     ];
 
-    const tagOptions: FilterOption[] = [
-        { value: "all", label: "All tags" },
-        ...filters.tags.map((tag) => ({
-            value: tag,
-            label: formatFilterLabel(tag),
-        })),
-    ];
-
     function updateFilters(nextValues?: {
         searchQuery?: string;
         category?: string;
         subcategory?: string;
-        tag?: string;
     }) {
         const params = new URLSearchParams(searchParams.toString());
         const nextSearch = nextValues?.searchQuery ?? activeSearchQuery;
         const nextCategory = nextValues?.category ?? activeCategory;
         const nextSubcategory = nextValues?.subcategory ?? activeSubcategory;
-        const nextTag = nextValues?.tag ?? activeTag;
 
         if (nextSearch.trim()) {
             params.set("q", nextSearch.trim());
@@ -174,12 +156,6 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
             params.set("subcategory", nextSubcategory);
         } else {
             params.delete("subcategory");
-        }
-
-        if (nextTag && nextTag !== "all") {
-            params.set("tag", nextTag);
-        } else {
-            params.delete("tag");
         }
 
         const query = params.toString();
@@ -247,13 +223,8 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                                 {activeSubcategory}
                             </span>
                         ) : null}
-                        {activeTag !== "all" ? (
-                            <span className="rounded-full bg-brand-oat px-3 py-1 text-xs font-medium text-brand-ink">
-                                {activeTag}
-                            </span>
-                        ) : null}
                     </div>
-                    <div className="grid gap-4 md:grid-cols-3">
+                    <div className="grid gap-4 md:grid-cols-2">
                         <div>
                             <FilterDropdown
                                 label="Category"
@@ -290,24 +261,6 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                                     closeMenu();
                                 }}
                                 options={subcategoryOptions}
-                            />
-                        </div>
-
-                        <div>
-                            <FilterDropdown
-                                label="Tags"
-                                value={activeTag}
-                                isOpen={openMenu === "tags"}
-                                onToggle={() =>
-                                    setOpenMenu((current) =>
-                                        current === "tags" ? null : "tags"
-                                    )
-                                }
-                                onSelect={(value) => {
-                                    updateFilters({ tag: value });
-                                    closeMenu();
-                                }}
-                                options={tagOptions}
                             />
                         </div>
                     </div>

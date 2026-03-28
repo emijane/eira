@@ -11,23 +11,20 @@ export default async function LibraryPage({
         q?: string;
         category?: string;
         subcategory?: string;
-        tag?: string;
     }>;
 }) {
     const params = await searchParams;
     const query = params?.q?.trim() ?? "";
     const category = params?.category?.trim() ?? "";
     const subcategory = params?.subcategory?.trim() ?? "";
-    const tag = params?.tag?.trim() ?? "";
     const [filters, { tools, totalTools, hasMore }] = await Promise.all([
         getToolFilters(),
         getToolsPage({
-        limit: LIBRARY_PAGE_SIZE,
-        offset: 0,
-        searchQuery: query,
-        category,
-        subcategory,
-        tag,
+            limit: LIBRARY_PAGE_SIZE,
+            offset: 0,
+            searchQuery: query,
+            category,
+            subcategory,
         }),
     ]);
 
@@ -48,7 +45,6 @@ export default async function LibraryPage({
                             searchQuery={query}
                             category={category}
                             subcategory={subcategory}
-                            tag={tag}
                         />
                         <div className="xl:sticky xl:top-28">
                             <LibrarySidebar />

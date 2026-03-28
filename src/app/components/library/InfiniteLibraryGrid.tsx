@@ -12,7 +12,6 @@ type InfiniteLibraryGridProps = {
     searchQuery?: string;
     category?: string;
     subcategory?: string;
-    tag?: string;
 };
 
 type ToolsResponse = {
@@ -29,7 +28,6 @@ export default function InfiniteLibraryGrid({
     searchQuery = "",
     category = "",
     subcategory = "",
-    tag = "",
 }: InfiniteLibraryGridProps) {
     const [tools, setTools] = useState(initialTools);
     const [hasMore, setHasMore] = useState(initialHasMore);
@@ -65,10 +63,6 @@ export default function InfiniteLibraryGrid({
 
             if (subcategory) {
                 params.set("subcategory", subcategory);
-            }
-
-            if (tag) {
-                params.set("tag", tag);
             }
 
             const response = await fetch(`/api/library?${params.toString()}`, {

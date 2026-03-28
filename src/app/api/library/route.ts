@@ -18,7 +18,6 @@ export async function GET(request: Request) {
     const searchQuery = searchParams.get("q")?.trim() ?? "";
     const category = searchParams.get("category")?.trim() ?? "";
     const subcategory = searchParams.get("subcategory")?.trim() ?? "";
-    const tag = searchParams.get("tag")?.trim() ?? "";
 
     try {
         const result = await getToolsPage({
@@ -28,7 +27,6 @@ export async function GET(request: Request) {
             searchQuery,
             category,
             subcategory,
-            tag,
         });
         return NextResponse.json(result);
     } catch (error) {
