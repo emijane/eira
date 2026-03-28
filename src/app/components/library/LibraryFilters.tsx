@@ -105,7 +105,7 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
     const activeSearchQuery = searchParams.get("q") ?? "";
     const activeCategory = searchParams.get("category") ?? "all";
     const activeSubcategory = searchParams.get("subcategory") ?? "all";
-    const [filtersOpen, setFiltersOpen] = useState(false);
+    const [filtersOpen, setFiltersOpen] = useState(true);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
 
     const closeMenu = () => setOpenMenu(null);
