@@ -11,7 +11,7 @@ export default async function LibraryPage({
 
     return (
         <main
-            className="min-h-screen bg-brand-ink"
+            className="min-h-screen bg-white"
         >
             <div className="mx-auto">
                 <LibraryHero />

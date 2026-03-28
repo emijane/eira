@@ -2,7 +2,7 @@ import LibraryFilters from "./LibraryFilters";
 
 export default function LibraryHero() {
     return (
-        <section className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(167,210,255,0.28),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(196,181,253,0.24),transparent_22%),linear-gradient(135deg,#3d3360_0%,#4d5fbf_22%,#8da7ff_52%,#6fcfe2_78%,#d3f2f3_100%)] px-6 py-10 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12 lg:py-14">
+        <section className="relative overflow-hidden border-b border-b-white bg-[radial-gradient(circle_at_top_right,rgba(167,210,255,0.28),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(196,181,253,0.24),transparent_22%),linear-gradient(135deg,#3d3360_0%,#4d5fbf_22%,#8da7ff_52%,#6fcfe2_78%,#d3f2f3_100%)] px-6 py-10 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12 lg:py-14">
             <div className="relative mx-auto max-w-7xl">
                 <div className="grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_320px] lg:items-start">
                     <div>
