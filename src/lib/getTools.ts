@@ -6,28 +6,49 @@ export type GetToolsPageOptions = {
     limit?: number;
     offset?: number;
     includeCount?: boolean;
+    searchQuery?: string;
+    category?: string;
+    tag?: string;
 };
 
 export async function getToolsPage({
     limit = LIBRARY_PAGE_SIZE,
     offset = 0,
     includeCount = true,
+    searchQuery = "",
+    category = "",
+    tag = "",
 }: GetToolsPageOptions = {}) {
     const safeLimit = Math.max(1, Math.min(limit, 24));
     const safeOffset = Math.max(0, offset);
 
-    let query = supabaseAdmin
+    let toolsQuery = supabaseAdmin
         .from("tools")
         .select("*", includeCount ? { count: "exact" } : undefined)
         .order("name", { ascending: true });
 
-    if (includeCount) {
-        query = query.range(safeOffset, safeOffset + safeLimit - 1);
-    } else {
-        query = query.range(safeOffset, safeOffset + safeLimit);
+    if (searchQuery) {
+    toolsQuery = toolsQuery.or(
+        `name.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`
+    );
     }
 
-    const { data, error, count } = await query;
+    if (category) {
+    toolsQuery = toolsQuery.eq("category", category);
+    }
+
+    if (tag) {
+    toolsQuery = toolsQuery.contains("tags", [tag]);
+    }
+
+
+    if (includeCount) {
+        toolsQuery = toolsQuery.range(safeOffset, safeOffset + safeLimit - 1);
+    } else {
+        toolsQuery = toolsQuery.range(safeOffset, safeOffset + safeLimit);
+    }
+
+    const { data, error, count } = await toolsQuery;
 
     if (error) {
         throw new Error(`Failed to fetch tools: ${error.message}`);
