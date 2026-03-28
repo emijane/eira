@@ -10,7 +10,6 @@ export type ToolInsertInput = {
     slug: string;
     website_url: string;
     image_file_name?: string | null;
-    image_url?: string | null;
     description: string;
     category: string;
     subcategory: string;

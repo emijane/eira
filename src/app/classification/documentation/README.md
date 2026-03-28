@@ -38,3 +38,9 @@ npx tsx src/app/classification/toolInput.ts
 
 This system allows fast tool ingestion by generating structured data automatically,
 while still requiring manual confirmation before inserting into the database.
+
+## Workflow for adding new tools
+1. Upload the screenshot first
+2. Copy the exact filename
+3. Run the script with the real website URL
+4. Review the generated row carefully before pressing y

@@ -50,7 +50,6 @@ async function main() {
             slug: slugify(classified.name),
             website_url: url,
             image_file_name: imageFileName || null,
-            image_url: imageFileName ? `/media/${imageFileName}` : null,
             description: classified.description,
             category: classified.category,
             subcategory: classified.subcategory,
