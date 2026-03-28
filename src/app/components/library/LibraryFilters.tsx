@@ -46,14 +46,12 @@ function SearchIcon() {
 }
 
 function FilterDropdown({
-    label,
     value,
     options,
     isOpen,
     onToggle,
     onSelect,
 }: {
-    label: string;
     value: string;
     options: FilterOption[];
     isOpen: boolean;
@@ -64,26 +62,18 @@ function FilterDropdown({
 
     return (
         <div className="relative">
-            <label className="flex flex-col gap-2 text-sm">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-haze">
-                    {label}
+            <button
+                type="button"
+                onClick={onToggle}
+                className={`flex h-14 w-full items-center justify-between px-4 text-left text-brand-copy transition ${
+                    isOpen ? "text-brand-ink" : "hover:text-brand-ink"
+                }`}
+            >
+                <span className="truncate text-sm">{selected.label}</span>
+                <span className="ml-4 shrink-0">
+                    <ChevronIcon open={isOpen} />
                 </span>
-                <button
-                    type="button"
-                    onClick={onToggle}
-                    className={`flex h-12 w-full items-center justify-between rounded-2xl border px-4 text-left text-brand-ink transition ${
-                        isOpen
-                            ? "border-brand-ink/18 ring-2 ring-brand-ink/8"
-                            : "border-brand-ink/10 hover:border-brand-ink/18"
-                    }`}
-                    style={{ backgroundColor: "rgba(255,255,255,0.92)" }}
-                >
-                    <span className="truncate">{selected.label}</span>
-                    <span className="ml-4 shrink-0">
-                        <ChevronIcon open={isOpen} />
-                    </span>
-                </button>
-            </label>
+            </button>
 
             {isOpen ? (
                 <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-brand-ink/10 bg-white shadow-[0_20px_50px_-24px_rgba(43,37,57,0.22)]">
@@ -128,27 +118,24 @@ export default function LibraryFilters() {
     const closeMenu = () => setOpenMenu(null);
 
     return (
-        <div className="mt-10 overflow-visible rounded-[1.75rem] border border-brand-ink/10 bg-white/92 p-4 shadow-[0_18px_44px_-34px_rgba(43,37,57,0.20)] sm:p-5">
-            <div className="grid gap-4 xl:grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))] xl:items-end">
-                <label className="flex flex-col gap-2">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-haze">
-                        Search
-                    </span>
-                    <form action="#" className="flex items-center rounded-2xl border border-brand-ink/10 bg-brand-cream px-4 py-3">
-                        <SearchIcon />
-                        <input
-                            type="text"
-                            value={searchQuery}
-                            onChange={(event) => setSearchQuery(event.target.value)}
-                            placeholder="search tools, frameworks, and categories"
-                            className="ml-3 w-full bg-transparent text-sm text-brand-ink outline-none placeholder:text-brand-haze"
-                        />
-                    </form>
-                </label>
+        <div className="mt-10 overflow-visible rounded-2xl border border-brand-ink/8 bg-white shadow-[0_18px_44px_-34px_rgba(43,37,57,0.16)]">
+            <div className="grid gap-0 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
+                <form
+                    action="#"
+                    className="flex h-14 items-center px-4 lg:border-r lg:border-brand-ink/8"
+                >
+                    <SearchIcon />
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(event) => setSearchQuery(event.target.value)}
+                        placeholder="Search tools, frameworks, and categories"
+                        className="ml-3 w-full bg-transparent text-sm text-brand-ink outline-none placeholder:text-brand-haze"
+                    />
+                </form>
 
-                <div className="rounded-2xl border border-brand-ink/8 bg-brand-cream/70 p-3">
+                <div className="lg:border-r lg:border-brand-ink/8">
                     <FilterDropdown
-                        label="Category"
                         value={category}
                         isOpen={openMenu === "category"}
                         onToggle={() =>
@@ -169,9 +156,8 @@ export default function LibraryFilters() {
                     />
                 </div>
 
-                <div className="rounded-2xl border border-brand-ink/8 bg-brand-cream/70 p-3">
+                <div className="lg:border-r lg:border-brand-ink/8">
                     <FilterDropdown
-                        label="Subcategory"
                         value={subcategory}
                         isOpen={openMenu === "subcategory"}
                         onToggle={() =>
@@ -192,9 +178,8 @@ export default function LibraryFilters() {
                     />
                 </div>
 
-                <div className="rounded-2xl border border-brand-ink/8 bg-brand-cream/70 p-3">
+                <div>
                     <FilterDropdown
-                        label="Tags"
                         value={tags}
                         isOpen={openMenu === "tags"}
                         onToggle={() =>
