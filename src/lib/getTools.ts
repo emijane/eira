@@ -18,6 +18,27 @@ export type ToolFilters = {
     subcategoriesByCategory: Record<string, string[]>;
 };
 
+function buildTagSearchTerms(searchQuery: string) {
+    const rawTerms = searchQuery
+        .toLowerCase()
+        .split(/[^a-z0-9+#.-]+/i)
+        .map((term) => term.trim())
+        .filter((term) => term.length >= 2);
+
+    const searchTerms = new Set<string>(rawTerms);
+
+    if (searchQuery.trim()) {
+        searchTerms.add(searchQuery.trim().toLowerCase());
+        searchTerms.add(searchQuery.trim().toLowerCase().replace(/\s+/g, "-"));
+    }
+
+    return [...searchTerms].filter(Boolean);
+}
+
+function escapeLikeValue(value: string) {
+    return value.replace(/[%_,]/g, "");
+}
+
 export async function getToolsPage({
     limit = LIBRARY_PAGE_SIZE,
     offset = 0,
@@ -36,9 +57,18 @@ export async function getToolsPage({
         .order("name", { ascending: true });
 
     if (searchQuery) {
-    toolsQuery = toolsQuery.or(
-        `name.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`
-    );
+        const normalizedSearch = escapeLikeValue(searchQuery.trim());
+        const tagSearchTerms = buildTagSearchTerms(searchQuery);
+        const searchFilters = [
+            `name.ilike.%${normalizedSearch}%`,
+            `description.ilike.%${normalizedSearch}%`,
+        ];
+
+        if (tagSearchTerms.length > 0) {
+            searchFilters.push(`tags.ov.{${tagSearchTerms.join(",")}}`);
+        }
+
+        toolsQuery = toolsQuery.or(searchFilters.join(","));
     }
 
     if (category) {
