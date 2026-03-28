@@ -65,18 +65,18 @@ function FilterDropdown({
     return (
         <div className="relative">
             <label className="flex flex-col gap-2 text-sm">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-300">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-haze">
                     {label}
                 </span>
                 <button
                     type="button"
                     onClick={onToggle}
-                    className={`flex w-full items-center justify-between rounded-2xl border px-5 py-3 text-left text-white transition ${
+                    className={`flex h-12 w-full items-center justify-between rounded-2xl border px-4 text-left text-brand-ink transition ${
                         isOpen
-                            ? "border-accent-sea ring-2 ring-accent-sea/20"
-                            : "border-white/12 hover:border-white/24"
+                            ? "border-brand-ink/18 ring-2 ring-brand-ink/8"
+                            : "border-brand-ink/10 hover:border-brand-ink/18"
                     }`}
-                    style={{ backgroundColor: "rgba(255,255,255,0.08)" }}
+                    style={{ backgroundColor: "rgba(255,255,255,0.92)" }}
                 >
                     <span className="truncate">{selected.label}</span>
                     <span className="ml-4 shrink-0">
@@ -86,7 +86,7 @@ function FilterDropdown({
             </label>
 
             {isOpen ? (
-                <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-brand-ink bg-brand-deep shadow-[0_20px_50px_-24px_rgba(0,0,0,0.35)]">
+                <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-brand-ink/10 bg-white shadow-[0_20px_50px_-24px_rgba(43,37,57,0.22)]">
                     <ul className="max-h-72 overflow-auto py-2">
                         {options.map((option) => {
                             const active = option.value === value;
@@ -98,13 +98,13 @@ function FilterDropdown({
                                         onClick={() => onSelect(option.value)}
                                         className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition ${
                                             active
-                                                ? "bg-white/10 font-medium text-white"
-                                                : "text-stone-200 hover:bg-white/6"
+                                                ? "bg-brand-oat font-medium text-brand-ink"
+                                                : "text-brand-copy hover:bg-brand-cream"
                                         }`}
                                     >
                                         <span>{option.label}</span>
                                         {active ? (
-                                            <span className="text-accent-sea">&#10003;</span>
+                                            <span className="text-brand-ink">&#10003;</span>
                                         ) : null}
                                     </button>
                                 </li>
@@ -124,141 +124,93 @@ export default function LibraryFilters() {
     const [category, setCategory] = useState("all");
     const [subcategory, setSubcategory] = useState("all");
     const [tags, setTags] = useState("all");
-    const [sortBy, setSortBy] = useState("popular");
 
     const closeMenu = () => setOpenMenu(null);
 
     return (
-        <div className="mt-10 overflow-visible rounded-[1.6rem] border border-brand-ink/10 bg-brand-ink p-5 shadow-[0_24px_55px_-30px_rgba(43,37,57,0.42)] sm:p-6">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-                <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-300">
-                        Filter Studio
-                    </p>
-                    <p className="mt-2 text-lg font-semibold tracking-tight text-white">
-                        Shape the collection your way.
-                    </p>
-                    <p className="mt-1 text-sm text-stone-300">
-                        Use a few strong filters instead of a crowded dashboard.
-                    </p>
+        <div className="mt-10 overflow-visible rounded-[1.75rem] border border-brand-ink/10 bg-white/92 p-4 shadow-[0_18px_44px_-34px_rgba(43,37,57,0.20)] sm:p-5">
+            <div className="grid gap-4 xl:grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))] xl:items-end">
+                <label className="flex flex-col gap-2">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-haze">
+                        Search
+                    </span>
+                    <form action="#" className="flex items-center rounded-2xl border border-brand-ink/10 bg-brand-cream px-4 py-3">
+                        <SearchIcon />
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(event) => setSearchQuery(event.target.value)}
+                            placeholder="search tools, frameworks, and categories"
+                            className="ml-3 w-full bg-transparent text-sm text-brand-ink outline-none placeholder:text-brand-haze"
+                        />
+                    </form>
+                </label>
+
+                <div className="rounded-2xl border border-brand-ink/8 bg-brand-cream/70 p-3">
+                    <FilterDropdown
+                        label="Category"
+                        value={category}
+                        isOpen={openMenu === "category"}
+                        onToggle={() =>
+                            setOpenMenu((current) =>
+                                current === "category" ? null : "category"
+                            )
+                        }
+                        onSelect={(value) => {
+                            setCategory(value);
+                            closeMenu();
+                        }}
+                        options={[
+                            { value: "all", label: "All categories" },
+                            { value: "ui", label: "UI & Styling" },
+                            { value: "frontend", label: "Frontend Frameworks" },
+                            { value: "devtools", label: "Developer Tools" },
+                        ]}
+                    />
                 </div>
 
-                <button
-                    type="button"
-                    className="inline-flex items-center self-start rounded-full border border-white/16 bg-white/10 px-4 py-2 text-sm font-medium text-white shadow-[0_10px_24px_-18px_rgba(0,0,0,0.28)] transition hover:-translate-y-0.5 hover:border-white/28 hover:bg-white/14"
-                >
-                    Reset Filters
-                </button>
-            </div>
-
-            <div className="mt-6 rounded-[1.45rem] bg-white/6 p-4 ring-1 ring-white/8">
-                <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)] lg:items-end">
-                    <label className="flex flex-col gap-2">
-                        <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-stone-300">
-                            Search
-                        </span>
-                        <div className="flex items-center rounded-[1.2rem] border border-white/12 bg-white/8 px-4 py-3">
-                            <SearchIcon />
-                            <input
-                                type="text"
-                                value={searchQuery}
-                                onChange={(event) => setSearchQuery(event.target.value)}
-                                placeholder="search tools, frameworks, and categories"
-                                className="ml-3 w-full bg-transparent text-sm text-white outline-none placeholder:text-stone-400"
-                            />
-                        </div>
-                    </label>
+                <div className="rounded-2xl border border-brand-ink/8 bg-brand-cream/70 p-3">
+                    <FilterDropdown
+                        label="Subcategory"
+                        value={subcategory}
+                        isOpen={openMenu === "subcategory"}
+                        onToggle={() =>
+                            setOpenMenu((current) =>
+                                current === "subcategory" ? null : "subcategory"
+                            )
+                        }
+                        onSelect={(value) => {
+                            setSubcategory(value);
+                            closeMenu();
+                        }}
+                        options={[
+                            { value: "all", label: "All subcategories" },
+                            { value: "components", label: "Component Libraries" },
+                            { value: "css", label: "CSS Frameworks" },
+                            { value: "boilerplates", label: "Boilerplates" },
+                        ]}
+                    />
                 </div>
 
-                <div className="mt-5 h-px bg-[linear-gradient(90deg,rgba(255,255,255,0.08),rgba(186,224,218,0.18),rgba(239,200,200,0.18),transparent)]" />
-
-                <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                    <div className="rounded-[1.15rem] border border-white/8 bg-white/4 p-3">
-                        <FilterDropdown
-                            label="Category"
-                            value={category}
-                            isOpen={openMenu === "category"}
-                            onToggle={() =>
-                                setOpenMenu((current) =>
-                                    current === "category" ? null : "category"
-                                )
-                            }
-                            onSelect={(value) => {
-                                setCategory(value);
-                                closeMenu();
-                            }}
-                            options={[
-                                { value: "all", label: "All categories" },
-                                { value: "ui", label: "UI & Styling" },
-                                { value: "frontend", label: "Frontend Frameworks" },
-                                { value: "devtools", label: "Developer Tools" },
-                            ]}
-                        />
-                    </div>
-
-                    <div className="rounded-[1.15rem] border border-white/8 bg-white/4 p-3">
-                        <FilterDropdown
-                            label="Subcategory"
-                            value={subcategory}
-                            isOpen={openMenu === "subcategory"}
-                            onToggle={() =>
-                                setOpenMenu((current) =>
-                                    current === "subcategory" ? null : "subcategory"
-                                )
-                            }
-                            onSelect={(value) => {
-                                setSubcategory(value);
-                                closeMenu();
-                            }}
-                            options={[
-                                { value: "all", label: "All subcategories" },
-                                { value: "components", label: "Component Libraries" },
-                                { value: "css", label: "CSS Frameworks" },
-                                { value: "boilerplates", label: "Boilerplates" },
-                            ]}
-                        />
-                    </div>
-
-                    <div className="rounded-[1.15rem] border border-white/8 bg-white/4 p-3">
-                        <FilterDropdown
-                            label="Tags"
-                            value={tags}
-                            isOpen={openMenu === "tags"}
-                            onToggle={() =>
-                                setOpenMenu((current) => (current === "tags" ? null : "tags"))
-                            }
-                            onSelect={(value) => {
-                                setTags(value);
-                                closeMenu();
-                            }}
-                            options={[
-                                { value: "all", label: "All tags" },
-                                { value: "tailwind", label: "Tailwind CSS" },
-                                { value: "react", label: "React" },
-                                { value: "open-source", label: "Open source" },
-                            ]}
-                        />
-                    </div>
-
-                    <div className="rounded-[1.15rem] border border-white/8 bg-white/4 p-3">
-                        <FilterDropdown
-                            label="Sort by"
-                            value={sortBy}
-                            isOpen={openMenu === "sortBy"}
-                            onToggle={() =>
-                                setOpenMenu((current) => (current === "sortBy" ? null : "sortBy"))
-                            }
-                            onSelect={(value) => {
-                                setSortBy(value);
-                                closeMenu();
-                            }}
-                            options={[
-                                { value: "popular", label: "Most popular" },
-                                { value: "newest", label: "Newest" },
-                                { value: "alphabetical", label: "Alphabetical" },
-                            ]}
-                        />
-                    </div>
+                <div className="rounded-2xl border border-brand-ink/8 bg-brand-cream/70 p-3">
+                    <FilterDropdown
+                        label="Tags"
+                        value={tags}
+                        isOpen={openMenu === "tags"}
+                        onToggle={() =>
+                            setOpenMenu((current) => (current === "tags" ? null : "tags"))
+                        }
+                        onSelect={(value) => {
+                            setTags(value);
+                            closeMenu();
+                        }}
+                        options={[
+                            { value: "all", label: "All tags" },
+                            { value: "tailwind", label: "Tailwind CSS" },
+                            { value: "react", label: "React" },
+                            { value: "open-source", label: "Open source" },
+                        ]}
+                    />
                 </div>
             </div>
         </div>
