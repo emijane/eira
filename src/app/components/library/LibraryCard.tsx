@@ -23,6 +23,7 @@ export default function LibraryCard({ tool }: { tool: LibraryTool }) {
                             className="h-56 w-full object-cover object-top transition duration-300 group-hover:scale-[1.02]"
                             width={400}
                             height={240}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                         />
                     </a>
                 ) : (
@@ -32,6 +33,7 @@ export default function LibraryCard({ tool }: { tool: LibraryTool }) {
                         className="h-56 w-full object-cover object-top"
                         width={400}
                         height={240}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     />
                 ) : (
                     <div className="flex h-56 w-full items-end bg-[linear-gradient(135deg,rgba(239,200,200,0.42)_0%,rgba(186,224,218,0.32)_45%,rgba(255,255,255,0.9)_100%)] p-5">
