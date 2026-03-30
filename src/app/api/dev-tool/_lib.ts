@@ -52,6 +52,16 @@ export async function parseJsonBody(request: Request) {
     return request.json();
 }
 
+export async function parseMultipartBody(request: Request) {
+    const contentType = request.headers.get("content-type") ?? "";
+
+    if (!contentType.toLowerCase().includes("multipart/form-data")) {
+        throw new Error("Requests must use multipart/form-data.");
+    }
+
+    return request.formData();
+}
+
 export function jsonResponse(body: unknown, status = 200) {
     return NextResponse.json(body, { status, headers: JSON_HEADERS });
 }

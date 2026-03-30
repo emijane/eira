@@ -1,5 +1,6 @@
 import { buildDevToolDraft } from "@/app/classification/devToolWorkflow";
-import { denyInProduction, jsonResponse, parseJsonBody, verifySameOrigin } from "../_lib";
+import { uploadDevToolImage } from "@/app/classification/devToolImageUpload";
+import { denyInProduction, jsonResponse, parseMultipartBody, verifySameOrigin } from "../_lib";
 
 export const runtime = "nodejs";
 
@@ -18,9 +19,12 @@ export async function POST(request: Request) {
     }
 
     try {
-        const body = await parseJsonBody(request);
-        const url = typeof body?.url === "string" ? body.url : "";
-        const imageFileName = typeof body?.image_file_name === "string" ? body.image_file_name : "";
+        const formData = await parseMultipartBody(request);
+        const url = typeof formData.get("url") === "string" ? String(formData.get("url")) : "";
+        const uploadedFile = formData.get("image");
+        const imageFileName = uploadedFile instanceof File
+            ? await uploadDevToolImage(url, uploadedFile)
+            : null;
         const result = await buildDevToolDraft(url, imageFileName);
 
         return jsonResponse({

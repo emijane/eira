@@ -1,4 +1,5 @@
 import { insertDevToolDraft } from "@/app/classification/devToolWorkflow";
+import { ensureStoredImageExists, validateStoredImageFileName } from "@/app/classification/devToolImageUpload";
 import { denyInProduction, jsonResponse, parseJsonBody, verifySameOrigin } from "../_lib";
 
 export const runtime = "nodejs";
@@ -20,7 +21,12 @@ export async function POST(request: Request) {
     try {
         const body = await parseJsonBody(request);
         const url = typeof body?.url === "string" ? body.url : "";
-        const imageFileName = typeof body?.image_file_name === "string" ? body.image_file_name : "";
+        const imageFileName = validateStoredImageFileName(body?.image_file_name);
+
+        if (imageFileName) {
+            await ensureStoredImageExists(imageFileName);
+        }
+
         const result = await insertDevToolDraft(url, imageFileName);
 
         if (result.duplicate) {

@@ -10,6 +10,8 @@ This folder contains the command-line ingestion workflow used to classify and ad
   Sends the tool input to OpenAI, validates the structured response, and maps it to the project taxonomy.
 - `devToolWorkflow.ts`
   Shared server-side workflow for validating a URL, classifying a tool, building an insert row, and checking for duplicates.
+- `devToolImageUpload.ts`
+  Validates uploaded image files, generates safe storage filenames, and uploads them to the Supabase `media` bucket.
 - `insertTool.ts`
   Defines the insert shape and contains the helper for inserting a tool into Supabase.
 - `findExistingTool.ts`

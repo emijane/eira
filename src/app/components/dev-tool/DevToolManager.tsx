@@ -58,8 +58,25 @@ async function postJson<T>(url: string, body: object) {
     };
 }
 
+async function postFormData<T>(url: string, body: FormData) {
+    const response = await fetch(url, {
+        method: "POST",
+        cache: "no-store",
+        body,
+    });
+
+    const payload = (await response.json()) as T;
+
+    return {
+        ok: response.ok,
+        status: response.status,
+        payload,
+    };
+}
+
 export default function DevToolManager() {
     const [websiteUrl, setWebsiteUrl] = useState("");
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [draft, setDraft] = useState<DraftTool | null>(null);
     const [duplicate, setDuplicate] = useState<DuplicateResult | null>(null);
     const [insertedTool, setInsertedTool] = useState<DraftTool | null>(null);
@@ -77,10 +94,17 @@ export default function DevToolManager() {
         setInsertedTool(null);
 
         try {
-            const { ok, payload } = await postJson<ClassifyResponse>("/api/dev-tool/classify", {
-                url: websiteUrl,
-                image_file_name: "",
-            });
+            const formData = new FormData();
+            formData.set("url", websiteUrl);
+
+            if (selectedFile) {
+                formData.set("image", selectedFile);
+            }
+
+            const { ok, payload } = await postFormData<ClassifyResponse>(
+                "/api/dev-tool/classify",
+                formData
+            );
 
             if (!ok) {
                 throw new Error(payload.error ?? "Could not classify this tool.");
@@ -118,7 +142,7 @@ export default function DevToolManager() {
         try {
             const { ok, status, payload } = await postJson<InsertResponse>("/api/dev-tool/insert", {
                 url: websiteUrl,
-                image_file_name: "",
+                image_file_name: draft?.image_file_name ?? "",
             });
 
             if (!ok) {
@@ -161,7 +185,12 @@ export default function DevToolManager() {
                         <input
                             type="text"
                             value={websiteUrl}
-                            onChange={(event) => setWebsiteUrl(event.target.value)}
+                            onChange={(event) => {
+                                setWebsiteUrl(event.target.value);
+                                setDraft(null);
+                                setDuplicate(null);
+                                setInsertedTool(null);
+                            }}
                             placeholder="https://www.example.com"
                             className="h-12 w-full rounded-2xl border border-black/10 bg-white px-4 text-sm text-black outline-none placeholder:text-black/35"
                         />
@@ -191,14 +220,27 @@ export default function DevToolManager() {
                         Upload image
                     </p>
                     <div className="mt-3 flex flex-wrap items-center gap-3">
-                        <button className="rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-black/75 transition hover:text-black">
+                        <label className="cursor-pointer rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-black/75 transition hover:text-black">
                             Choose file
-                        </button>
-                        <span className="text-sm text-black/55">No file selected</span>
+                            <input
+                                type="file"
+                                accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
+                                className="sr-only"
+                                onChange={(event) => {
+                                    setSelectedFile(event.target.files?.[0] ?? null);
+                                    setDraft(null);
+                                    setDuplicate(null);
+                                    setInsertedTool(null);
+                                }}
+                            />
+                        </label>
+                        <span className="text-sm text-black/55">
+                            {selectedFile ? `${selectedFile.name} selected` : "No file selected"}
+                        </span>
                     </div>
                     <p className="mt-3 text-sm leading-6 text-black/70">
-                        Placeholder only for now. Later this can wire into your image upload flow
-                        before insertion.
+                        Upload runs during classification and stores the image in Supabase.
+                        Max size: 5 MB. Allowed types: PNG, JPG, JPEG, WebP.
                     </p>
                 </div>
 
