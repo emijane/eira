@@ -50,7 +50,7 @@ export default async function LibraryPage({
                 {totalTools === 0 ? (
                     <LibraryEmptyState />
                 ) : (
-                    <div className="mx-auto mt-10 max-w-7xl p-7 lg:p-0">
+                    <div className="mx-auto mt-2 max-w-7xl p-7 lg:p-0">
                         <InfiniteLibraryGrid
                             initialTools={tools}
                             initialHasMore={hasMore}

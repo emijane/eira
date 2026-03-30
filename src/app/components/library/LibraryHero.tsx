@@ -2,17 +2,8 @@ import type { ToolFilters } from "@/lib/getTools";
 import MainMenu from "../MainMenu";
 
 export default function LibraryHero({ filters }: { filters: ToolFilters }) {
-    const featuredCategories = Object.entries(filters.categoryCounts)
-        .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
-        .slice(0, 3);
-    const totalTools = Object.values(filters.categoryCounts).reduce(
-        (sum, count) => sum + count,
-        0
-    );
-    const totalCategories = filters.categories.length;
-
     return (
-        <section className="relative overflow-visible border-b border-b-white/20 px-6 py-5 sm:px-8 lg:px-12">
+        <section className="relative overflow-visible px-6 py-5 sm:px-8 lg:px-12">
             <div className="relative mx-auto max-w-7xl">
                 <MainMenu/>
                 <div className="max-w-4xl mb-10">
@@ -32,19 +23,6 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
                             Explore standout tools for building web products, narrow by category
                             or tags, and quickly scan what fits your stack best.
                         </p>
-                        <div className="mt-6 flex flex-wrap gap-3 text-sm text-white/86">
-                            <span className="inline-flex items-center rounded-full border border-white/18 bg-white/12 px-3.5 py-1.5 backdrop-blur-sm">
-                                {totalTools} tools cataloged
-                            </span>
-                            <span className="inline-flex items-center rounded-full border border-white/18 bg-white/12 px-3.5 py-1.5 backdrop-blur-sm">
-                                {totalCategories} categories to explore
-                            </span>
-                            {featuredCategories[0] ? (
-                                <span className="inline-flex items-center rounded-full border border-white/18 bg-white/12 px-3.5 py-1.5 backdrop-blur-sm">
-                                    Popular: {featuredCategories[0][0]}
-                                </span>
-                            ) : null}
-                        </div>
                     </div>
                 </div>
             </div>
