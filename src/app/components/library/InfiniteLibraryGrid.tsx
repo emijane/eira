@@ -96,13 +96,13 @@ export default function InfiniteLibraryGrid({
             next={loadMoreTools}
             hasMore={hasMore}
             loader={
-                <div className="mt-6 rounded-3xl border border-brand-ink/10 bg-white/80 px-5 py-4 text-center text-sm text-brand-copy shadow-[0_20px_50px_-38px_rgba(43,37,57,0.28)]">
+                <div className="mt-6 rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,15,34,0.84)_0%,rgba(14,10,24,0.76)_100%)] px-5 py-4 text-center text-sm text-white/68 shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl">
                     Loading more tools...
                 </div>
             }
             endMessage={
                 tools.length > 0 ? (
-                    <p className="mt-6 text-center text-sm text-brand-haze">
+                    <p className="mt-6 text-center text-sm text-primary/72">
                         You&apos;ve reached the end of the library.
                     </p>
                 ) : null
@@ -115,7 +115,7 @@ export default function InfiniteLibraryGrid({
                 visibleTools={tools.length}
             />
             {errorMessage ? (
-                <div className="mt-6 rounded-3xl border border-rose-200 bg-rose-50/90 px-5 py-4 text-sm text-rose-700">
+                <div className="mt-6 rounded-3xl border border-rose-300/30 bg-rose-500/10 px-5 py-4 text-sm text-rose-100 backdrop-blur-xl">
                     {errorMessage}
                 </div>
             ) : null}

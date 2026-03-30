@@ -10,16 +10,16 @@ export default function LibraryGrid({
 }) {
     return (
         <section>
-            <div className="mb-6 rounded-3xl border border-brand-ink/10 bg-white/90 p-6 shadow-[0_20px_50px_-38px_rgba(43,37,57,0.28)]">
+            <div className="mb-6 rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,15,34,0.84)_0%,rgba(14,10,24,0.76)_100%)] p-6 shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
                             results
                         </p>
-                        <h3 className="mt-3 text-xl font-semibold tracking-tight text-brand-ink sm:text-[1.35rem]">
+                        <h3 className="mt-3 text-xl font-semibold tracking-tight text-white sm:text-[1.35rem]">
                             {visibleTools} tools
                         </h3>
-                        <p className="mt-2 text-[0.92rem] leading-6 text-brand-copy">
+                        <p className="mt-2 text-[0.92rem] leading-6 text-white/68">
                             Scroll to keep exploring curated picks across frameworks, ui kits,
                             and developer tools.
                         </p>
@@ -30,7 +30,7 @@ export default function LibraryGrid({
                             <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-primary">
                                 sort by
                             </span>
-                            <select className="h-11 w-full rounded-2xl border border-brand-ink/10 bg-brand-cream px-4 text-sm text-brand-ink outline-none">
+                            <select className="h-11 w-full rounded-2xl border border-white/10 bg-white/6 px-4 text-sm text-white outline-none">
                                 <option>Most popular</option>
                                 <option>Newest</option>
                                 <option>Alphabetical</option>
