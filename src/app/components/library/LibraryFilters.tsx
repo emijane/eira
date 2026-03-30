@@ -200,7 +200,7 @@ export function LibraryControls({
     ];
 
     return (
-        <section>
+        <section className="relative z-10">
             <div className="flex flex-col gap-2 mb-10">
                 <form
                     onSubmit={(event) => {
@@ -237,8 +237,8 @@ export function LibraryControls({
             </div>
 
             <div
-                className={`overflow-hidden transition-[max-height,opacity,margin] duration-200 ease-out ${
-                    controlsOpen ? "mt-4 max-h-[28rem] opacity-100" : "mt-0 max-h-0 opacity-0"
+                className={`transition-[opacity,margin] duration-200 ease-out ${
+                    controlsOpen ? "mt-4 mb-10 opacity-100" : "mt-0 mb-0 hidden opacity-0"
                 }`}
                 aria-hidden={!controlsOpen}
             >
@@ -289,15 +289,20 @@ export function LibraryControls({
                         <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
                             Sort by
                         </span>
-                        <select
-                            value={activeSort}
-                            onChange={(event) => updateFilters({ sort: event.target.value })}
-                            className="h-12 w-full rounded-2xl border border-black/10 bg-white px-4 text-sm text-black outline-none"
-                        >
-                            <option value="popular">Most popular</option>
-                            <option value="alphabetical">Alphabetical</option>
-                            <option value="category">Category</option>
-                        </select>
+                        <div className="relative">
+                            <select
+                                value={activeSort}
+                                onChange={(event) => updateFilters({ sort: event.target.value })}
+                                className="h-12 w-full appearance-none rounded-2xl border border-black/10 bg-white px-4 pr-11 text-sm text-black/72 outline-none transition hover:border-primary/24 hover:text-black focus:border-primary/34"
+                            >
+                                <option value="popular">Most popular</option>
+                                <option value="alphabetical">Alphabetical</option>
+                                <option value="category">Category</option>
+                            </select>
+                            <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+                                <ChevronIcon open={false} />
+                            </span>
+                        </div>
                     </label>
                 </div>
             </div>
