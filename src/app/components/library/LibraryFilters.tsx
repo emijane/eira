@@ -169,8 +169,8 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
     }
 
     return (
-        <div className="mt-10 overflow-visible">
-            <div className="rounded-[1.8rem] border border-white/22 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,255,0.92)_100%)] p-1 shadow-[0_24px_50px_-34px_rgba(24,24,40,0.38)]">
+        <div className="mt-8 overflow-visible">
+            <div className="rounded-[1.45rem] border border-white/18 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,255,0.92)_100%)] p-1 shadow-[0_20px_40px_-32px_rgba(24,24,40,0.34)]">
                 <form
                     onSubmit={(event) => {
                         event.preventDefault();
@@ -179,16 +179,16 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                             searchQuery: String(formData.get("q") ?? ""),
                         });
                     }}
-                    className="flex h-16 items-center rounded-[1.35rem] bg-white/96 px-4"
+                    className="flex h-12 items-center rounded-[1.1rem] bg-white/96 px-3.5"
                 >
-                    <Search className="h-4 w-4 text-brand-haze" />
+                    <Search className="h-3.5 w-3.5 text-brand-haze" />
                     <input
                         name="q"
                         type="text"
                         key={activeSearchQuery}
                         defaultValue={activeSearchQuery}
                         placeholder="Search tools, frameworks, and categories"
-                        className="ml-3 w-full bg-transparent text-[0.96rem] text-brand-ink outline-none placeholder:text-brand-haze"
+                        className="ml-2.5 w-full bg-transparent text-[0.92rem] text-brand-ink outline-none placeholder:text-brand-haze"
                     />
 
                     <button
@@ -197,10 +197,10 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                             setFiltersOpen((current) => !current);
                             closeMenu();
                         }}
-                        className="inline-flex h-11 items-center gap-2 rounded-full border border-brand-ink/8 bg-brand-cream/45 px-4 text-sm font-medium text-brand-ink transition hover:border-brand-ink/14 hover:bg-brand-cream/75 hover:text-brand-inkSoft"
+                        className="inline-flex h-8 items-center gap-1.5 rounded-full border border-brand-ink/8 bg-brand-cream/45 px-3 text-[0.82rem] font-medium text-brand-ink transition hover:border-brand-ink/14 hover:bg-brand-cream/75 hover:text-brand-inkSoft"
                     >
-                        <SlidersHorizontal className="h-4 w-4" />
-                        Filters
+                        <SlidersHorizontal className="h-3.5 w-3.5" />
+                        <span className="hidden sm:inline">Filters</span>
                     </button>
                 </form>
             </div>

@@ -5,20 +5,22 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
+                primary: "#C5A8EB",
+                secondary: "#7059E4",
                 brand: {
-                    ink: "#2B2539",
-                    inkSoft: "#373144",
-                    deep: "#1F1A29",
-                    mauve: "#64586D",
-                    lilac: "#4D4456",
-                    copy: "#6C6477",
-                    muted: "#5C5368",
-                    haze: "#8B8196",
-                    oat: "#F3EFEA",
-                    cream: "#FFFEFC",
+                    ink: "#2F2551",
+                    inkSoft: "#4A3E76",
+                    deep: "#21193E",
+                    mauve: "#7059E4",
+                    lilac: "#C5A8EB",
+                    copy: "#625A7D",
+                    muted: "#7A7097",
+                    haze: "#9F96BC",
+                    oat: "#F6F1FC",
+                    cream: "#FEFCFF",
                 },
                 accent: {
-                    sea: "#BED3CC",
+                    sea: "#C5A8EB",
                 },
             },
         },
