@@ -68,18 +68,6 @@ export default function LibraryCard({ tool }: { tool: LibraryTool }) {
                     </p>
                 </div>
 
-                {tool.tags?.length ? (
-                    <div className="flex flex-wrap gap-2">
-                        {tool.tags.map((tag) => (
-                            <span
-                                key={tag}
-                                className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs text-white/58"
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                ) : null}
             </div>
         </article>
     );
