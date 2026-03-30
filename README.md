@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Eira
 
-## Getting Started
+Eira is a curated frontend tool library for discovering design, UI, development, and workflow tools in one place. The site is built to feel editorial and easy to browse, while still supporting structured search, filtering, and lightweight taxonomy-driven classification behind the scenes.
 
-First, run the development server:
+## What The Site Is For
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Eira is used to:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- browse a growing library of frontend and design-adjacent tools
+- filter by category and subcategory
+- search tools by name, description, and relevant tags
+- curate consistent metadata for each tool
+- ingest new tools quickly with an internal development workflow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Core Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Minimal, card-based library UI
+- Search plus collapsible filters for category, subcategory, and sort
+- Infinite loading for the tool grid
+- Shared taxonomy for classifier output and library filtering
+- AI-assisted classification helps keep tool data structured and consistent
+- Curated metadata for names, descriptions, categories, subcategories, and tags
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js 16 with App Router
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- Supabase
+  - Postgres for tool records
+  - Storage for uploaded tool images
+- OpenAI API for tool classification
+- Lucide React for icons
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `src/app/`
+  Next.js app routes, shared layout, route handlers, and app-level components.
+- `src/app/library/`
+  The main tool library route.
+- `src/app/components/library/`
+  Search, filters, grid, and card components used by the library.
+- `src/app/classification/`
+  Shared classification logic and taxonomy validation.
+- `src/lib/`
+  Shared server utilities, including Supabase access and tool querying.
+- `docs/`
+  Supporting project documentation, including taxonomy notes.
 
-## Deploy on Vercel
+## Classification
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Eira uses AI-assisted classification to help organize tools consistently before they are added to the library. That process is designed to keep taxonomy decisions predictable and reduce manual cleanup as the catalog grows.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The classifier generates structured fields such as:
+
+- name
+- one-sentence description
+- category
+- subcategory
+- tags
+- slug
+
+Developers can test and refine this classification flow privately during content operations, while the public site stays focused on browsing and discovery.
+
+## Search And Taxonomy
+
+The library supports:
+
+- text search across name, description, and tags
+- category filtering
+- subcategory filtering
+- client-side sort options
+
+Subcategories used by the filter UI come from the data in the database. The classifier is constrained by the shared taxonomy defined in:
+
+- `src/app/classification/classifyTool.ts`
+
+If you add a new subcategory there, it becomes available for future classified tools. It will appear in the library filters once tools using that subcategory exist in the database.
