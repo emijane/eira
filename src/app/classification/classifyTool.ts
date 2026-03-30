@@ -63,7 +63,8 @@ const TAXONOMY = {
         "Typography",
         "Color Tools",
         "Gradient & Background Generators",
-        "UI Generators"
+        "UI Generators",
+        "SVG & Vector Tools"
     ],
     "State & Data Management": [
         "State Management",
