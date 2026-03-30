@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Github, Instagram, Twitter } from "lucide-react";
 import Header from "./components/MainMenu";
 import "./globals.css";
 
@@ -57,6 +58,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const year = new Date().getFullYear();
+
   return (
     <html
       lang="en"
@@ -71,6 +74,50 @@ export default function RootLayout({
           </div>
         </header>
         <div className="flex-1">{children}</div>
+        <footer className="border-t border-black/8 bg-white px-6 py-6 sm:px-8 lg:px-12">
+          <div className="mx-auto flex max-w-[1560px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-black/60">
+              Copyright {year} Eira Tools. All rights reserved.
+            </p>
+            <nav aria-label="Social links">
+              <ul className="flex flex-wrap items-center gap-4 text-sm">
+                <li>
+                  <a
+                    href="https://x.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-black/60 transition hover:text-primary"
+                    aria-label="X"
+                  >
+                    <Twitter className="h-4 w-4" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-black/60 transition hover:text-primary"
+                    aria-label="GitHub"
+                  >
+                    <Github className="h-4 w-4" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-black/60 transition hover:text-primary"
+                    aria-label="Instagram"
+                  >
+                    <Instagram className="h-4 w-4" />
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </footer>
       </body>
     </html>
   );

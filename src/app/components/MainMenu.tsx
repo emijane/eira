@@ -1,5 +1,6 @@
 "use client";
 
+import { Github, Instagram, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -39,31 +40,71 @@ export default function MainMenu() {
             </div>
 
             <nav aria-label="Primary" className="ml-auto min-w-0">
-                <ul className="flex items-center gap-5 sm:gap-8">
-                    {menuItems.map((item) => {
-                        const isActive = pathname === item.href;
+                <div className="flex items-center gap-5 sm:gap-8">
+                    <ul className="flex items-center gap-5 sm:gap-8">
+                        {menuItems.map((item) => {
+                            const isActive = pathname === item.href;
 
-                        return (
-                            <li key={item.href}>
-                                <Link
-                                    href={item.href}
-                                    className={`text-[0.95rem] font-medium tracking-[-0.01em] transition ${
-                                        isActive
-                                            ? usesLightText
-                                                ? "text-white"
-                                                : "text-black"
-                                            : usesLightText
-                                                ? "text-white/72 hover:text-white"
-                                                : "text-black/56 hover:text-black"
-                                    }`}
-                                    aria-current={isActive ? "page" : undefined}
-                                >
-                                    {item.label}
-                                </Link>
-                            </li>
-                        );
-                    })}
-                </ul>
+                            return (
+                                <li key={item.href}>
+                                    <Link
+                                        href={item.href}
+                                        className={`text-[0.95rem] font-medium tracking-[-0.01em] transition ${
+                                            isActive
+                                                ? usesLightText
+                                                    ? "text-white"
+                                                    : "text-black"
+                                                : usesLightText
+                                                    ? "text-white/72 hover:text-white"
+                                                    : "text-black/56 hover:text-black"
+                                        }`}
+                                        aria-current={isActive ? "page" : undefined}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                </li>
+                            );
+                        })}
+                    </ul>
+
+                    <div className={`hidden h-5 w-px ${usesLightText ? "bg-white/18" : "bg-black/10"} lg:block`} />
+
+                    <ul className="hidden items-center gap-3 lg:flex">
+                        <li>
+                            <a
+                                href="https://x.com"
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="X"
+                                className={`${usesLightText ? "text-white/62 hover:text-white" : "text-black/50 hover:text-primary"} transition`}
+                            >
+                                <Twitter className="h-4 w-4" />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://github.com"
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="GitHub"
+                                className={`${usesLightText ? "text-white/62 hover:text-white" : "text-black/50 hover:text-primary"} transition`}
+                            >
+                                <Github className="h-4 w-4" />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://instagram.com"
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="Instagram"
+                                className={`${usesLightText ? "text-white/62 hover:text-white" : "text-black/50 hover:text-primary"} transition`}
+                            >
+                                <Instagram className="h-4 w-4" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </div>
     );
