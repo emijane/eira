@@ -12,7 +12,7 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
     const totalCategories = filters.categories.length;
 
     return (
-        <section className="relative overflow-visible border-b border-b-white/60 bg-[radial-gradient(circle_at_top_right,rgba(196,181,253,0.28),transparent_18%),radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.16),transparent_20%),radial-gradient(circle_at_bottom_right,rgba(120,214,229,0.24),transparent_24%),linear-gradient(135deg,#403569_0%,#5765c8_28%,#85a8ff_60%,#75d1e1_84%,#d5f2f3_100%)] px-6 py-10 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12 lg:py-16">
+        <section className="relative overflow-visible border-b border-b-white/60 bg-[radial-gradient(circle_at_top_right,rgba(167,139,250,0.24),transparent_18%),radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.12),transparent_20%),radial-gradient(circle_at_bottom_right,rgba(56,189,248,0.18),transparent_24%),linear-gradient(135deg,#24174a_0%,#3f3280_24%,#5b5fc7_52%,#4f8fd1_76%,#72c3d6_100%)] px-6 py-10 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12 lg:py-16">
             <div className="relative mx-auto max-w-7xl">
                 <div className="max-w-4xl">
                     <div>
