@@ -64,7 +64,8 @@ const TAXONOMY = {
         "Color Tools",
         "Gradient & Background Generators",
         "UI Generators",
-        "SVG & Vector Tools"
+        "SVG & Vector Tools",
+        "Mockup & Screenshot Tools"
     ],
     "State & Data Management": [
         "State Management",
@@ -213,6 +214,7 @@ Examples:
 - Tailwind CSS -> UI & Styling / CSS Frameworks
 - Fontshare -> UI & Styling / Typography
 - Coolors -> UI & Styling / Color Tools
+- Shots -> UI & Styling / Mockup & Screenshot Tools
 - Clerk -> Authentication / Auth Providers
 - Supabase -> Backend & Database / Backend-as-a-Service
 `;

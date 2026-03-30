@@ -217,6 +217,7 @@ UI & Styling:
 - Gradient & Background Generators
 - UI Generators
 - SVG & Vector Tools
+- Mockup & Screenshot Tools
 
 State & Data Management:
 - State Management
