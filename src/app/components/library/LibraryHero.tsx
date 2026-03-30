@@ -6,6 +6,8 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
     const featuredCategories = Object.entries(filters.categoryCounts)
         .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
         .slice(0, 3);
+    const collectionPreview = featuredCategories.slice(0, 2);
+    const primaryCollection = collectionPreview[0]?.[0] ?? "UI & Styling";
 
     return (
         <section className="relative overflow-visible border-b border-b-white bg-[radial-gradient(circle_at_top_right,rgba(167,210,255,0.28),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(196,181,253,0.24),transparent_22%),linear-gradient(135deg,#3d3360_0%,#4d5fbf_22%,#8da7ff_52%,#6fcfe2_78%,#d3f2f3_100%)] px-6 py-10 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12 lg:py-14">
@@ -34,32 +36,43 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
                         <div className="rounded-[1.75rem] border border-white/24 bg-white/18 p-4 shadow-[0_22px_44px_-34px_rgba(43,37,57,0.3)] backdrop-blur-xl">
                             <div className="rounded-[1.4rem] border border-white/42 bg-[linear-gradient(160deg,rgba(255,255,255,0.82)_0%,rgba(240,248,255,0.68)_100%)] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-600">
-                                    quick paths
+                                    curated collection
                                 </p>
-                                <p className="mt-3 text-lg font-semibold tracking-tight text-slate-900">
-                                    Jump straight into the busiest parts of the library.
+                                <p className="mt-3 max-w-[15rem] text-xl font-semibold tracking-tight text-slate-900">
+                                    Tools for shipping polished interfaces faster.
                                 </p>
-                                <div className="mt-5 grid gap-3">
-                                    {featuredCategories.map(([category, count]) => (
-                                        <Link
+                                <p className="mt-3 text-sm leading-6 text-slate-600">
+                                    A focused starting point for building UI systems, landing
+                                    pages, and frontend workflows that feel finished.
+                                </p>
+                                <div className="mt-5 flex flex-wrap gap-2">
+                                    {collectionPreview.map(([category, count]) => (
+                                        <span
                                             key={category}
-                                            href={`/library?category=${encodeURIComponent(category)}`}
-                                            className="flex items-center justify-between rounded-2xl border border-white/38 bg-[rgba(255,255,255,0.56)] px-4 py-3 text-left shadow-[0_10px_24px_-20px_rgba(43,37,57,0.25)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/72"
+                                            className="inline-flex items-center rounded-full border border-white/48 bg-[rgba(255,255,255,0.64)] px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-[0_10px_24px_-22px_rgba(43,37,57,0.28)]"
                                         >
-                                            <span className="block text-sm font-semibold text-slate-800">
-                                                {category}
-                                            </span>
-                                            <span className="text-sm font-semibold text-slate-900">
-                                                {count}
-                                            </span>
-                                        </Link>
+                                            {category}
+                                            <span className="ml-2 text-slate-500">{count}</span>
+                                        </span>
                                     ))}
                                 </div>
+                                <div className="mt-5 rounded-2xl border border-white/40 bg-[rgba(255,255,255,0.52)] p-4 shadow-[0_12px_28px_-24px_rgba(43,37,57,0.28)]">
+                                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+                                        includes
+                                    </p>
+                                    <p className="mt-2 text-sm leading-6 text-slate-700">
+                                        Hand-picked picks across{" "}
+                                        <span className="font-semibold text-slate-900">
+                                            {primaryCollection}
+                                        </span>{" "}
+                                        and adjacent categories worth browsing together.
+                                    </p>
+                                </div>
                                 <Link
-                                    href="/library"
-                                    className="mt-4 inline-flex text-sm font-semibold text-slate-700 transition hover:text-slate-950"
+                                    href={`/library?category=${encodeURIComponent(primaryCollection)}`}
+                                    className="mt-5 inline-flex items-center rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
                                 >
-                                    Explore the full library
+                                    View collection
                                 </Link>
                             </div>
                         </div>
