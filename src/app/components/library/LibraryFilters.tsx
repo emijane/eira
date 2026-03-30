@@ -170,7 +170,7 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
 
     return (
         <div className="mt-10 overflow-visible">
-            <div className="rounded-2xl border-2 border-brand-ink/10 bg-white shadow-[0_18px_44px_-34px_rgba(43,37,57,0.16)]">
+            <div className="rounded-[1.8rem] border border-white/22 bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(248,250,255,0.92)_100%)] p-1 shadow-[0_24px_50px_-34px_rgba(24,24,40,0.38)]">
                 <form
                     onSubmit={(event) => {
                         event.preventDefault();
@@ -179,7 +179,7 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                             searchQuery: String(formData.get("q") ?? ""),
                         });
                     }}
-                    className="flex h-14 items-center rounded-xl bg-white px-3"
+                    className="flex h-16 items-center rounded-[1.35rem] bg-white/96 px-4"
                 >
                     <Search className="h-4 w-4 text-brand-haze" />
                     <input
@@ -188,7 +188,7 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                         key={activeSearchQuery}
                         defaultValue={activeSearchQuery}
                         placeholder="Search tools, frameworks, and categories"
-                        className="ml-3 w-full bg-transparent text-sm text-brand-ink outline-none placeholder:text-brand-haze"
+                        className="ml-3 w-full bg-transparent text-[0.96rem] text-brand-ink outline-none placeholder:text-brand-haze"
                     />
 
                     <button
@@ -197,7 +197,7 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                             setFiltersOpen((current) => !current);
                             closeMenu();
                         }}
-                        className="inline-flex h-10 items-center gap-2 border-l border-brand-ink/8 pl-4 pr-2 text-sm font-medium text-brand-ink transition hover:text-brand-inkSoft"
+                        className="inline-flex h-11 items-center gap-2 rounded-full border border-brand-ink/8 bg-brand-cream/45 px-4 text-sm font-medium text-brand-ink transition hover:border-brand-ink/14 hover:bg-brand-cream/75 hover:text-brand-inkSoft"
                     >
                         <SlidersHorizontal className="h-4 w-4" />
                         Filters
@@ -206,8 +206,8 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
             </div>
 
             {filtersOpen ? (
-                <div className="mt-3 rounded-3xl border border-brand-ink/8 bg-white/96 p-4 shadow-[0_18px_44px_-34px_rgba(43,37,57,0.16)] sm:p-5">
-                    <div className="mb-4 flex flex-wrap gap-2">
+                <div className="mt-4 rounded-[2rem] border border-white/22 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(245,248,255,0.92)_100%)] p-5 shadow-[0_24px_50px_-34px_rgba(24,24,40,0.38)] sm:p-6">
+                    <div className="mb-5 flex flex-wrap gap-2">
                         {activeSearchQuery ? (
                             <span className="rounded-full bg-brand-oat px-3 py-1 text-xs font-medium text-brand-ink">
                                 {activeSearchQuery}
@@ -224,7 +224,7 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                             </span>
                         ) : null}
                     </div>
-                    <div className="grid gap-4 md:grid-cols-2">
+                    <div className="grid gap-5 md:grid-cols-2">
                         <div>
                             <FilterDropdown
                                 label="Category"
@@ -264,17 +264,17 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                             />
                         </div>
                     </div>
-                    <div className="mt-5 flex flex-wrap gap-3">
+                    <div className="mt-6 flex flex-wrap gap-3">
                         <button
                             type="submit"
-                            className="inline-flex h-10 items-center justify-center rounded-2xl bg-brand-ink px-4 text-sm font-medium text-white transition hover:bg-brand-inkSoft"
+                            className="inline-flex h-11 items-center justify-center rounded-full bg-brand-ink px-5 text-sm font-medium text-white shadow-[0_18px_28px_-20px_rgba(43,37,57,0.5)] transition hover:bg-brand-inkSoft"
                         >
                             Apply Search
                         </button>
                         <button
                             type="button"
                             onClick={clearFilters}
-                            className="inline-flex h-10 items-center justify-center rounded-2xl border border-brand-ink/10 bg-white px-4 text-sm font-medium text-brand-copy transition hover:border-brand-ink/18 hover:text-brand-ink"
+                            className="inline-flex h-11 items-center justify-center rounded-full border border-brand-ink/10 bg-white px-5 text-sm font-medium text-brand-copy transition hover:border-brand-ink/18 hover:text-brand-ink"
                         >
                             Clear Filters
                         </button>
