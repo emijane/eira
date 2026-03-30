@@ -9,12 +9,12 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
                 <div className="max-w-4xl mb-10">
                     <div>
                         <div className="flex items-center gap-4">
-                            <span className="inline-flex items-center rounded-full border border-black/10 bg-white px-4 py-1.5 text-xs font-semibold text-primary">
-                                curated tool library
+                            <span className="inline-flex items-center text-s font-semibold text-transparent bg-clip-text bg-[linear-gradient(90deg,var(--color-primary),var(--color-secondary))]">
+                                Curated Tool Library
                             </span>
                         </div>
 
-                        <h1 className="mt-8 max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-black sm:text-5xl lg:text-[4.25rem] lg:leading-[0.95]">
+                        <h1 className="mt-2 max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-black sm:text-5xl lg:text-[4.25rem] lg:leading-[0.95]">
                             Find your next favorite tool within minutes.
                         </h1>
 
