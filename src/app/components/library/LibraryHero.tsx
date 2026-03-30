@@ -13,7 +13,7 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
     const totalCategories = filters.categories.length;
 
     return (
-        <section className="relative overflow-visible border-b border-b-white/60 bg-[radial-gradient(circle_at_top_right,rgba(221,214,254,0.22),transparent_24%),radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.06),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(233,213,255,0.24),transparent_34%),linear-gradient(135deg,#24174a_0%,#2c1d56_22%,#221537_46%,#4a316f_72%,#d9c7f6_100%)] px-6 py-5 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12">
+        <section className="relative overflow-visible border-b border-b-white/60 bg-[radial-gradient(circle_at_top_right,rgba(255,198,227,0.8),transparent_24%),radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.06),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(233,213,255,0.24),transparent_34%),linear-gradient(135deg,#24174a_0%,#2c1d56_22%,#221537_46%,#4a316f_72%,#d9c7f6_100%)] px-6 py-5 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12">
             <div className="relative mx-auto max-w-7xl">
                 <MainMenu/>
                 <div className="max-w-4xl mb-10">
@@ -25,11 +25,11 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
                             <span className="hidden h-px flex-1 bg-[linear-gradient(90deg,rgba(255,255,255,0.22),rgba(209,242,243,0.28),transparent)] sm:block" />
                         </div>
 
-                        <h1 className="mt-8 max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-[4.25rem] lg:leading-[0.98]">
+                        <h1 className="mt-8 max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-[4.25rem] lg:leading-[0.95]">
                             Find your next favorite tool within minutes.
                         </h1>
 
-                        <p className="mt-6 max-w-2xl text-[1.02rem] leading-8 text-white/84">
+                        <p className="mt-6 max-w-2xl text-[1.02rem] leading-6 text-white/84">
                             Explore standout tools for building web products, narrow by category
                             or tags, and quickly scan what fits your stack best.
                         </p>
