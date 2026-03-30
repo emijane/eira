@@ -18,7 +18,7 @@ export default function MainMenu() {
 
     return (
         <div className="mx-auto flex items-center gap-6">
-            <div className="flex min-w-0 items-center gap-6 sm:gap-8">
+            <div className="flex min-w-0 items-center gap-3">
                 <Link
                     href="/"
                     className="inline-flex items-center gap-1 transition hover:opacity-90"
@@ -30,15 +30,15 @@ export default function MainMenu() {
                         height={44}
                         className="h-11 w-11 object-contain"
                     />
-                    <span className={`text-xl font-semibold tracking-tight ${usesLightText ? "text-white" : "text-black"}`}>
+                    <span className={`text-[1.75rem] font-semibold tracking-[-0.04em] ${usesLightText ? "text-white" : "text-black"}`}>
                         eira
                         <span className="ml-1 font-medium text-primary">/ tools</span>
                     </span>
                 </Link>
             </div>
 
-            <nav aria-label="Primary" className="min-w-0">
-                <ul className="flex items-center gap-4 sm:gap-6">
+            <nav aria-label="Primary" className="ml-auto min-w-0">
+                <ul className="flex items-center gap-5 sm:gap-8">
                     {menuItems.map((item) => {
                         const isActive = pathname === item.href;
 
@@ -46,7 +46,7 @@ export default function MainMenu() {
                             <li key={item.href}>
                                 <Link
                                     href={item.href}
-                                    className={`text-sm font-medium tracking-[0.01em] transition ${
+                                    className={`text-[0.95rem] font-medium tracking-[-0.01em] transition ${
                                         isActive
                                             ? usesLightText
                                                 ? "text-white"
