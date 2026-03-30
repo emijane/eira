@@ -14,9 +14,10 @@ const menuItems = [
 
 export default function MainMenu() {
     const pathname = usePathname();
+    const usesLightText = pathname === "/" || pathname === "/collections" || pathname === "/submit-a-tool" || pathname === "/about";
 
     return (
-        <div className="mx-auto mb-10 flex items-center gap-6">
+        <div className="mx-auto flex items-center gap-6">
             <div className="flex min-w-0 items-center gap-6 sm:gap-8">
                 <Link
                     href="/"
@@ -29,7 +30,7 @@ export default function MainMenu() {
                         height={44}
                         className="h-11 w-11 object-contain"
                     />
-                    <span className="text-xl font-semibold tracking-tight text-black">
+                    <span className={`text-xl font-semibold tracking-tight ${usesLightText ? "text-white" : "text-black"}`}>
                         eira
                         <span className="ml-1 font-medium text-primary">/ tools</span>
                     </span>
@@ -47,8 +48,12 @@ export default function MainMenu() {
                                     href={item.href}
                                     className={`text-sm font-medium tracking-[0.01em] transition ${
                                         isActive
-                                            ? "text-black"
-                                            : "text-black/56 hover:text-black"
+                                            ? usesLightText
+                                                ? "text-white"
+                                                : "text-black"
+                                            : usesLightText
+                                                ? "text-white/72 hover:text-white"
+                                                : "text-black/56 hover:text-black"
                                     }`}
                                     aria-current={isActive ? "page" : undefined}
                                 >

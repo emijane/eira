@@ -1,11 +1,9 @@
 import type { ToolFilters } from "@/lib/getTools";
-import MainMenu from "../MainMenu";
 
 export default function LibraryHero({ filters }: { filters: ToolFilters }) {
     return (
-        <section className="relative overflow-visible px-6 py-5 sm:px-8 lg:px-12">
+        <section className="relative overflow-visible px-6 pt-28 sm:px-8 lg:px-12">
             <div className="relative mx-auto max-w-[1560px]">
-                <MainMenu/>
                 <div className="max-w-4xl mb-10">
                     <div>
                         <div className="flex items-center gap-4">
