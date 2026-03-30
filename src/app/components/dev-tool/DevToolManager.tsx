@@ -209,6 +209,34 @@ export default function DevToolManager() {
                             className="h-12 w-full rounded-2xl border border-black/10 bg-white px-4 text-sm text-black outline-none placeholder:text-black/35"
                         />
                     </label>
+                    <div className="rounded-[1.5rem] border border-dashed border-black/12 bg-[#fcfcfc] p-5">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
+                            Upload image
+                        </p>
+                        <div className="mt-3 flex flex-wrap items-center gap-3">
+                            <label className="cursor-pointer rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-black/75 transition hover:text-black">
+                                Choose file
+                                <input
+                                    type="file"
+                                    accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
+                                    className="sr-only"
+                                    onChange={(event) => {
+                                        setSelectedFile(event.target.files?.[0] ?? null);
+                                        setDraft(null);
+                                        setDuplicate(null);
+                                        setInsertedTool(null);
+                                    }}
+                                />
+                            </label>
+                            <span className="text-sm text-black/55">
+                                {selectedFile ? `${selectedFile.name} selected` : "No file selected"}
+                            </span>
+                        </div>
+                        <p className="mt-3 text-sm leading-6 text-black/70">
+                            Image upload is required. Classification uploads the file to Supabase first.
+                            Max size: 5 MB. Allowed types: PNG, JPG, JPEG, WebP.
+                        </p>
+                    </div>
 
                     <div className="flex flex-wrap gap-3">
                         <button
@@ -220,35 +248,6 @@ export default function DevToolManager() {
                         </button>
                     </div>
                 </form>
-
-                <div className="mt-4 rounded-[1.5rem] border border-dashed border-black/12 bg-[#fcfcfc] p-5">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                        Upload image
-                    </p>
-                    <div className="mt-3 flex flex-wrap items-center gap-3">
-                        <label className="cursor-pointer rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-black/75 transition hover:text-black">
-                            Choose file
-                            <input
-                                type="file"
-                                accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
-                                className="sr-only"
-                                onChange={(event) => {
-                                    setSelectedFile(event.target.files?.[0] ?? null);
-                                    setDraft(null);
-                                    setDuplicate(null);
-                                    setInsertedTool(null);
-                                }}
-                            />
-                        </label>
-                        <span className="text-sm text-black/55">
-                            {selectedFile ? `${selectedFile.name} selected` : "No file selected"}
-                        </span>
-                    </div>
-                    <p className="mt-3 text-sm leading-6 text-black/70">
-                        Image upload is required. Classification uploads the file to Supabase first.
-                        Max size: 5 MB. Allowed types: PNG, JPG, JPEG, WebP.
-                    </p>
-                </div>
 
                 {statusMessage ? (
                     <div className="mt-4 rounded-2xl border border-primary/16 bg-primary/6 px-4 py-3 text-sm text-black/75">
