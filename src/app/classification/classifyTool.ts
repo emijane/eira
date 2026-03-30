@@ -194,7 +194,7 @@ ${TAXONOMY_TEXT}
 
 Rules:
 - Use the real product name.
-- Description must be 1-2 sentences, neutral, no marketing fluff.
+- Description must be exactly 1 sentence, neutral, and no marketing fluff.
 - Tags must be lowercase, relevant, and consistent across tools.
 - Prefer short reusable tags over creative variations.
 - Avoid near-duplicate tags and synonyms unless one version is clearly the project standard.
