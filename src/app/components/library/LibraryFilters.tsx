@@ -105,7 +105,7 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
     const activeSearchQuery = searchParams.get("q") ?? "";
     const activeCategory = searchParams.get("category") ?? "all";
     const activeSubcategory = searchParams.get("subcategory") ?? "all";
-    const [filtersOpen, setFiltersOpen] = useState(true);
+    const [filtersOpen, setFiltersOpen] = useState(false);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
 
     const closeMenu = () => setOpenMenu(null);
@@ -205,8 +205,21 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                 </form>
             </div>
 
-            {filtersOpen ? (
-                <div className="mt-4 rounded-[2rem] border border-white/22 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(245,248,255,0.92)_100%)] p-5 shadow-[0_24px_50px_-34px_rgba(24,24,40,0.38)] sm:p-6">
+            <div
+                className={`overflow-hidden transition-[max-height,opacity,margin] duration-200 ease-out ${
+                    filtersOpen
+                        ? "mt-4 max-h-[32rem] opacity-100"
+                        : "mt-0 max-h-0 opacity-0"
+                }`}
+                aria-hidden={!filtersOpen}
+            >
+                <div
+                    className={`rounded-[2rem] border border-white/22 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(245,248,255,0.92)_100%)] p-5 shadow-[0_24px_50px_-34px_rgba(24,24,40,0.38)] transition-transform duration-200 ease-out sm:p-6 ${
+                        filtersOpen
+                            ? "translate-y-0"
+                            : "-translate-y-1 pointer-events-none"
+                    }`}
+                >
                     <div className="mb-5 flex flex-wrap gap-2">
                         {activeSearchQuery ? (
                             <span className="rounded-full bg-brand-oat px-3 py-1 text-xs font-medium text-brand-ink">
@@ -280,7 +293,7 @@ export default function LibraryFilters({ filters }: { filters: ToolFilters }) {
                         </button>
                     </div>
                 </div>
-            ) : null}
+            </div>
         </div>
     );
 }
