@@ -29,7 +29,7 @@ export default function MainMenu() {
                         height={44}
                         className="h-11 w-11 object-contain"
                     />
-                    <span className="text-xl font-semibold tracking-tight text-white">
+                    <span className="text-xl font-semibold tracking-tight text-black">
                         eira
                         <span className="ml-1 font-medium text-primary">/ tools</span>
                     </span>
@@ -47,8 +47,8 @@ export default function MainMenu() {
                                     href={item.href}
                                     className={`text-sm font-medium tracking-[0.01em] transition ${
                                         isActive
-                                            ? "text-white"
-                                            : "text-white/72 hover:text-white"
+                                            ? "text-black"
+                                            : "text-black/56 hover:text-black"
                                     }`}
                                     aria-current={isActive ? "page" : undefined}
                                 >

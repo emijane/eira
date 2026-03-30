@@ -54,10 +54,10 @@ function FilterDropdown({
             <button
                 type="button"
                 onClick={onToggle}
-                className={`flex h-12 w-full items-center justify-between rounded-2xl border px-4 text-left text-white/72 transition ${
+                className={`flex h-12 w-full items-center justify-between rounded-2xl border px-4 text-left text-black/72 transition ${
                     isOpen
-                        ? "border-primary/34 bg-white/8 text-white"
-                        : "border-white/10 bg-white/6 hover:border-primary/24 hover:text-white"
+                        ? "border-primary/34 bg-white text-black"
+                        : "border-black/10 bg-white hover:border-primary/24 hover:text-black"
                 }`}
             >
                 <span className="truncate text-sm">{selected.label}</span>
@@ -67,7 +67,7 @@ function FilterDropdown({
             </button>
 
             {isOpen ? (
-                <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,15,34,0.96)_0%,rgba(14,10,24,0.94)_100%)] shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl">
+                <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_16px_40px_-24px_rgba(16,24,40,0.14)]">
                     <ul className="max-h-72 overflow-auto py-2">
                         {options.map((option) => {
                             const active = option.value === value;
@@ -79,8 +79,8 @@ function FilterDropdown({
                                         onClick={() => onSelect(option.value)}
                                         className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition ${
                                             active
-                                                ? "bg-secondary/16 font-medium text-primary"
-                                                : "text-white/72 hover:bg-white/6 hover:text-white"
+                                                ? "bg-primary/12 font-medium text-primary"
+                                                : "text-black/72 hover:bg-black/[0.03] hover:text-black"
                                         }`}
                                     >
                                         <span>{option.label}</span>
@@ -210,7 +210,7 @@ export function LibraryControls({
                             searchQuery: String(formData.get("q") ?? ""),
                         });
                     }}
-                    className="flex h-12 items-center gap-3 rounded-[1.1rem] border border-primary/40 bg-transparent pl-4 pr-2"
+                    className="flex h-12 items-center gap-3 rounded-[1.1rem] border border-black/10 bg-white pl-4 pr-2"
                 >
                     <Search className="h-5 w-5 shrink-0 text-primary" />
                     <input
@@ -219,7 +219,7 @@ export function LibraryControls({
                         key={activeSearchQuery}
                         defaultValue={activeSearchQuery}
                         placeholder="Search tools, frameworks, and categories"
-                        className="min-w-0 flex-1 bg-transparent text-[0.92rem] text-white outline-none placeholder:text-white/34"
+                        className="min-w-0 flex-1 bg-transparent text-[0.92rem] text-black outline-none placeholder:text-black/35"
                     />
 
                     <button
@@ -228,7 +228,7 @@ export function LibraryControls({
                             setControlsOpen((current) => !current);
                             closeMenu();
                         }}
-                        className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-[linear-gradient(135deg,rgba(112,89,228,0.34)_0%,rgba(197,168,235,0.22)_100%)] px-3.5 text-[0.82rem] font-medium text-primary shadow-[0_10px_28px_-18px_rgba(112,89,228,0.75)] transition hover:bg-[linear-gradient(135deg,rgba(112,89,228,0.42)_0%,rgba(197,168,235,0.28)_100%)] hover:text-white"
+                        className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3.5 text-[0.82rem] font-medium text-primary transition hover:bg-primary/16"
                     >
                         <SlidersHorizontal className="h-3.5 w-3.5" />
                         <span className="hidden sm:inline">Filters</span>
@@ -247,7 +247,7 @@ export function LibraryControls({
                         <button
                             type="button"
                             onClick={clearFilters}
-                            className="text-xs font-medium text-white/56 transition hover:text-white"
+                            className="text-xs font-medium text-black/48 transition hover:text-black"
                         >
                             Clear all
                         </button>
@@ -292,7 +292,7 @@ export function LibraryControls({
                         <select
                             value={activeSort}
                             onChange={(event) => updateFilters({ sort: event.target.value })}
-                            className="h-12 w-full rounded-2xl border border-white/10 bg-white/6 px-4 text-sm text-white outline-none"
+                            className="h-12 w-full rounded-2xl border border-black/10 bg-white px-4 text-sm text-black outline-none"
                         >
                             <option value="popular">Most popular</option>
                             <option value="alphabetical">Alphabetical</option>
