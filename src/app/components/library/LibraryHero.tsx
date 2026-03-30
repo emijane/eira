@@ -1,5 +1,4 @@
 import type { ToolFilters } from "@/lib/getTools";
-import LibraryFilters from "./LibraryFilters";
 import MainMenu from "../MainMenu";
 
 export default function LibraryHero({ filters }: { filters: ToolFilters }) {
@@ -46,7 +45,6 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
                                 </span>
                             ) : null}
                         </div>
-                        <LibraryFilters filters={filters} />
                     </div>
                 </div>
             </div>

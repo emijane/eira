@@ -59,7 +59,7 @@ export default async function LibraryPage({
                             subcategory={subcategory}
                         />
                         <div className="xl:sticky xl:top-28">
-                            <LibrarySidebar />
+                            <LibrarySidebar filters={filters} />
                         </div>
                     </div>
                 )}

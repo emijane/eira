@@ -1,3 +1,6 @@
+import type { ToolFilters } from "@/lib/getTools";
+import { LibrarySidebarFilters } from "./LibraryFilters";
+
 const relatedTools = [
     "ui kits",
     "react libraries",
@@ -7,9 +10,10 @@ const relatedTools = [
     "component libraries",
 ];
 
-export default function LibrarySidebar() {
+export default function LibrarySidebar({ filters }: { filters: ToolFilters }) {
     return (
         <aside className="space-y-6">
+            <LibrarySidebarFilters filters={filters} />
             <section className="rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,15,34,0.84)_0%,rgba(14,10,24,0.76)_100%)] p-6 shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
                     submit a tool
