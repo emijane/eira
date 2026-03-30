@@ -1,5 +1,6 @@
 import type { ToolFilters } from "@/lib/getTools";
 import LibraryFilters from "./LibraryFilters";
+import MainMenu from "../MainMenu";
 
 export default function LibraryHero({ filters }: { filters: ToolFilters }) {
     const featuredCategories = Object.entries(filters.categoryCounts)
@@ -12,9 +13,10 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
     const totalCategories = filters.categories.length;
 
     return (
-        <section className="relative overflow-visible border-b border-b-white/60 bg-[radial-gradient(circle_at_top_right,rgba(221,214,254,0.22),transparent_24%),radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.06),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(233,213,255,0.24),transparent_34%),linear-gradient(135deg,#24174a_0%,#2c1d56_22%,#221537_46%,#4a316f_72%,#d9c7f6_100%)] px-6 py-10 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12 lg:py-16">
+        <section className="relative overflow-visible border-b border-b-white/60 bg-[radial-gradient(circle_at_top_right,rgba(221,214,254,0.22),transparent_24%),radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.06),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(233,213,255,0.24),transparent_34%),linear-gradient(135deg,#24174a_0%,#2c1d56_22%,#221537_46%,#4a316f_72%,#d9c7f6_100%)] px-6 py-5 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12">
             <div className="relative mx-auto max-w-7xl">
-                <div className="max-w-4xl">
+                <MainMenu/>
+                <div className="max-w-4xl mb-10">
                     <div>
                         <div className="flex items-center gap-4">
                             <span className="inline-flex items-center rounded-full border border-white/20 bg-white/12 px-4 py-1.5 text-xs font-semibold text-white/88 shadow-[inset_0_1px_0_rgba(255,255,255,0.14)] backdrop-blur-sm">
