@@ -50,17 +50,19 @@ export default async function LibraryPage({
                 {totalTools === 0 ? (
                     <LibraryEmptyState />
                 ) : (
-                    <div className="mx-auto mt-2 max-w-7xl p-7 lg:p-0">
-                        <InfiniteLibraryGrid
-                            initialTools={tools}
-                            initialHasMore={hasMore}
-                            pageSize={LIBRARY_PAGE_SIZE}
-                            filters={filters}
-                            searchQuery={query}
-                            category={category}
-                            subcategory={subcategory}
-                            sort={sort}
-                        />
+                    <div className="mt-2 px-6 pb-8 sm:px-8 lg:px-12">
+                        <div className="mx-auto max-w-[1560px]">
+                            <InfiniteLibraryGrid
+                                initialTools={tools}
+                                initialHasMore={hasMore}
+                                pageSize={LIBRARY_PAGE_SIZE}
+                                filters={filters}
+                                searchQuery={query}
+                                category={category}
+                                subcategory={subcategory}
+                                sort={sort}
+                            />
+                        </div>
                     </div>
                 )}
             </div>

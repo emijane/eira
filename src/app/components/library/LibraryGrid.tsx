@@ -13,7 +13,7 @@ export default function LibraryGrid({
     return (
         <section>
             <LibraryControls filters={filters} />
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                 {tools.map((tool) => (
                     <LibraryCard key={tool.id} tool={tool} />
                 ))}
