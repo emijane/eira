@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, Slash } from "lucide-react";
@@ -31,8 +32,15 @@ export default function Header() {
                 <div className="flex min-w-0 items-center gap-4">
                     <Link
                         href="/"
-                        className="inline-flex items-baseline gap-0.5 transition hover:opacity-90"
+                        className="inline-flex items-center gap-1.5 transition hover:opacity-90"
                     >
+                        <Image
+                            src="/eria-icon.png"
+                            alt="Eira Tools icon"
+                            width={28}
+                            height={28}
+                            className="h-7 w-7 object-contain"
+                        />
                         <span className="text-lg font-semibold tracking-tight text-stone-900">
                             eira
                         </span>
