@@ -13,7 +13,7 @@ export default function LibraryHero({ filters }: { filters: ToolFilters }) {
     const totalCategories = filters.categories.length;
 
     return (
-        <section className="relative overflow-visible border-b border-b-white/60 bg-[radial-gradient(circle_at_top_right,rgba(255,198,227,0.8),transparent_24%),radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.06),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(233,213,255,0.24),transparent_34%),linear-gradient(135deg,#24174a_0%,#2c1d56_22%,#221537_46%,#4a316f_72%,#d9c7f6_100%)] px-6 py-5 shadow-[0_28px_90px_-42px_rgba(43,37,57,0.28)] sm:px-8 lg:px-12">
+        <section className="relative overflow-visible border-b border-b-white/20 px-6 py-5 sm:px-8 lg:px-12">
             <div className="relative mx-auto max-w-7xl">
                 <MainMenu/>
                 <div className="max-w-4xl mb-10">
