@@ -59,7 +59,11 @@ const TAXONOMY = {
         "Styling Utilities",
         "Animation Libraries",
         "Icon Libraries",
-        "Design Systems"
+        "Design Systems",
+        "Typography",
+        "Color Tools",
+        "Gradient & Background Generators",
+        "UI Generators"
     ],
     "State & Data Management": [
         "State Management",
@@ -206,6 +210,8 @@ Rules:
 Examples:
 - Next.js -> Frameworks / React Frameworks
 - Tailwind CSS -> UI & Styling / CSS Frameworks
+- Fontshare -> UI & Styling / Typography
+- Coolors -> UI & Styling / Color Tools
 - Clerk -> Authentication / Auth Providers
 - Supabase -> Backend & Database / Backend-as-a-Service
 `;

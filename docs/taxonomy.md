@@ -212,6 +212,10 @@ UI & Styling:
 - Animation Libraries
 - Icon Libraries
 - Design Systems
+- Typography
+- Color Tools
+- Gradient & Background Generators
+- UI Generators
 
 State & Data Management:
 - State Management
