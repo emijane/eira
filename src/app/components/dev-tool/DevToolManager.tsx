@@ -91,6 +91,16 @@ export default function DevToolManager() {
 
     async function handleClassify(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        if (!websiteUrl.trim()) {
+            setErrorMessage("Enter a website URL first.");
+            return;
+        }
+
+        if (!selectedFile) {
+            setErrorMessage("Upload an image before classifying the tool.");
+            return;
+        }
+
         // Classification gives us a preview row first, mirroring the old terminal review step.
         setIsClassifying(true);
         setErrorMessage(null);
@@ -177,7 +187,7 @@ export default function DevToolManager() {
                         Quick add
                     </p>
                     <h2 className="mt-2 text-2xl font-semibold tracking-tight text-black">
-                        URL + image placeholder
+                        Upload URL and image
                     </h2>
                 </div>
 
@@ -208,14 +218,6 @@ export default function DevToolManager() {
                         >
                             {isClassifying ? "Classifying..." : "Classify tool"}
                         </button>
-                        <button
-                            type="button"
-                            onClick={handleInsert}
-                            disabled={isInserting || !draft || !!duplicate}
-                            className="rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-black/75 transition hover:text-black disabled:cursor-not-allowed disabled:opacity-45"
-                        >
-                            {isInserting ? "Inserting..." : "Confirm insert"}
-                        </button>
                     </div>
                 </form>
 
@@ -243,7 +245,7 @@ export default function DevToolManager() {
                         </span>
                     </div>
                     <p className="mt-3 text-sm leading-6 text-black/70">
-                        Upload runs during classification and stores the image in Supabase.
+                        Image upload is required. Classification uploads the file to Supabase first.
                         Max size: 5 MB. Allowed types: PNG, JPG, JPEG, WebP.
                     </p>
                 </div>
@@ -269,10 +271,10 @@ export default function DevToolManager() {
                                 Confirmation
                             </p>
                             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-black">
-                                Review before inserting
+                                Review tool before insertion
                             </h2>
                             <p className="mt-2 text-sm text-black/60">
-                                Check the preview card and generated metadata first.
+                                Step 3: review the generated card and metadata, then confirm insertion.
                             </p>
                         </div>
                         {insertedTool ? (
