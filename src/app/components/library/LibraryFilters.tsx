@@ -163,10 +163,8 @@ function useLibraryFilterControls() {
 
 export function LibraryControls({
     filters,
-    visibleTools,
 }: {
     filters: ToolFilters;
-    visibleTools: number;
 }) {
     const {
         activeSearchQuery,
@@ -202,8 +200,8 @@ export function LibraryControls({
     ];
 
     return (
-        <section className="mb-6 rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,15,34,0.84)_0%,rgba(14,10,24,0.76)_100%)] p-4 shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl sm:p-5">
-            <div className="flex flex-col gap-3">
+        <section>
+            <div className="flex flex-col gap-2 mb-10">
                 <form
                     onSubmit={(event) => {
                         event.preventDefault();
@@ -212,7 +210,7 @@ export function LibraryControls({
                             searchQuery: String(formData.get("q") ?? ""),
                         });
                     }}
-                    className="flex h-12 items-center gap-3 rounded-[1.1rem] border border-primary/40 bg-[linear-gradient(180deg,rgba(20,15,34,0.86)_0%,rgba(14,10,24,0.78)_100%)] pl-4 pr-2 shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl"
+                    className="flex h-12 items-center gap-3 rounded-[1.1rem] border border-primary/40 bg-transparent pl-4 pr-2"
                 >
                     <Search className="h-5 w-5 shrink-0 text-primary" />
                     <input
@@ -236,21 +234,6 @@ export function LibraryControls({
                         <span className="hidden sm:inline">Filters</span>
                     </button>
                 </form>
-
-                <div className="flex items-center justify-between gap-3 px-1">
-                    <p className="text-xs font-medium uppercase tracking-[0.12em] text-primary/82">
-                        {visibleTools} tools
-                    </p>
-                    {(activeCategory !== "all" || activeSubcategory !== "all" || activeSearchQuery) ? (
-                        <button
-                            type="button"
-                            onClick={clearFilters}
-                            className="text-xs font-medium text-white/56 transition hover:text-white"
-                        >
-                            Clear all
-                        </button>
-                    ) : null}
-                </div>
             </div>
 
             <div
@@ -259,6 +242,17 @@ export function LibraryControls({
                 }`}
                 aria-hidden={!controlsOpen}
             >
+                {(activeCategory !== "all" || activeSubcategory !== "all" || activeSearchQuery) ? (
+                    <div className="mb-4 flex justify-end">
+                        <button
+                            type="button"
+                            onClick={clearFilters}
+                            className="text-xs font-medium text-white/56 transition hover:text-white"
+                        >
+                            Clear all
+                        </button>
+                    </div>
+                ) : null}
                 <div className="grid gap-4 md:grid-cols-3">
                     <FilterDropdown
                         label="Category"

@@ -137,7 +137,6 @@ export default function InfiniteLibraryGrid({
             <LibraryGrid
                 filters={filters}
                 tools={sortTools(tools)}
-                visibleTools={tools.length}
             />
             {errorMessage ? (
                 <div className="mt-6 rounded-3xl border border-rose-300/30 bg-rose-500/10 px-5 py-4 text-sm text-rose-100 backdrop-blur-xl">
