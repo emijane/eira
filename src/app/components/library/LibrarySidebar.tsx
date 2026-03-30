@@ -11,7 +11,7 @@ export default function LibrarySidebar() {
     return (
         <aside className="space-y-6">
             <section className="rounded-3xl border border-brand-ink/10 bg-white/90 p-6 shadow-[0_20px_50px_-38px_rgba(43,37,57,0.28)]">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-haze">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
                     submit a tool
                 </p>
                 <h3 className="mt-3 text-2xl font-semibold tracking-tight text-brand-ink">
@@ -22,7 +22,7 @@ export default function LibrarySidebar() {
                     library.
                 </p>
                 <label className="mt-5 block">
-                    <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-brand-haze">
+                    <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-primary">
                         website
                     </span>
                     <input
@@ -40,7 +40,7 @@ export default function LibrarySidebar() {
             </section>
 
             <section className="rounded-3xl border border-brand-ink/10 bg-white/85 p-6 shadow-[0_18px_40px_-34px_rgba(43,37,57,0.22)]">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-haze">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
                     related tools
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">

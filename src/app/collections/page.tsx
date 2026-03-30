@@ -13,7 +13,7 @@ export default function CollectionsPage() {
       <div className="mx-auto max-w-7xl">
         <MainMenu />
         <section className="rounded-[2rem] border border-brand-ink/8 bg-white p-8 shadow-[0_24px_70px_-44px_rgba(43,37,57,0.3)] sm:p-12">
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-brand-haze">
+          <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary">
             Collections
           </p>
           <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-brand-ink">

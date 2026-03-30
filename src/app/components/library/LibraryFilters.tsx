@@ -48,7 +48,7 @@ function FilterDropdown({
 
     return (
         <div className="relative">
-            <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-haze">
+            <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
                 {label}
             </label>
             <button
