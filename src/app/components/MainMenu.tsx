@@ -9,6 +9,7 @@ const menuItems = [
     { href: "/library", label: "Library" },
     { href: "/collections", label: "Collections" },
     { href: "/submit-a-tool", label: "Submit a Tool" },
+    { href: "/dev-tool", label: "Dev Tool" },
     { href: "/about", label: "About" },
 ];
 
