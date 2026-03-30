@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 type ExistingTool = {
@@ -84,6 +85,9 @@ export default function DevToolManager() {
     const [statusMessage, setStatusMessage] = useState<string | null>(null);
     const [isClassifying, setIsClassifying] = useState(false);
     const [isInserting, setIsInserting] = useState(false);
+    const imagePreviewSrc = draft?.image_file_name
+        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/media/${draft.image_file_name}`
+        : null;
 
     async function handleClassify(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -210,7 +214,7 @@ export default function DevToolManager() {
                             disabled={isInserting || !draft || !!duplicate}
                             className="rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-black/75 transition hover:text-black disabled:cursor-not-allowed disabled:opacity-45"
                         >
-                            {isInserting ? "Inserting..." : "Insert tool"}
+                            {isInserting ? "Inserting..." : "Confirm insert"}
                         </button>
                     </div>
                 </form>
@@ -262,12 +266,14 @@ export default function DevToolManager() {
                     <div className="flex flex-wrap items-start justify-between gap-4">
                         <div>
                             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-                                Generated row
+                                Confirmation
                             </p>
                             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-black">
-                                {draft.name}
+                                Review before inserting
                             </h2>
-                            <p className="mt-2 text-sm text-black/60">{draft.website_url}</p>
+                            <p className="mt-2 text-sm text-black/60">
+                                Check the preview card and generated metadata first.
+                            </p>
                         </div>
                         {insertedTool ? (
                             <span className="rounded-full bg-black px-3 py-1 text-xs font-medium text-white">
@@ -284,9 +290,53 @@ export default function DevToolManager() {
                         )}
                     </div>
 
-                    <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    <div className="mt-6 grid gap-8 xl:grid-cols-[380px_minmax(0,1fr)]">
+                        <article className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-[0_2px_6px_rgba(16,24,40,0.04),0_1px_2px_rgba(16,24,40,0.03)]">
+                            <div className="relative overflow-hidden border-b border-black/8 bg-[#faf8fb]">
+                                {imagePreviewSrc ? (
+                                    <Image
+                                        src={imagePreviewSrc}
+                                        alt={draft.name}
+                                        className="h-56 w-full object-cover object-top"
+                                        width={400}
+                                        height={240}
+                                        sizes="(max-width: 768px) 100vw, 380px"
+                                    />
+                                ) : (
+                                    <div className="flex h-56 w-full items-end bg-[linear-gradient(180deg,#fcfbfd_0%,#f8f6fb_100%)] p-5">
+                                        <span className="rounded-full border border-primary/20 bg-white px-3 py-1 text-xs font-medium text-primary">
+                                            No preview image
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="space-y-5 p-6">
+                                <div className="flex flex-wrap gap-2">
+                                    <span className="rounded-full border border-primary/18 bg-primary/8 px-3 py-1 text-xs font-semibold tracking-[0.04em] text-primary">
+                                        {draft.category}
+                                    </span>
+                                    <span className="rounded-full border border-black/10 bg-[#fafafa] px-3 py-1 text-xs font-medium text-primary">
+                                        {draft.subcategory}
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-2xl font-semibold tracking-tight text-black">
+                                        {draft.name}
+                                    </h3>
+                                    <p className="mt-3 text-sm leading-6 text-black/80">
+                                        {draft.description}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <div>
+                            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                         {[
                             ["Slug", draft.slug],
+                            ["Website URL", draft.website_url],
                             ["Category", draft.category],
                             ["Subcategory", draft.subcategory],
                             ["Image filename", draft.image_file_name ?? "None"],
@@ -300,31 +350,39 @@ export default function DevToolManager() {
                         ))}
                     </div>
 
-                    <div className="mt-4 rounded-[1.5rem] border border-black/10 bg-[#fcfcfc] p-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                            Description
-                        </p>
-                        <p className="mt-2 text-sm leading-6 text-black/80">{draft.description}</p>
-                    </div>
+                            <div className="mt-4 rounded-[1.5rem] border border-black/10 bg-[#fcfcfc] p-4">
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
+                                    Tags
+                                </p>
+                                <div className="mt-3 flex flex-wrap gap-2">
+                                    {draft.tags.map((tag) => (
+                                        <span
+                                            key={tag}
+                                            className="rounded-full border border-black/10 bg-white px-3 py-1 text-xs text-black/70"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
 
-                    <div className="mt-4 rounded-[1.5rem] border border-black/10 bg-[#fcfcfc] p-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                            Tags
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                            {draft.tags.map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="rounded-full border border-black/10 bg-white px-3 py-1 text-xs text-black/70"
-                                >
-                                    {tag}
-                                </span>
-                            ))}
+                            {!insertedTool && !duplicate ? (
+                                <div className="mt-4 flex flex-wrap gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={handleInsert}
+                                        disabled={isInserting}
+                                        className="rounded-full bg-black px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                                    >
+                                        {isInserting ? "Inserting..." : "Looks good, insert tool"}
+                                    </button>
+                                </div>
+                            ) : null}
                         </div>
                     </div>
 
                     {duplicate ? (
-                        <div className="mt-4 rounded-[1.5rem] border border-primary/20 bg-primary/6 p-4">
+                        <div className="mt-6 rounded-[1.5rem] border border-primary/20 bg-primary/6 p-4">
                             <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
                                 Existing match
                             </p>
