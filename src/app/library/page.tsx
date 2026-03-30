@@ -34,7 +34,7 @@ export default async function LibraryPage({
             className="min-h-screen bg-white"
         >
             <div className="mx-auto">
-                <LibraryHero filters={filters} />
+                <LibraryHero />
                 {totalTools === 0 ? (
                     <LibraryEmptyState />
                 ) : (

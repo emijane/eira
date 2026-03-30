@@ -1,6 +1,4 @@
-import type { ToolFilters } from "@/lib/getTools";
-
-export default function LibraryHero({ filters }: { filters: ToolFilters }) {
+export default function LibraryHero() {
     return (
         <section className="relative overflow-visible px-6 pt-28 sm:px-8 lg:px-12">
             <div className="relative mx-auto max-w-[1560px]">
