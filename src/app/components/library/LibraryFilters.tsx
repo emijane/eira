@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Search } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import type { ToolFilters } from "@/lib/getTools";
 
 type FilterOption = {
@@ -105,16 +105,19 @@ function useLibraryFilterControls() {
     const activeSearchQuery = searchParams.get("q") ?? "";
     const activeCategory = searchParams.get("category") ?? "all";
     const activeSubcategory = searchParams.get("subcategory") ?? "all";
+    const activeSort = searchParams.get("sort") ?? "popular";
 
     function updateFilters(nextValues?: {
         searchQuery?: string;
         category?: string;
         subcategory?: string;
+        sort?: string;
     }) {
         const params = new URLSearchParams(searchParams.toString());
         const nextSearch = nextValues?.searchQuery ?? activeSearchQuery;
         const nextCategory = nextValues?.category ?? activeCategory;
         const nextSubcategory = nextValues?.subcategory ?? activeSubcategory;
+        const nextSort = nextValues?.sort ?? activeSort;
 
         if (nextSearch.trim()) {
             params.set("q", nextSearch.trim());
@@ -134,6 +137,12 @@ function useLibraryFilterControls() {
             params.delete("subcategory");
         }
 
+        if (nextSort && nextSort !== "popular") {
+            params.set("sort", nextSort);
+        } else {
+            params.delete("sort");
+        }
+
         const query = params.toString();
         router.push(query ? `${pathname}?${query}` : pathname, { scroll: true });
     }
@@ -146,54 +155,28 @@ function useLibraryFilterControls() {
         activeSearchQuery,
         activeCategory,
         activeSubcategory,
+        activeSort,
         updateFilters,
         clearFilters,
     };
 }
 
-export function LibrarySearchBar() {
-    const { activeSearchQuery, updateFilters } = useLibraryFilterControls();
-
-    return (
-        <form
-            onSubmit={(event) => {
-                event.preventDefault();
-                const formData = new FormData(event.currentTarget);
-                updateFilters({
-                    searchQuery: String(formData.get("q") ?? ""),
-                });
-            }}
-            className="flex h-12 items-center gap-3 rounded-[1.1rem] border border-primary/40 bg-[linear-gradient(180deg,rgba(20,15,34,0.86)_0%,rgba(14,10,24,0.78)_100%)] pl-4 pr-2 shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl"
-        >
-            <Search className="h-5 w-5 shrink-0 text-primary" />
-            <input
-                name="q"
-                type="text"
-                key={activeSearchQuery}
-                defaultValue={activeSearchQuery}
-                placeholder="Search tools, frameworks, and categories"
-                className="min-w-0 flex-1 bg-transparent text-[0.92rem] text-white outline-none placeholder:text-white/34"
-            />
-
-            <button
-                type="submit"
-                className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-[linear-gradient(135deg,rgba(112,89,228,0.34)_0%,rgba(197,168,235,0.22)_100%)] px-3.5 text-[0.82rem] font-medium text-primary shadow-[0_10px_28px_-18px_rgba(112,89,228,0.75)] transition hover:bg-[linear-gradient(135deg,rgba(112,89,228,0.42)_0%,rgba(197,168,235,0.28)_100%)] hover:text-white"
-            >
-                <Search className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Search</span>
-            </button>
-        </form>
-    );
-}
-
-export function LibrarySidebarFilters({ filters }: { filters: ToolFilters }) {
+export function LibraryControls({
+    filters,
+    visibleTools,
+}: {
+    filters: ToolFilters;
+    visibleTools: number;
+}) {
     const {
         activeSearchQuery,
         activeCategory,
         activeSubcategory,
+        activeSort,
         updateFilters,
         clearFilters,
     } = useLibraryFilterControls();
+    const [controlsOpen, setControlsOpen] = useState(false);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
 
     const closeMenu = () => setOpenMenu(null);
@@ -219,68 +202,110 @@ export function LibrarySidebarFilters({ filters }: { filters: ToolFilters }) {
     ];
 
     return (
-        <section className="rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,15,34,0.84)_0%,rgba(14,10,24,0.76)_100%)] p-6 shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-                filters
-            </p>
-            <div className="mt-5 space-y-5">
-                <FilterDropdown
-                    label="Category"
-                    value={activeCategory}
-                    isOpen={openMenu === "category"}
-                    onToggle={() =>
-                        setOpenMenu((current) => (current === "category" ? null : "category"))
-                    }
-                    onSelect={(value) => {
+        <section className="mb-6 rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,15,34,0.84)_0%,rgba(14,10,24,0.76)_100%)] p-4 shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl sm:p-5">
+            <div className="flex flex-col gap-3">
+                <form
+                    onSubmit={(event) => {
+                        event.preventDefault();
+                        const formData = new FormData(event.currentTarget);
                         updateFilters({
-                            category: value,
-                            subcategory: "all",
+                            searchQuery: String(formData.get("q") ?? ""),
                         });
-                        closeMenu();
                     }}
-                    options={categoryOptions}
-                />
-                <FilterDropdown
-                    label="Subcategory"
-                    value={activeSubcategory}
-                    isOpen={openMenu === "subcategory"}
-                    onToggle={() =>
-                        setOpenMenu((current) =>
-                            current === "subcategory" ? null : "subcategory"
-                        )
-                    }
-                    onSelect={(value) => {
-                        updateFilters({ subcategory: value });
-                        closeMenu();
-                    }}
-                    options={subcategoryOptions}
-                />
-            </div>
-            <div className="mt-5 flex flex-wrap gap-2">
-                {activeSearchQuery ? (
-                    <span className="rounded-full border border-secondary/24 bg-secondary/14 px-3 py-1 text-xs font-medium text-primary">
-                        {activeSearchQuery}
-                    </span>
-                ) : null}
-                {activeCategory !== "all" ? (
-                    <span className="rounded-full border border-secondary/24 bg-secondary/14 px-3 py-1 text-xs font-medium text-primary">
-                        {activeCategory}
-                    </span>
-                ) : null}
-                {activeSubcategory !== "all" ? (
-                    <span className="rounded-full border border-secondary/24 bg-secondary/14 px-3 py-1 text-xs font-medium text-primary">
-                        {activeSubcategory}
-                    </span>
-                ) : null}
-            </div>
-            <div className="mt-6 flex flex-wrap gap-3">
-                <button
-                    type="button"
-                    onClick={clearFilters}
-                    className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/6 px-5 text-sm font-medium text-white/72 transition hover:border-primary/28 hover:text-white"
+                    className="flex h-12 items-center gap-3 rounded-[1.1rem] border border-primary/40 bg-[linear-gradient(180deg,rgba(20,15,34,0.86)_0%,rgba(14,10,24,0.78)_100%)] pl-4 pr-2 shadow-[0_24px_70px_-42px_rgba(0,0,0,0.72)] backdrop-blur-xl"
                 >
-                    Clear Filters
-                </button>
+                    <Search className="h-5 w-5 shrink-0 text-primary" />
+                    <input
+                        name="q"
+                        type="text"
+                        key={activeSearchQuery}
+                        defaultValue={activeSearchQuery}
+                        placeholder="Search tools, frameworks, and categories"
+                        className="min-w-0 flex-1 bg-transparent text-[0.92rem] text-white outline-none placeholder:text-white/34"
+                    />
+
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setControlsOpen((current) => !current);
+                            closeMenu();
+                        }}
+                        className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-[linear-gradient(135deg,rgba(112,89,228,0.34)_0%,rgba(197,168,235,0.22)_100%)] px-3.5 text-[0.82rem] font-medium text-primary shadow-[0_10px_28px_-18px_rgba(112,89,228,0.75)] transition hover:bg-[linear-gradient(135deg,rgba(112,89,228,0.42)_0%,rgba(197,168,235,0.28)_100%)] hover:text-white"
+                    >
+                        <SlidersHorizontal className="h-3.5 w-3.5" />
+                        <span className="hidden sm:inline">Filters</span>
+                    </button>
+                </form>
+
+                <div className="flex items-center justify-between gap-3 px-1">
+                    <p className="text-xs font-medium uppercase tracking-[0.12em] text-primary/82">
+                        {visibleTools} tools
+                    </p>
+                    {(activeCategory !== "all" || activeSubcategory !== "all" || activeSearchQuery) ? (
+                        <button
+                            type="button"
+                            onClick={clearFilters}
+                            className="text-xs font-medium text-white/56 transition hover:text-white"
+                        >
+                            Clear all
+                        </button>
+                    ) : null}
+                </div>
+            </div>
+
+            <div
+                className={`overflow-hidden transition-[max-height,opacity,margin] duration-200 ease-out ${
+                    controlsOpen ? "mt-4 max-h-[28rem] opacity-100" : "mt-0 max-h-0 opacity-0"
+                }`}
+                aria-hidden={!controlsOpen}
+            >
+                <div className="grid gap-4 md:grid-cols-3">
+                    <FilterDropdown
+                        label="Category"
+                        value={activeCategory}
+                        isOpen={openMenu === "category"}
+                        onToggle={() =>
+                            setOpenMenu((current) => (current === "category" ? null : "category"))
+                        }
+                        onSelect={(value) => {
+                            updateFilters({
+                                category: value,
+                                subcategory: "all",
+                            });
+                            closeMenu();
+                        }}
+                        options={categoryOptions}
+                    />
+                    <FilterDropdown
+                        label="Subcategory"
+                        value={activeSubcategory}
+                        isOpen={openMenu === "subcategory"}
+                        onToggle={() =>
+                            setOpenMenu((current) =>
+                                current === "subcategory" ? null : "subcategory"
+                            )
+                        }
+                        onSelect={(value) => {
+                            updateFilters({ subcategory: value });
+                            closeMenu();
+                        }}
+                        options={subcategoryOptions}
+                    />
+                    <label className="block">
+                        <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
+                            Sort by
+                        </span>
+                        <select
+                            value={activeSort}
+                            onChange={(event) => updateFilters({ sort: event.target.value })}
+                            className="h-12 w-full rounded-2xl border border-white/10 bg-white/6 px-4 text-sm text-white outline-none"
+                        >
+                            <option value="popular">Most popular</option>
+                            <option value="alphabetical">Alphabetical</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </label>
+                </div>
             </div>
         </section>
     );

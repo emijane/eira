@@ -1,7 +1,6 @@
 import LibraryEmptyState from "@/app/components/library/LibraryEmptyState";
 import LibraryHero from "@/app/components/library/LibraryHero";
 import InfiniteLibraryGrid from "@/app/components/library/InfiniteLibraryGrid";
-import LibrarySidebar from "@/app/components/library/LibrarySidebar";
 import { getToolFilters, getToolsPage, LIBRARY_PAGE_SIZE } from "@/lib/getTools";
 
 export default async function LibraryPage({
@@ -11,12 +10,14 @@ export default async function LibraryPage({
         q?: string;
         category?: string;
         subcategory?: string;
+        sort?: string;
     }>;
 }) {
     const params = await searchParams;
     const query = params?.q?.trim() ?? "";
     const category = params?.category?.trim() ?? "";
     const subcategory = params?.subcategory?.trim() ?? "";
+    const sort = params?.sort?.trim() ?? "popular";
     const [filters, { tools, totalTools, hasMore }] = await Promise.all([
         getToolFilters(),
         getToolsPage({
@@ -49,18 +50,17 @@ export default async function LibraryPage({
                 {totalTools === 0 ? (
                     <LibraryEmptyState />
                 ) : (
-                    <div className="mt-10 p-7 lg:p-0 mx-auto max-w-7xl grid gap-8 xl:grid-cols-[minmax(0,1.9fr)_320px] xl:items-start">
+                    <div className="mx-auto mt-10 max-w-7xl p-7 lg:p-0">
                         <InfiniteLibraryGrid
                             initialTools={tools}
                             initialHasMore={hasMore}
                             pageSize={LIBRARY_PAGE_SIZE}
+                            filters={filters}
                             searchQuery={query}
                             category={category}
                             subcategory={subcategory}
+                            sort={sort}
                         />
-                        <div className="xl:sticky xl:top-28">
-                            <LibrarySidebar filters={filters} />
-                        </div>
                     </div>
                 )}
             </div>

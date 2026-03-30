@@ -3,15 +3,18 @@
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LibraryGrid from "./LibraryGrid";
+import type { ToolFilters } from "@/lib/getTools";
 import type { LibraryTool } from "./types";
 
 type InfiniteLibraryGridProps = {
     initialTools: LibraryTool[];
     initialHasMore: boolean;
     pageSize: number;
+    filters: ToolFilters;
     searchQuery?: string;
     category?: string;
     subcategory?: string;
+    sort?: string;
 };
 
 type ToolsResponse = {
@@ -25,9 +28,11 @@ export default function InfiniteLibraryGrid({
     initialTools,
     initialHasMore,
     pageSize,
+    filters,
     searchQuery = "",
     category = "",
     subcategory = "",
+    sort = "popular",
 }: InfiniteLibraryGridProps) {
     const [tools, setTools] = useState(initialTools);
     const [hasMore, setHasMore] = useState(initialHasMore);
@@ -90,6 +95,25 @@ export default function InfiniteLibraryGrid({
         }
     }
 
+    function sortTools(items: LibraryTool[]) {
+        if (sort === "alphabetical") {
+            return [...items].sort((left, right) => left.name.localeCompare(right.name));
+        }
+
+        if (sort === "category") {
+            return [...items].sort((left, right) => {
+                const categoryCompare = (left.category ?? "").localeCompare(right.category ?? "");
+                if (categoryCompare !== 0) {
+                    return categoryCompare;
+                }
+
+                return left.name.localeCompare(right.name);
+            });
+        }
+
+        return items;
+    }
+
     return (
         <InfiniteScroll
             dataLength={tools.length}
@@ -111,7 +135,8 @@ export default function InfiniteLibraryGrid({
             style={{ overflow: "visible" }}
         >
             <LibraryGrid
-                tools={tools}
+                filters={filters}
+                tools={sortTools(tools)}
                 visibleTools={tools.length}
             />
             {errorMessage ? (
