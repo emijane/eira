@@ -70,7 +70,8 @@ export async function uploadDevToolImage(url: string, file: File | null) {
     }
 
     const safeBaseName = slugify(hostname) || "tool";
-    const storedFileName = `${safeBaseName}-${Date.now()}-${crypto.randomUUID()}.${extension}`;
+    const shortId = crypto.randomUUID().replace(/-/g, "").slice(0, 6);
+    const storedFileName = `${safeBaseName}-${shortId}.${extension}`;
     const fileBuffer = Buffer.from(await file.arrayBuffer());
 
     const { error } = await supabaseAdmin
