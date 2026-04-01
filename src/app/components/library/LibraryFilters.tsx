@@ -29,6 +29,19 @@ function ChevronIcon({ open }: { open: boolean }) {
     );
 }
 
+function XMarkIcon({ className }: { className?: string }) {
+    return (
+        <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className={className}
+        >
+            <path d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" />
+        </svg>
+    );
+}
+
 function FilterDropdown({
     label,
     value,
@@ -199,6 +212,7 @@ export function LibraryControls({
         })),
     ];
 
+
     return (
         <section className="relative z-10">
             <div className="flex flex-col gap-2 mb-10">
@@ -236,23 +250,35 @@ export function LibraryControls({
                 </form>
             </div>
 
+            <div className="flex text-xs gap-2 mb-5">
+                {activeCategory !== "all" && (
+                    <button
+                    type="button"
+                    onClick={() => updateFilters({ category: '', subcategory: '' })}
+                    className="inline-flex items-center gap-2 rounded-2xl border border-black/10 bg-white px-3 py-1 text-sm text-black/72 outline-none transition hover:border-primary/24 hover:text-black focus:border-primary/34 hover:cursor-pointer"
+                    >
+                        <span>{activeCategory}</span>
+                        <XMarkIcon className="h-3 w-3" />
+                    </button>
+                )}
+                {activeSubcategory !== "all" && (
+                    <button
+                    type="button"
+                    onClick={() => updateFilters({ subcategory: '' })}
+                    className="inline-flex items-center gap-2 rounded-2xl border border-black/10 bg-white px-3 py-1 text-sm text-black/72 outline-none transition hover:border-primary/24 hover:text-black focus:border-primary/34 hover:cursor-pointer"
+                    >
+                        <span>{activeSubcategory}</span>
+                        <XMarkIcon className="h-3 w-3" />
+                    </button>
+                )}
+            </div>
+
             <div
                 className={`transition-[opacity,margin] duration-200 ease-out ${
-                    controlsOpen ? "mt-4 mb-10 opacity-100" : "mt-0 mb-0 hidden opacity-0"
+                    controlsOpen ? "mb-10 opacity-100" : "mt-0 mb-0 hidden opacity-0"
                 }`}
                 aria-hidden={!controlsOpen}
             >
-                {(activeCategory !== "all" || activeSubcategory !== "all" || activeSearchQuery) ? (
-                    <div className="mb-4 flex justify-end">
-                        <button
-                            type="button"
-                            onClick={clearFilters}
-                            className="text-xs font-medium text-black/48 transition hover:text-black"
-                        >
-                            Clear all
-                        </button>
-                    </div>
-                ) : null}
                 <div className="grid gap-4 md:grid-cols-3">
                     <FilterDropdown
                         label="Category"
@@ -279,10 +305,16 @@ export function LibraryControls({
                                 current === "subcategory" ? null : "subcategory"
                             )
                         }
+
                         onSelect={(value) => {
-                            updateFilters({ subcategory: value });
-                            closeMenu();
+                        const parentCategory = Object.entries(filters.subcategoriesByCategory).find(
+                            ([_, subcategories]) => subcategories.includes(value)
+                        )?.[0] ?? "all";
+
+                        updateFilters({ category: parentCategory, subcategory: value });
+                        closeMenu();
                         }}
+
                         options={subcategoryOptions}
                     />
                     <label className="block">
