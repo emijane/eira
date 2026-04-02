@@ -7,7 +7,7 @@ export default function LibraryCard({ tool }: { tool: LibraryTool }) {
         : null;
 
     return (
-        <article className="group overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-[0_2px_6px_rgba(16,24,40,0.04),0_1px_2px_rgba(16,24,40,0.03)] transition duration-200 hover:-translate-y-0.5 hover:border-black/15 hover:shadow-[0_12px_24px_-12px_rgba(16,24,40,0.1)]">
+        <article className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-[0_2px_6px_rgba(16,24,40,0.04),0_1px_2px_rgba(16,24,40,0.03)] transition duration-200 hover:-translate-y-0.5 hover:border-black/15 hover:shadow-[0_12px_24px_-12px_rgba(16,24,40,0.1)]">
             <div className="relative overflow-hidden border-b border-black/8 bg-[#faf8fb]">
                 {imageSrc ? tool.website_url ? (
                     <a
@@ -44,21 +44,8 @@ export default function LibraryCard({ tool }: { tool: LibraryTool }) {
                 )}
             </div>
 
-            <div className="space-y-5 p-6">
-                <div className="flex flex-wrap gap-2">
-                    {tool.category && (
-                        <span className="rounded-full border border-primary/18 bg-primary/8 px-3 py-1 text-xs font-semibold tracking-[0.04em] text-primary">
-                            {tool.category}
-                        </span>
-                    )}
-                    {tool.subcategory && (
-                        <span className="rounded-full border border-black/10 bg-[#fafafa] px-3 py-1 text-xs font-medium text-primary">
-                            {tool.subcategory}
-                        </span>
-                    )}
-                </div>
-
-                <div>
+            <div className="flex flex-1 flex-col p-6">
+                <div className="flex-1">
                     <h2 className="text-2xl font-semibold tracking-tight text-black">
                         {tool.name}
                     </h2>
@@ -67,6 +54,20 @@ export default function LibraryCard({ tool }: { tool: LibraryTool }) {
                     </p>
                 </div>
 
+                {(tool.category || tool.subcategory) ? (
+                    <div className="mt-5 flex flex-wrap gap-2">
+                        {tool.category ? (
+                            <span className="rounded-md bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                                {tool.category}
+                            </span>
+                        ) : null}
+                        {tool.subcategory ? (
+                            <span className="rounded-md bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                                {tool.subcategory}
+                            </span>
+                        ) : null}
+                    </div>
+                ) : null}
             </div>
         </article>
     );

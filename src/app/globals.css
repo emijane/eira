@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fcf9ff;
+  --foreground: #1f1636;
 }
 
 @theme inline {
@@ -11,8 +11,8 @@
   --font-sans: var(--font-google-sans-code);
   --font-inter: var(--font-inter);
   --font-mono: var(--font-geist-mono);
-  --color-primary: #5C91FF;
-  --color-secondary: #4784FF;
+  --color-primary: #7c3aed;
+  --color-secondary: #a78bfa;
   --color-brand-ink: #2F2551;
   --color-brand-copy: #625A7D;
 }
@@ -25,7 +25,10 @@
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at top left, rgba(167, 139, 250, 0.16), transparent 28%),
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.12), transparent 24%),
+    var(--background);
   color: var(--foreground);
   font-family: var(--font-google-sans-code), "Courier New", monospace;
 }

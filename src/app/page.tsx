@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#2f2551_0%,#7059e4_26%,#f6f1fc_26%,#fefcff_100%)]">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#2f2551_0%,#7c3aed_26%,#f4edff_26%,#fdfaff_100%)]">
       <section className="px-6 pb-5 pt-28 sm:px-8 lg:px-12">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl pb-18 pt-6 text-white">
