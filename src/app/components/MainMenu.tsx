@@ -51,7 +51,7 @@ export default function MainMenu() {
                         height={44}
                         className="h-11 w-11 shrink-0 object-contain"
                     />
-                    <span className="inline-flex min-w-0 items-center gap-1.5 font-mono leading-none">
+                    <span className="inline-flex min-w-0 items-center gap-1.5 leading-none">
                         <span
                             className={`truncate text-[1.2rem] font-semibold tracking-[-0.03em] leading-none sm:text-[1.45rem] ${
                                 usesLightText ? "text-white" : "text-black"
