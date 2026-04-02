@@ -80,7 +80,7 @@ export default function MainMenu() {
             </div>
 
             <div className="ml-auto flex items-center gap-4">
-                <nav aria-label="Primary" className="hidden min-w-0 md:block">
+                <nav aria-label="Primary" className="hidden min-w-0 lg:block">
                     <div className="flex items-center gap-5 lg:gap-8">
                         <ul className="flex items-center gap-5 lg:gap-8">
                             {menuItems.map((item) => {
@@ -140,7 +140,7 @@ export default function MainMenu() {
                     <SheetTrigger asChild>
                         <button
                             type="button"
-                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition md:hidden ${
+                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition lg:hidden ${
                                 usesLightText
                                     ? "border-white/16 bg-white/8 text-white hover:bg-white/14"
                                     : "border-black/10 bg-white text-black hover:border-primary/24 hover:text-primary"
