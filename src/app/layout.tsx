@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Google_Sans_Code, Inter } from "next/font/google";
 import { Github, Instagram, Twitter } from "lucide-react";
 import Header from "./components/MainMenu";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const googleSansCode = Google_Sans_Code({
+  variable: "--font-google-sans-code",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -65,7 +70,7 @@ export default function RootLayout({
       lang="en"
       data-theme="light"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${googleSansCode.variable} ${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning className="relative min-h-full flex flex-col">
         <header className="absolute inset-x-0 top-0 z-50 px-6 pt-5 sm:px-8 lg:px-12">

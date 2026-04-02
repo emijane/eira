@@ -42,7 +42,7 @@ export default function MainMenu() {
             <div className="flex min-w-0 items-center gap-3">
                 <Link
                     href="/"
-                    className="inline-flex min-w-0 items-center gap-1 transition hover:opacity-90"
+                    className="inline-flex min-w-0 items-center gap-2 transition hover:opacity-90"
                 >
                     <Image
                         src="/favicon.png"
@@ -51,13 +51,30 @@ export default function MainMenu() {
                         height={44}
                         className="h-11 w-11 shrink-0 object-contain"
                     />
-                    <span
-                        className={`truncate text-[1.45rem] font-semibold tracking-[-0.04em] sm:text-[1.75rem] ${
-                            usesLightText ? "text-white" : "text-black"
-                        }`}
-                    >
-                        eira
-                        <span className="ml-1 font-medium text-primary">/ tools</span>
+                    <span className="inline-flex min-w-0 items-center gap-1.5 font-mono leading-none">
+                        <span
+                            className={`truncate text-[1.2rem] font-semibold tracking-[-0.03em] leading-none sm:text-[1.45rem] ${
+                                usesLightText ? "text-white" : "text-black"
+                            }`}
+                        >
+                            eira
+                        </span>
+                        <span
+                            className={`shrink-0 text-[1.05rem] font-medium leading-none sm:text-[1.2rem] ${
+                                usesLightText ? "text-white/72" : "text-primary"
+                            }`}
+                        >
+                            /
+                        </span>
+                        <span
+                            className={`truncate rounded-md border px-2 py-0.5 text-[0.82rem] font-medium leading-none tracking-[-0.01em] sm:text-[0.92rem] ${
+                                usesLightText
+                                    ? "border-white/14 bg-white/8 text-white/88"
+                                    : "border-primary/18 bg-primary/6 text-primary"
+                            }`}
+                        >
+                            tools
+                        </span>
                     </span>
                 </Link>
             </div>
