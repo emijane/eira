@@ -4,6 +4,14 @@ import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal } from "lucide-react";
 import type { ToolFilters } from "@/lib/getTools";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type FilterOption = {
     value: string;
@@ -46,67 +54,40 @@ function FilterDropdown({
     label,
     value,
     options,
-    isOpen,
-    onToggle,
     onSelect,
 }: {
     label: string;
     value: string;
     options: FilterOption[];
-    isOpen: boolean;
-    onToggle: () => void;
     onSelect: (value: string) => void;
 }) {
     const selected = options.find((option) => option.value === value) ?? options[0];
 
     return (
-        <div className="relative">
-            <label className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                {label}
-            </label>
-            <button
-                type="button"
-                onClick={onToggle}
-                className={`flex h-12 w-full items-center justify-between rounded-2xl border px-4 text-left text-black/72 transition ${
-                    isOpen
-                        ? "border-primary/34 bg-white text-black"
-                        : "border-black/10 bg-white hover:border-primary/24 hover:text-black"
-                }`}
-            >
-                <span className="truncate text-sm">{selected.label}</span>
-                <span className="ml-4 shrink-0">
-                    <ChevronIcon open={isOpen} />
-                </span>
-            </button>
-
-            {isOpen ? (
-                <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_16px_40px_-24px_rgba(16,24,40,0.14)]">
-                    <ul className="max-h-72 overflow-auto py-2">
-                        {options.map((option) => {
-                            const active = option.value === value;
-
-                            return (
-                                <li key={option.value}>
-                                    <button
-                                        type="button"
-                                        onClick={() => onSelect(option.value)}
-                                        className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition ${
-                                            active
-                                                ? "bg-primary/12 font-medium text-primary"
-                                                : "text-black/72 hover:bg-black/[0.03] hover:text-black"
-                                        }`}
-                                    >
-                                        <span>{option.label}</span>
-                                        {active ? (
-                                            <span className="text-primary">&#10003;</span>
-                                        ) : null}
-                                    </button>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-            ) : null}
+        <div>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <button
+                        type="button"
+                        className="flex h-12 w-full items-center justify-between rounded-2xl border border-black/10 bg-white px-4 text-left text-black/72 transition hover:border-primary/24 hover:text-black focus:border-primary/34 focus:text-black focus:outline-none"
+                    >
+                        <span className="truncate text-sm">{selected.label}</span>
+                        <span className="ml-4 shrink-0">
+                            <ChevronIcon open={false} />
+                        </span>
+                    </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-[var(--radix-dropdown-menu-trigger-width)]">
+                    <DropdownMenuLabel>{label}</DropdownMenuLabel>
+                    <DropdownMenuRadioGroup value={value} onValueChange={onSelect}>
+                        {options.map((option) => (
+                            <DropdownMenuRadioItem key={option.value} value={option.value}>
+                                {option.label}
+                            </DropdownMenuRadioItem>
+                        ))}
+                    </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
         </div>
     );
 }
@@ -188,12 +169,9 @@ export function LibraryControls({
         clearFilters,
     } = useLibraryFilterControls();
     const [controlsOpen, setControlsOpen] = useState(false);
-    const [openMenu, setOpenMenu] = useState<string | null>(null);
-
-    const closeMenu = () => setOpenMenu(null);
 
     const categoryOptions: FilterOption[] = [
-        { value: "all", label: "All categories" },
+        { value: "all", label: "Select category" },
         ...filters.categories.map((category) => ({
             value: category,
             label: category,
@@ -205,7 +183,7 @@ export function LibraryControls({
         : filters.subcategoriesByCategory[activeCategory] ?? [];
 
     const subcategoryOptions: FilterOption[] = [
-        { value: "all", label: "All subcategories" },
+        { value: "all", label: "Select subcategory" },
         ...visibleSubcategories.map((subcategory) => ({
             value: subcategory,
             label: subcategory,
@@ -215,7 +193,7 @@ export function LibraryControls({
 
     return (
         <section className="relative z-10">
-            <div className="flex flex-col gap-2 mb-10">
+            <div className="mx-auto flex max-w-200 flex-col gap-2">
                 <form
                     onSubmit={(event) => {
                         event.preventDefault();
@@ -235,20 +213,19 @@ export function LibraryControls({
                         placeholder="Search tools, frameworks, and categories"
                         className="min-w-0 flex-1 bg-transparent text-[0.92rem] text-black outline-none placeholder:text-black/35"
                     />
-
-                    <button
-                        type="button"
-                        onClick={() => {
-                            setControlsOpen((current) => !current);
-                            closeMenu();
-                        }}
-                        className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3.5 text-[0.82rem] font-medium text-primary transition hover:bg-primary/16"
-                    >
-                        <SlidersHorizontal className="h-3.5 w-3.5" />
-                        <span className="hidden sm:inline">Filters</span>
-                    </button>
                 </form>
             </div>
+
+            <button
+                type="button"
+                onClick={() => {
+                    setControlsOpen((current) => !current);
+                }}
+                className="inline-flex h-9 mt-3 shrink-0 items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3.5 text-[0.82rem] font-medium text-primary transition hover:bg-primary/16"
+            >
+                <SlidersHorizontal className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Filters</span>
+            </button>
 
             <div className="flex text-xs gap-2 mb-5">
                 {activeCategory !== "all" && (
@@ -279,63 +256,56 @@ export function LibraryControls({
                 }`}
                 aria-hidden={!controlsOpen}
             >
+                {(activeCategory !== "all" || activeSubcategory !== "all" || activeSearchQuery) ? (
+                    <div className="mb-4 flex justify-end">
+                        <button
+                            type="button"
+                            onClick={clearFilters}
+                            className="text-xs font-medium text-black/48 transition hover:text-black"
+                        >
+                            Clear all
+                        </button>
+                    </div>
+                ) : null}
                 <div className="grid gap-4 md:grid-cols-3">
                     <FilterDropdown
                         label="Category"
                         value={activeCategory}
-                        isOpen={openMenu === "category"}
-                        onToggle={() =>
-                            setOpenMenu((current) => (current === "category" ? null : "category"))
-                        }
                         onSelect={(value) => {
                             updateFilters({
                                 category: value,
                                 subcategory: "all",
                             });
-                            closeMenu();
                         }}
                         options={categoryOptions}
                     />
                     <FilterDropdown
                         label="Subcategory"
                         value={activeSubcategory}
-                        isOpen={openMenu === "subcategory"}
-                        onToggle={() =>
-                            setOpenMenu((current) =>
-                                current === "subcategory" ? null : "subcategory"
-                            )
-                        }
-
                         onSelect={(value) => {
-                        const parentCategory = Object.entries(filters.subcategoriesByCategory).find(
-                            ([_, subcategories]) => subcategories.includes(value)
-                        )?.[0] ?? "all";
+                            if (value === "all") {
+                                updateFilters({ subcategory: "all" });
+                                return;
+                            }
 
-                        updateFilters({ category: parentCategory, subcategory: value });
-                        closeMenu();
+                            const parentCategory = Object.entries(filters.subcategoriesByCategory).find(
+                                ([, subcategories]) => subcategories.includes(value)
+                            )?.[0] ?? "all";
+
+                            updateFilters({ category: parentCategory, subcategory: value });
                         }}
-
                         options={subcategoryOptions}
                     />
-                    <label className="block">
-                        <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.12em] text-primary">
-                            Sort by
-                        </span>
-                        <div className="relative">
-                            <select
-                                value={activeSort}
-                                onChange={(event) => updateFilters({ sort: event.target.value })}
-                                className="h-12 w-full appearance-none rounded-2xl border border-black/10 bg-white px-4 pr-11 text-sm text-black/72 outline-none transition hover:border-primary/24 hover:text-black focus:border-primary/34"
-                            >
-                                <option value="popular">Most popular</option>
-                                <option value="alphabetical">Alphabetical</option>
-                                <option value="category">Category</option>
-                            </select>
-                            <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
-                                <ChevronIcon open={false} />
-                            </span>
-                        </div>
-                    </label>
+                    <FilterDropdown
+                        label="Sort by"
+                        value={activeSort}
+                        onSelect={(value) => updateFilters({ sort: value })}
+                        options={[
+                            { value: "popular", label: "Most popular" },
+                            { value: "alphabetical", label: "Alphabetical" },
+                            { value: "category", label: "Category" },
+                        ]}
+                    />
                 </div>
             </div>
         </section>

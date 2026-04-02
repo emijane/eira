@@ -33,13 +33,13 @@ export default async function LibraryPage({
         <main
             className="min-h-screen bg-white"
         >
-            <div className="mx-auto">
+            <div className="mx-auto max-w-400">
                 <LibraryHero />
                 {totalTools === 0 ? (
                     <LibraryEmptyState />
                 ) : (
                     <div className="mt-2 px-6 pb-8 sm:px-8 lg:px-12">
-                        <div className="mx-auto max-w-[1560px]">
+                        <div>
                             <InfiniteLibraryGrid
                                 initialTools={tools}
                                 initialHasMore={hasMore}
