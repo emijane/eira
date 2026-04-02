@@ -5,10 +5,18 @@ export default function LibraryCard({ tool }: { tool: LibraryTool }) {
     const imageSrc = tool.image_file_name
         ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/media/${tool.image_file_name}`
         : null;
+    const isFeatured = tool.tags?.includes("featured");
 
     return (
         <article className="group relative overflow-hidden rounded-[1.5rem] border border-black/10 bg-white shadow-[0_2px_6px_rgba(16,24,40,0.04),0_1px_2px_rgba(16,24,40,0.03)] transition duration-200 hover:-translate-y-0.5 hover:border-black/15 hover:shadow-[0_12px_24px_-12px_rgba(16,24,40,0.1)]">
             <div className="relative h-56 overflow-hidden border-b border-black/8 bg-[#faf8fb]">
+                {isFeatured ? (
+                    <div className="pointer-events-none absolute left-4 top-4 z-10">
+                        <span className="rounded-full border border-[#d4a11d]/55 bg-[linear-gradient(135deg,#fff4bf_0%,#f7cf52_42%,#e7a91a_100%)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[#4d3200] shadow-[0_12px_24px_-16px_rgba(158,108,0,0.8)]">
+                            Featured
+                        </span>
+                    </div>
+                ) : null}
                 {imageSrc ? tool.website_url ? (
                     <a
                         href={tool.website_url}
