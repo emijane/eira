@@ -143,7 +143,7 @@ export default function MainMenu() {
                             className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition lg:hidden ${
                                 usesLightText
                                     ? "border-white/16 bg-white/8 text-white hover:bg-white/14"
-                                    : "border-black/10 bg-white text-black hover:border-primary/24 hover:text-primary"
+                                    : "border-black bg-black text-white hover:bg-black/88"
                             }`}
                             aria-label="Open menu"
                         >
