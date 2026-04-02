@@ -56,7 +56,7 @@ export default function LibraryCard({ tool }: { tool: LibraryTool }) {
                 {(tool.category || tool.subcategory) ? (
                     <div className="flex flex-wrap gap-2">
                         {tool.category ? (
-                            <span className="rounded-md bg-primary/10 px-2.5 py-1 text-[0.7rem] font-semibold text-primary">
+                            <span className="rounded-md bg-black px-2.5 py-1 text-[0.7rem] font-semibold text-white">
                                 {tool.category}
                             </span>
                         ) : null}
