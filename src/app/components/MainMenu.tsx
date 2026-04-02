@@ -1,9 +1,18 @@
 "use client";
 
-import { Github, Instagram, Twitter } from "lucide-react";
+import { Github, Instagram, Menu, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 
 const menuItems = [
     { href: "/", label: "Home" },
@@ -14,98 +23,173 @@ const menuItems = [
     { href: "/about", label: "About" },
 ];
 
+const socialLinks = [
+    { href: "https://x.com", label: "X", icon: Twitter },
+    { href: "https://github.com", label: "GitHub", icon: Github },
+    { href: "https://instagram.com", label: "Instagram", icon: Instagram },
+];
+
 export default function MainMenu() {
     const pathname = usePathname();
-    const usesLightText = pathname === "/" || pathname === "/collections" || pathname === "/submit-a-tool" || pathname === "/about";
+    const usesLightText =
+        pathname === "/" ||
+        pathname === "/collections" ||
+        pathname === "/submit-a-tool" ||
+        pathname === "/about";
 
     return (
-        <div className="mx-auto flex items-center gap-6">
+        <div className="mx-auto flex items-center gap-4 sm:gap-6">
             <div className="flex min-w-0 items-center gap-3">
                 <Link
                     href="/"
-                    className="inline-flex items-center gap-1 transition hover:opacity-90"
+                    className="inline-flex min-w-0 items-center gap-1 transition hover:opacity-90"
                 >
                     <Image
                         src="/favicon.png"
                         alt="Eira Tools icon"
                         width={44}
                         height={44}
-                        className="h-11 w-11 object-contain"
+                        className="h-11 w-11 shrink-0 object-contain"
                     />
-                    <span className={`text-[1.75rem] font-semibold tracking-[-0.04em] ${usesLightText ? "text-white" : "text-black"}`}>
+                    <span
+                        className={`truncate text-[1.45rem] font-semibold tracking-[-0.04em] sm:text-[1.75rem] ${
+                            usesLightText ? "text-white" : "text-black"
+                        }`}
+                    >
                         eira
                         <span className="ml-1 font-medium text-primary">/ tools</span>
                     </span>
                 </Link>
             </div>
 
-            <nav aria-label="Primary" className="ml-auto min-w-0">
-                <div className="flex items-center gap-5 sm:gap-8">
-                    <ul className="flex items-center gap-5 sm:gap-8">
-                        {menuItems.map((item) => {
-                            const isActive = pathname === item.href;
+            <div className="ml-auto flex items-center gap-4">
+                <nav aria-label="Primary" className="hidden min-w-0 md:block">
+                    <div className="flex items-center gap-5 lg:gap-8">
+                        <ul className="flex items-center gap-5 lg:gap-8">
+                            {menuItems.map((item) => {
+                                const isActive = pathname === item.href;
 
-                            return (
-                                <li key={item.href}>
-                                    <Link
-                                        href={item.href}
-                                        className={`text-[0.95rem] font-medium tracking-[-0.01em] transition ${
-                                            isActive
-                                                ? usesLightText
-                                                    ? "text-white"
-                                                    : "text-black"
-                                                : usesLightText
-                                                    ? "text-white/72 hover:text-white"
-                                                    : "text-black/56 hover:text-black"
-                                        }`}
-                                        aria-current={isActive ? "page" : undefined}
+                                return (
+                                    <li key={item.href}>
+                                        <Link
+                                            href={item.href}
+                                            className={`text-[0.95rem] font-medium tracking-[-0.01em] transition ${
+                                                isActive
+                                                    ? usesLightText
+                                                        ? "text-white"
+                                                        : "text-black"
+                                                    : usesLightText
+                                                        ? "text-white/72 hover:text-white"
+                                                        : "text-black/56 hover:text-black"
+                                            }`}
+                                            aria-current={isActive ? "page" : undefined}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+
+                        <div
+                            className={`hidden h-5 w-px ${
+                                usesLightText ? "bg-white/18" : "bg-black/10"
+                            } lg:block`}
+                        />
+
+                        <ul className="hidden items-center gap-3 lg:flex">
+                            {socialLinks.map(({ href, label, icon: Icon }) => (
+                                <li key={label}>
+                                    <a
+                                        href={href}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label={label}
+                                        className={`${
+                                            usesLightText
+                                                ? "text-white/62 hover:text-white"
+                                                : "text-black/50 hover:text-primary"
+                                        } transition`}
                                     >
-                                        {item.label}
-                                    </Link>
+                                        <Icon className="h-4 w-4" />
+                                    </a>
                                 </li>
-                            );
-                        })}
-                    </ul>
+                            ))}
+                        </ul>
+                    </div>
+                </nav>
 
-                    <div className={`hidden h-5 w-px ${usesLightText ? "bg-white/18" : "bg-black/10"} lg:block`} />
+                <Sheet>
+                    <SheetTrigger asChild>
+                        <button
+                            type="button"
+                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition md:hidden ${
+                                usesLightText
+                                    ? "border-white/16 bg-white/8 text-white hover:bg-white/14"
+                                    : "border-black/10 bg-white text-black hover:border-primary/24 hover:text-primary"
+                            }`}
+                            aria-label="Open menu"
+                        >
+                            <Menu className="h-5 w-5" />
+                        </button>
+                    </SheetTrigger>
+                    <SheetContent side="right" className="w-[88vw] max-w-xs">
+                        <SheetHeader className="pr-10">
+                            <SheetTitle>Eira Tools</SheetTitle>
+                            <SheetDescription>
+                                Browse the site and jump between sections.
+                            </SheetDescription>
+                        </SheetHeader>
 
-                    <ul className="hidden items-center gap-3 lg:flex">
-                        <li>
-                            <a
-                                href="https://x.com"
-                                target="_blank"
-                                rel="noreferrer"
-                                aria-label="X"
-                                className={`${usesLightText ? "text-white/62 hover:text-white" : "text-black/50 hover:text-primary"} transition`}
-                            >
-                                <Twitter className="h-4 w-4" />
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="https://github.com"
-                                target="_blank"
-                                rel="noreferrer"
-                                aria-label="GitHub"
-                                className={`${usesLightText ? "text-white/62 hover:text-white" : "text-black/50 hover:text-primary"} transition`}
-                            >
-                                <Github className="h-4 w-4" />
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="https://instagram.com"
-                                target="_blank"
-                                rel="noreferrer"
-                                aria-label="Instagram"
-                                className={`${usesLightText ? "text-white/62 hover:text-white" : "text-black/50 hover:text-primary"} transition`}
-                            >
-                                <Instagram className="h-4 w-4" />
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+                        <nav aria-label="Mobile primary" className="mt-4">
+                            <ul className="flex flex-col gap-2">
+                                {menuItems.map((item) => {
+                                    const isActive = pathname === item.href;
+
+                                    return (
+                                        <li key={item.href}>
+                                            <SheetClose asChild>
+                                                <Link
+                                                    href={item.href}
+                                                    className={`flex items-center rounded-2xl border px-4 py-3 text-sm font-medium transition ${
+                                                        isActive
+                                                            ? "border-primary/20 bg-primary/10 text-primary"
+                                                            : "border-black/10 bg-white text-black/72 hover:border-primary/24 hover:text-black"
+                                                    }`}
+                                                    aria-current={isActive ? "page" : undefined}
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            </SheetClose>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </nav>
+
+                        <div className="mt-6 border-t border-black/8 pt-5">
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-black/45">
+                                Social
+                            </p>
+                            <ul className="mt-3 flex items-center gap-3">
+                                {socialLinks.map(({ href, label, icon: Icon }) => (
+                                    <li key={label}>
+                                        <a
+                                            href={href}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            aria-label={label}
+                                            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-black/65 transition hover:border-primary/24 hover:text-primary"
+                                        >
+                                            <Icon className="h-4 w-4" />
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </SheetContent>
+                </Sheet>
+            </div>
         </div>
     );
 }

@@ -10,8 +10,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-primary: #DBC0FC;
-  --color-secondary: #836DF4;
+  --color-primary: #5C91FF;
+  --color-secondary: #4784FF;
   --color-brand-ink: #2F2551;
   --color-brand-copy: #625A7D;
 }
